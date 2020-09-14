@@ -28,7 +28,6 @@
 
 <script src="{{JS}}sweetalert-dev.js"></script>
 
-
 <script src="{{JS_HOME}}datatables.min.js"></script>
 
 <!-- include alertify script -->
@@ -198,3 +197,4 @@ $(function() {
 @yield('custom_div_end')
 
 <div class="ajax-loader" style="display:none;" id="ajax_loader"><img src="{{AJAXLOADER}}"> {{trans('please_wait')}}...</div>
+

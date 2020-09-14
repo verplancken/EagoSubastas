@@ -220,6 +220,8 @@ class AuctionsController extends Controller
 
         $record->international_shipping = $request->international_shipping;
 
+        $record->visibilidad = $request->visibilidad;
+
         $record->shipping_terms         = $request->shipping_terms;
 
         $record->make_featured          = $request->make_featured;
@@ -462,7 +464,10 @@ class AuctionsController extends Controller
 
         $record->international_shipping = $request->international_shipping;
 
+        $record->visibilidad = $request->visibilidad;
+
         $record->shipping_terms         = $request->shipping_terms;
+
 
         $record->make_featured          = $request->make_featured;
 

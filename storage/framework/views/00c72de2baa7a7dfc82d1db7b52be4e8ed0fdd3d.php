@@ -707,6 +707,28 @@
 
                 </div>
 
+                <div class="form-group">
+
+                    <?php echo Form::label('visibilidad', getPhrase('Tipo de subasta'), ['class' => 'control-label']); ?>
+
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                        <?php echo e(Form::radio('visibilidad', 0, false, array('id'=>'visibilidad_no', 'name'=>'visibilidad'))); ?>
+
+
+
+                            <label for="visibilidad_no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> Cerrada</label>
+                        </div>
+                        <div class="col-md-6">
+                        <?php echo e(Form::radio('visibilidad', 1, true, array('id'=>'visibilidad_yes', 'name'=>'visibilidad'))); ?>
+
+
+                            <label for="visibilidad_yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> Abierta</label>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="form-group">
 

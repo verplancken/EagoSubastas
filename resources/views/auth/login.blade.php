@@ -156,7 +156,7 @@ $google_login = getSetting('google_plus_login','module');
 
                     <div class="row col-lg-12">
                       <p class="alert alert-info">
-                          Social Logins only for Bidder
+                          Inicios de sesión sociales
                       </p>
                     </div>
                  
@@ -381,7 +381,7 @@ $google_login = getSetting('google_plus_login','module');
                   <div class="form-group col-lg-12">
                     <div class="text-center  login-btn">
                         <button type="submit" class="btn btn-primary login-bttn" ng-disabled='!registrationForm.$valid'>
-                                       {{getPhrase('register_now')}}
+                                       Registrar
                                     </button>
                       </div>
 

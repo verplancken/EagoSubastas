@@ -35,19 +35,19 @@ if ($loggedInUser) {
                         <div class="dropdown-menu-notif-item dropdown-list ">
 
                             <a href="{{$single_notification_url}}" class="note-menu">
-                                <h4>{{$title}}</h4>
+                                <h5>{{$title}}</h5>
 
                                 <p>{{$notification->updated_at->diffForHumans()}}</p>
                             </a>
                         </div>
                     @endforeach
                         <div class="dropdown-menu-notif-more">
-                            <a href="{{URL_USER_NOTIFICATIONS}}">{{getPhrase('see_all')}}</a>
+                            <a href="{{URL_USER_NOTIFICATIONS}}">Ver todo</a>
                         </div>
                     </div>
                     @else
                     <div class="dropdown-menu-notif-list" >
-                        <div class="dropdown-menu-notif-item dropdown-list"><span class="no-notification-text"> {{getPhrase('no_notifications_available')}}</span>
+                        <div class="dropdown-menu-notif-item dropdown-list"><span class="no-notification-text"> No hay notificaciones disponibles</span>
                         </div>
                     </div>
                     @endif

@@ -68,9 +68,9 @@
 
                      <span class="text-red">*</span>
                    
-                    <?php echo e(Form::textarea('page_text', old('page_text'), $attributes = 
+                    <?php echo e(Form::textarea('editor', old('page_text'), $attributes =
 
-                    array('class' => 'form-control ckeditor', 
+                    array('class' => 'form-control ckeditor',
 
                     'placeholder' => 'Description',
 
@@ -78,10 +78,11 @@
 
                     'required' => 'true',
 
+                    'id' => 'editor',
+
                     'ng-class'=>'{"has-error": formValidate.page_text.$touched && formValidate.page_text.$invalid}',
 
                     ))); ?>
-
 
 
                     
@@ -143,7 +144,8 @@
 
                <div class="form-groupp pull-right">
 
-					<button class="btn btn-success" ng-disabled='!formValidate.$valid'><?php echo e(getPhrase('save')); ?></button>
+
+                   <button class="btn btn-success" ng-disabled='!formValidate.$valid'>Guardar</button>
 
 				</div>
 

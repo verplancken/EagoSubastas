@@ -528,65 +528,6 @@
 </div>
 <!--Bid history modal end-->
 
-
-{{-- Modal Ganador --}}
-{{-- @foreach ($bidders as $user)
-    <div class="modal fade" id="modal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-        <form method="POST" action="{{route('ganador.auctions',$user->id)}}">
-
-            {{csrf_field() }}
-
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ganador</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                Desea ponerlo como ganador?
-                </div>
-
-                <div class="row">
-                    
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="form-check-input" type="radio" name="is_bidder_won" value="No" checked>
-                                <label>
-                                    NO
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="form-check-input" type="radio" name="is_bidder_won" value="Yes">
-                                <label>
-                                    SI
-                                </label>
-                            </div>
-                        </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
-                </div>
-            </div>
-
-            </div>
-        </form>
-
-    </div>
-@endforeach --}}
-
-
-
-
-
 <!--send Email modal-->
 <div class="modal fade" id="sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

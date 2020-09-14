@@ -737,12 +737,6 @@ class AuctionController extends Controller
         $auction = DB::table('auctions')
                     ->get();
 
-        
-        // $auctions2 = Auction::where('sub_category_id',$subcategoria->id)
-        //                     ->select('id','sub_category_id')
-        //                     ->get();
-        //                     dd($auctions2);
-        // $lotes = ['auctions.sub_category_id','=','subcategoria.id'];
 
         $data['active_class']   = 'auctions';
         $data['layout']         = getLayout();
@@ -952,18 +946,26 @@ class AuctionController extends Controller
         ->get();
         //dd($invitacion);
         $user = DB::table('users')
-    
         ->first();
+
+
 
         //CUANDO EXISTEN DATOS EN auctionbidders
         $auctionbidders = AuctionBidder::select('auction_id', 'no_of_times', 'bidder_id')
                                         ->get();
                                  //dd($auctionbidders);
+         $users   = \Auth::user();
+
+        $auctionbidders = AuctionBidder::where('bidder_id', '=', $users->id)
+                                    ->where('auction_id', '=', $auction->id)
+                                     ->select('auction_id', 'no_of_times', 'bidder_id')
+                                        ->get();
+
 
         $subcategoria = DB::table('sub_catogories')
                             ->first();
 
-        $user   = \Auth::user();
+
                    //dd($user);
 
         $lote = DB::table('sub_catogories')
@@ -973,36 +975,11 @@ class AuctionController extends Controller
        $cond2[] = ['auctionbidders.is_bidder_won','=','Yes'];
        $auctionbidders2 = DB::table('auctionbidders')
                      ->select(DB::raw('count(*) as bidder_count'))
-                     ->where('bidder_id', '=', $user->id)
+                     ->where('bidder_id', '=', $users->id)
                      ->where('sub', '=', $auction->sub_category_id)
                      ->where($cond2)
                      ->get();
-
-                 // dd($auctionbidders2);
-    
-
-        // $cond2[] = ['auctionbidders.is_bidder_won','=','Yes'];
-
-    
-        // $auctionbidders2 = DB::table('auctionbidders') 
-        //                     ->where('sub', $subcategoria->id)
-        //                     ->where($cond2)
-        //                     ->count();
-
-        // $total = DB::table('auctionbidders') 
-        //                 ->where('sub', $subcategoria->id)
-        //                 ->where($auctionbidders2, '<', $subcategoria->articulos)
-        //                 ->get();
-
-                           
-                           
-        //        dd($total);
-                        
-
-
-        
-           //dd($auctions);
-          //dd($auctionbidders);
+      // dd($auctionbidders2);
         
         return view('home.pages.auctions.auction-details', $data, compact('invitacion', 'auctionbidders', 'auctionbidders2', 'lote'));
 
@@ -1307,12 +1284,12 @@ class AuctionController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function saveBid(Request $request)
+   public function saveBid(Request $request)
     {
         if (checkRole(getUserGrade(4))) {
             return redirect(URL_DASHBOARD);
         }
-        
+
         $currentUser = \Auth::user();
 
         $bid_amount  = $request->bid_amount;
@@ -1325,27 +1302,27 @@ class AuctionController extends Controller
 
 
            if ($redirect = $this->check_isdemo()) {
-              flash('info','crud_operations_disabled_in_demo', 'info');
+              flash('info','operaciones de crud deshabilitadas en la demostración', 'info');
               return redirect($redirect);
             }
 
             if ($bid_amount && $auction_id) {
 
 
-                //check is user is bidder
+                //comprobar si el usuario es postor
                 if ($currentUser->role_id!=getRoleData('bidder')) {
-                    flash('error','please_login_as_bidder_to_continue', 'error');
+                    flash('error','por favor inicie sesión como postor para continuar', 'error');
                     return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
                 }
-              
 
-                //auction record
+
+                //récord de subasta
                 $auction_record = Auction::where('id',$auction_id)->where('sub_category_id',$sub)->get();
                 if (count($auction_record))
                   $auction_record = $auction_record[0];
 
-                //live auction condition
-                //if live auction happening - regular auction should not work
+                //condición de subasta en vivo
+                //si se realiza una subasta en vivo, la subasta regular no debería funcion
                 $live_auction=false;
                 $today = date('Y-m-d');
                 if ($auction_record->live_auction_date) {
@@ -1361,7 +1338,7 @@ class AuctionController extends Controller
                       }
                 }
                 if ($live_auction) {
-                  flash('info','Live auction happening currently..can not perform regular auction', 'info');
+                  flash('info','La subasta en vivo está sucediendo actualmente ... no se puede realizar una subasta regula', 'info');
                   return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction_record->slug);
                 }
 
@@ -1370,24 +1347,24 @@ class AuctionController extends Controller
 
 
 
-                //check auction start,end date-time,auction status
+                //comprobar el inicio de la subasta, la fecha y hora de finalización, el estado de la subasta
                 $auction = Auction::getAuctionRecord($auction_id);
 
                 if (!empty($auction)) {
 
-                  //check already someone paid auction amount/bought auction
-                  //bid payment - paid or not
+                    // verifique que alguien pagó el monto de la subasta / compró la subasta
+                  // pago de oferta - pagado o no
                   $bid_payment_record = $auction->getAuctionPayment();
-                  
-                  //buy now payment - paid or not
+
+                  //comprar ahora pago - pagado o no pago - pagado o no
                   $buy_now_payment_record = $auction->getBuyNowAuctionPayment();
-                  
+
                   $bid_div=true;
                   if (count($bid_payment_record) || count($buy_now_payment_record)) {
 
                     $bid_div = false;
 
-                    flash('info','Some one has already won/bought this auction..','info');
+                    flash('info','Alguien ya ha ganado / comprado esta subasta.','info');
                     return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
                   }
 
@@ -1395,51 +1372,71 @@ class AuctionController extends Controller
 
 
 
-                    //start date time,end date time
+                    //fecha de inicio hora, fecha de finalización hora
                     $now = strtotime(date('Y-m-d H:i:s'));
                     $start_date = strtotime($auction->start_date);
                     $end_date   = strtotime($auction->end_date);
 
                     if ($start_date<=$now && $end_date>=$now) {
 
-                        //check last recent bid
+                        //comprobar la última oferta reciente
                         $last_bid = Bidding::getLastBidRecord($auction->id);
+
 
                         if (!empty($last_bid)) {
 
                             if ($bid_amount>$last_bid->bid_amount) {
-                                //save in table
+                                //guardar en la mesa
                                 $save=TRUE;
                             } else {
-                                //redirect - bid amount is not valid
-                                flash('error','bid_amount_is_not_valid', 'error');
+                                //redireccionamiento: el monto de la oferta no es válido
+                                flash('error','el monto de la oferta no es válido', 'error');
                                 return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
                             }
-                            
+
                         } elseif ($auction->minimum_bid>0) {
 
-                            //if not last recent bid, check auction minimum amount
-                            
-                            //1st bid
+                            //si no es la última oferta reciente, verifique el monto mínimo de la subasta
+
+                            //Primera puja
                             if ($bid_amount>=$auction->minimum_bid) {
-                                //save in table
+                                //guardar en la tabla
                                 $save=TRUE;
                             } else {
-                                //redirect - bid amount is not valid
-                                flash('error','bid_amount_is_not_valid', 'error');
+                                //redireccionamiento: el monto de la oferta no es válido
+                                flash('error','el monto de la oferta no es válido', 'error');
                                 return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
                             }
 
                         } elseif (empty($last_bid) && $auction->minimum_bid<=0) {
-                            //1st bid
-                            //save in table
+                            //Primera puja
+                            //guardar en la tabla
                             $save=TRUE;
 
                         } else {
 
                             return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
                         }
-                        
+
+
+                         $auctionbidder = AuctionBidder::where('auction_id',$auction_id)
+                                                            ->where('sub',$sub)
+                                                            ->where('bidder_id',$currentUser->id)
+                                                            ->select(['id','no_of_times'])
+                                                            ->first();
+
+                            if(count($auctionbidder)){
+                                if($auctionbidder->no_of_times < $auction->tiros){
+
+                                    $save=TRUE;
+                                    //dd($save);
+                                } else {
+                                    flash('error','Lo sentimos, no tienes mas tiros', 'error');
+                                    return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
+                                }
+                            }
+
+
                         if ($save) {
 
                             $auctionbidder = AuctionBidder::where('auction_id',$auction_id)
@@ -1449,13 +1446,13 @@ class AuctionController extends Controller
                                                             ->first();
                             if (count($auctionbidder)) {
 
-                                //if its not 1st time--then update no_of_times
+                                // si no es la primera vez, actualice no_of_times
                                 $auctionbidder->no_of_times = $auctionbidder->no_of_times+1;
                                 $auctionbidder->save();
 
                             } else {
 
-                                //if first time--save record
+                                // si es la primera vez - guardar registro
                                 $auctionbidder = new AuctionBidder;
 
                                 $auctionbidder->auction_id = $auction_id;
@@ -1474,7 +1471,7 @@ class AuctionController extends Controller
 
                             $bidding->save();
 
-                            flash('success','bid_placed_successfully', 'success');
+                            flash('success','Oferto exitosamente', 'success');
                             return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
 
 
@@ -1484,25 +1481,25 @@ class AuctionController extends Controller
 
                     } else {
 
-                        flash('error','auction_date_time_is_not_valid', 'error');
+                        flash('error','la fecha de la subasta no es válida', 'error');
                         return redirect(URL_HOME_AUCTIONS);
                     }
                 } else {
 
-                    flash('error','auction_not_found', 'error');
+                    flash('error','subasta no encontrada', 'error');
                     return redirect(URL_HOME_AUCTIONS);
                 }        
                 
             
             } else {
-                flash('error','bid_amount_not_valid', 'error');
+                flash('error','monto de la oferta no válido', 'error');
                 return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
             }
 
             
         } else {
            
-            flash('info','please_login_to_continue', 'info');
+            flash('info','Por favor inicie sesión para continuar', 'info');
             return redirect(URL_USERS_LOGIN);
         }
 

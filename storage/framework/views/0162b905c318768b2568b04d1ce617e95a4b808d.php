@@ -18,18 +18,18 @@ $google_login = getSetting('google_plus_login','module');
                     <div class="row">
                         <div class="col-md-6">
                             <h4>
-                <a href="#" class="active" id="login-form-link"><?php echo e(getPhrase('login')); ?></a>
+
+                                <a href="#" class="active" id="login-form-link">Login</a>
                   </h4> </div>
                         <div class="col-md-6">
                             <h4>
-                <a href="#" id="register-form-link"><?php echo e(getPhrase('register')); ?></a>
+
+                        <a href="#" id="register-form-link">Registro</a>
                 </h4> </div>
                     </div>
                      </div>
 
           <div class="panel-body form-auth-style">
-
-
 
                 <!--form id="login-form" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;"-->
 
@@ -115,8 +115,8 @@ $google_login = getSetting('google_plus_login','module');
                        <button type="submit"
                                     class="btn btn-primary login-bttn"
                                     style="margin-right: 15px;" ng-disabled='!loginForm.$valid'>
-                                <?php echo e(getPhrase('login')); ?>
 
+                                    Login
                             </button>
                     </div>
                     <hr>
@@ -128,7 +128,8 @@ $google_login = getSetting('google_plus_login','module');
 
 
 
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal"> <?php echo e(getPhrase('forgot_password')); ?> ? </a>
+
+                      <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal"> Se te olvidó tu contraseña ? </a>
 
 
 
@@ -160,7 +161,7 @@ $google_login = getSetting('google_plus_login','module');
 
                     <div class="row col-lg-12">
                       <p class="alert alert-info">
-                          Social Logins only for Bidder
+                          Inicios de sesión sociales
                       </p>
                     </div>
                  
@@ -377,20 +378,25 @@ $google_login = getSetting('google_plus_login','module');
 
 
 
-                            <div class=" col-lg-12">
+                            <div class=" col-lg-12" style="display: none">
 
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                    <?php echo e(Form::radio('user_type','seller', true, array('id'=>'seller', 'name'=>'user_type'))); ?>
+                                    <?php echo e(Form::radio('user_type','bidder', true, array('id'=>'bidder', 'name'=>'user_type'))); ?>
 
+                                        <label for="bidder"><span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>
 
-                                        <label for="seller"><!-- <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> --><?php echo e(getPhrase('seller')); ?></label>
+                                            licitador
+                                        </label>
                                     </div>
+
                                     <div class="col-md-6">
-                                    <?php echo e(Form::radio('user_type','bidder', false, array('id'=>'bidder', 'name'=>'user_type'))); ?>
+                                    <?php echo e(Form::radio('user_type','seller', false, array('id'=>'seller', 'name'=>'user_type'))); ?>
 
-                                        <label for="bidder"><!-- <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>--> <?php echo e(getPhrase('bidder')); ?>
 
+                                        <label for="seller"><span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>
+
+                                            vendedor
                                         </label>
                                     </div>
                                 </div>
@@ -402,8 +408,7 @@ $google_login = getSetting('google_plus_login','module');
                   <div class="form-group col-lg-12">
                     <div class="text-center  login-btn">
                         <button type="submit" class="btn btn-primary login-bttn" ng-disabled='!registrationForm.$valid'>
-                                       <?php echo e(getPhrase('register_now')); ?>
-
+                                       Registrar
                                     </button>
                       </div>
 
