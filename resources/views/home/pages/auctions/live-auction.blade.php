@@ -73,9 +73,9 @@ if ($auction->is_bid_increment && $auction->bid_increment>0) {
 } else {
   //if not incremental
   if (isset($bidding) && !empty($bidding->bid_amount))
-    $enter_amount .= '> '.$bidding->bid_amount;
+    $enter_amount .= '> '.number_format($bidding->bid_amount);
   elseif ($auction->minimum_bid>0)
-    $enter_amount .= '> '.$auction->minimum_bid;
+    $enter_amount .= '> '.number_format($auction->minimum_bid);
 }
 
 
@@ -96,7 +96,7 @@ use App\SubCatogory;
 
 		<div class="form-group bid-form-group">
 			<p>{{$auction->sub_category_id}}</p>
-			<p>Precio Reserva {{$currency_code}}{{$auction->reserve_price}}</p>
+			<p>Precio Reserva ${!! number_format($auction->reserve_price) !!} MXN</p>
 			<p>Termina {{$live_auction_date}} {{$auction->live_auction_end_time}}</p>
 			<p id="demo"></p> 
 		</div>
@@ -127,14 +127,23 @@ use App\SubCatogory;
 			@if (count($live_biddings))
 			
 			
-			<ul class="list-group">
-			 @foreach ($live_biddings as $bid)
-	              <li class="list-group-item d-flex justify-content-between align-items-center">
-	              	{{$bid->name}}
-	                <span class="badge badge-primary badge-pill">{{$currency_code}}{{$bid->bid_amount}}</span>
-	              </li>
-              @endforeach
-          	</ul>
+
+				@if ($auction->visibilidad==1)
+					<ul class="list-group">
+					 @foreach ($live_biddings as $bid)
+						  <li class="list-group-item d-flex justify-content-between align-items-center">
+							{{$bid->name}}
+							<span class="badge badge-primary badge-pill">{{$currency_code}}{{$bid->bid_amount}}</span>
+						  </li>
+					  @endforeach
+					</ul>
+					@else
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<p>Tipo de subasta cerrada, no podras ver a los apostadores</p>
+						<p>Usuario</p>
+					</li>
+				@endif
+
           	
           
             @endif  

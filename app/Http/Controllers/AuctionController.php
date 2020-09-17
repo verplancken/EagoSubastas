@@ -124,618 +124,626 @@ class AuctionController extends Controller
         //Selected Sellers
         $sellers = $request->auction_sellers;
 
+             if ($item_type != '' && count($auction_status) > 0) {
+
+
+                 if ($item_type === 'auction_items') {
+                     $cond[] = ['is_buynow', '!=', 1];
+
+                 } elseif ($item_type === 'buynow_items') {
+                     $cond[] = ['is_buynow', '=', 1];
+                 }
+
+
+                 /* $auctionstatus=[];
+                  foreach ($auction_status as $status) {
+                       array_push($auctionstatus, "$status");
+                  }*/
 
-        if ($item_type!='' && count($auction_status)>0) {
-
-
-           if ($item_type==='auction_items') {
-                $cond[] =  ['is_buynow','!=',1];
-
-           } elseif ($item_type==='buynow_items') {
-                $cond[] =  ['is_buynow','=',1];
-           } 
-             
-
-          /* $auctionstatus=[]; 
-           foreach ($auction_status as $status) {
-                array_push($auctionstatus, "$status");
-           }*/
-          
-           
-            
-
-
-            if ($auction_date!='') {
-
-                $cond[] = ['auctions.start_date','<=',$auction_date];
-                $cond[] = ['auctions.end_date','>=',$auction_date];
-
-            } else {
-
-                if ((in_array('open',$auction_status) || in_array('new',$auction_status)) && !in_array('closed',$auction_status)) {
-                    $cond[] = ['auctions.start_date','<=',NOW()];
-                    $cond[] = ['auctions.end_date','>=',NOW()];
-
-                   /* $cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
-                    $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
-                } 
-            }
-           
-            if ($featured=='true') {
-                $cond[] = ['auctions.make_featured','=',1];
-            }
-
-              
-
-            if (count($sub_categories)) {
-
-                if (count($selected_cities)) {
-
-                    if (count($sellers)) {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                        ->join('categories','auctions.category_id','categories.id')
-                        ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                        ->select(['auctions.id','auctions.title','auctions.slug',
-                                  'auctions.description','auctions.image',
-                                  'auctions.reserve_price','auctions.auction_status',
-                                  'auctions.start_date','auctions.end_date'])
-                        ->where($cond)
-                        ->whereIn('auctions.auction_status',$auction_status)
-                        ->whereIn('auctions.sub_category_id',$sub_categories)
-                        ->whereIn('users.city_id',$selected_cities)
-                        ->whereIn('users.id',$sellers)
-                        ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-
-                    } else {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                        ->join('categories','auctions.category_id','categories.id')
-                        ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                        ->select(['auctions.id','auctions.title','auctions.slug',
-                                  'auctions.description','auctions.image',
-                                  'auctions.reserve_price','auctions.auction_status',
-                                  'auctions.start_date','auctions.end_date'])
-                        ->where($cond)
-                        ->whereIn('auctions.auction_status',$auction_status)
-                        ->whereIn('auctions.sub_category_id',$sub_categories)
-                        ->whereIn('users.city_id',$selected_cities)
-                        ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-
-                } else {
-
-                    if (count($sellers)) {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                        ->join('categories','auctions.category_id','categories.id')
-                        ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                        ->select(['auctions.id','auctions.title','auctions.slug',
-                                  'auctions.description','auctions.image',
-                                  'auctions.reserve_price','auctions.auction_status',
-                                  'auctions.start_date','auctions.end_date'])
-                        ->where($cond)
-                        ->whereIn('auctions.auction_status',$auction_status)
-                        ->whereIn('auctions.sub_category_id',$sub_categories)
-                        ->whereIn('users.id',$sellers)
-                        ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                        ->join('categories','auctions.category_id','categories.id')
-                        ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                        ->select(['auctions.id','auctions.title','auctions.slug',
-                                  'auctions.description','auctions.image',
-                                  'auctions.reserve_price','auctions.auction_status',
-                                  'auctions.start_date','auctions.end_date'])
-                        ->where($cond)
-                        ->whereIn('auctions.auction_status',$auction_status)
-                        ->whereIn('auctions.sub_category_id',$sub_categories)
-                        ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-                }
-
-            } else {
-
-                if (count($selected_cities)) {
-
-                    if (count($sellers)) {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                        ->join('categories','auctions.category_id','categories.id')
-                        ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                        ->select(['auctions.id','auctions.title','auctions.slug',
-                                  'auctions.description','auctions.image',
-                                  'auctions.reserve_price','auctions.auction_status',
-                                  'auctions.start_date','auctions.end_date'])
-                        ->where($cond)
-                        ->whereIn('auctions.auction_status',$auction_status)
-                        ->whereIn('users.city_id',$selected_cities)
-                        ->whereIn('users.id',$sellers)
-                        ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                        ->join('categories','auctions.category_id','categories.id')
-                        ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                        ->select(['auctions.id','auctions.title','auctions.slug',
-                                  'auctions.description','auctions.image',
-                                  'auctions.reserve_price','auctions.auction_status',
-                                  'auctions.start_date','auctions.end_date'])
-                        ->where($cond)
-                        ->whereIn('auctions.auction_status',$auction_status)
-                        ->whereIn('users.city_id',$selected_cities)
-                        ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-
-
-                     
-
-                } else {
-
-                    if (count($sellers)) {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                            ->join('categories','auctions.category_id','categories.id')
-                            ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                            ->select(['auctions.id','auctions.title','auctions.slug',
-                                      'auctions.description','auctions.image',
-                                      'auctions.reserve_price','auctions.auction_status',
-                                      'auctions.start_date','auctions.end_date'])
-                            ->where($cond)
-                            ->whereIn('auctions.auction_status',$auction_status)
-                            ->whereIn('users.id',$sellers)
-                            ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                            ->join('categories','auctions.category_id','categories.id')
-                            ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                            ->select(['auctions.id','auctions.title','auctions.slug',
-                                      'auctions.description','auctions.image',
-                                      'auctions.reserve_price','auctions.auction_status',
-                                      'auctions.start_date','auctions.end_date'])
-                            ->where($cond)
-                            ->whereIn('auctions.auction_status',$auction_status)
-                            ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-
-                    }
-                   
-                }
-            }
-
-        } elseif ($item_type!='' && count($auction_status)<=0) {  
-           
-            if ($auction_date!='') {
-
-                $cond[] = ['auctions.start_date','<=',$auction_date];
-                $cond[] = ['auctions.end_date','>=',$auction_date];
-
-            } else { 
-
-                $cond[] = ['auctions.start_date','<=',NOW()];
-                $cond[] = ['auctions.end_date','>=',NOW()];
-
-               /* $cond[] = ['auctions.start_date','<=',DATE('Y-m-d')];
-                $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
-            }
-
-
-
-            if ($item_type==='auction_items') {
-                $cond[] =  ['is_buynow','!=',1];
-
-            } elseif ($item_type==='buynow_items') {
-                $cond[] =  ['is_buynow','=',1];
-            } 
-
-            // $cond[] = ['auctions.auction_status','=','open'];
-
-
-            if ($featured=='true') {
-                $cond[] = ['auctions.make_featured','=',1];
-            }
-
-            if (count($sub_categories)) {
-
-                if (count($selected_cities)) {
-
-                     if (count($sellers)) {
-
-                          $auctions = Auction::join('users','auctions.user_id','users.id')
-                                    ->join('categories','auctions.category_id','categories.id')
-                                    ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                    ->select(['auctions.id','auctions.title','auctions.slug',
-                                              'auctions.description','auctions.image',
-                                              'auctions.reserve_price','auctions.auction_status',
-                                              'auctions.start_date','auctions.end_date'])
-                                    ->where($cond)
-                                    ->whereIn('auctions.sub_category_id',$sub_catogories)
-                                    ->whereIn('users.city_id',$selected_cities)
-                                    ->whereIn('users.id',$sellers)
-                                    ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                                    ->join('categories','auctions.category_id','categories.id')
-                                    ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                    ->select(['auctions.id','auctions.title','auctions.slug',
-                                              'auctions.description','auctions.image',
-                                              'auctions.reserve_price','auctions.auction_status',
-                                              'auctions.start_date','auctions.end_date'])
-                                    ->where($cond)
-                                    ->whereIn('auctions.sub_category_id',$sub_catogories)
-                                    ->whereIn('users.city_id',$selected_cities)
-                                    ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-
-                } else {
-
-                    if (count($sellers)) {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                            ->join('categories','auctions.category_id','categories.id')
-                            ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                            ->select(['auctions.id','auctions.title','auctions.slug',
-                                      'auctions.description','auctions.image',
-                                      'auctions.reserve_price','auctions.auction_status',
-                                      'auctions.start_date','auctions.end_date'])
-                            ->where($cond)
-                            ->whereIn('auctions.sub_category_id',$sub_catogories)
-                            ->whereIn('users.id',$sellers)
-                            ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                            ->join('categories','auctions.category_id','categories.id')
-                            ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                            ->select(['auctions.id','auctions.title','auctions.slug',
-                                      'auctions.description','auctions.image',
-                                      'auctions.reserve_price','auctions.auction_status',
-                                      'auctions.start_date','auctions.end_date'])
-                            ->where($cond)
-                            ->whereIn('auctions.sub_category_id',$sub_catogories)
-                            ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    }
-
-                }
-
-            } else {
-
-                if (count($selected_cities)) {
-
-                    if (count($sellers)) {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date'])
-                                ->where($cond)
-                                ->whereIn('users.city_id',$selected_cities)
-                                ->whereIn('users.id',$sellers)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date'])
-                                ->where($cond)
-                                ->whereIn('users.city_id',$selected_cities)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-                    
-
-                } else {
-
-                    if (count($sellers)) {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date'])
-                                ->where($cond)
-                                ->whereIn('users.id',$sellers)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                            $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date'])
-                                ->where($cond)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-                }
-            }
-
-        } elseif ($item_type=='' && count($auction_status)>0) {
-
-            // dd($auction_status);
-            //live = auction_staus=open
-            //upcoming = auction_status=new
-            //past = auction_status=closed
-            
-            //open
-            //new
-            //past
-            //open,new
-            //open,closed
-            //new,closed
-            //open,new,closed
-            
-
-            if ($auction_date!='') {
-
-                $cond[] = ['auctions.start_date','<=',$auction_date];
-                $cond[] = ['auctions.end_date','>=',$auction_date];
-
-            } else {
-
-                if ((in_array('open',$auction_status) || in_array('new',$auction_status)) && !in_array('closed',$auction_status)) {
-
-                    $cond[] = ['auctions.start_date','<=',NOW()];
-                    $cond[] = ['auctions.end_date','>=',NOW()];
-
-                    /*$cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
-                    $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
-
-                } 
-            }
-            
-
-
-           /* $auctionstatus=[]; 
-
-            foreach ($auction_status as $status) {
-                array_push($auctionstatus, "'$status'");
-            }*/
-
-            if ($featured=='true') {
-                $cond[] = ['auctions.make_featured','=',1];
-            }
-
-
-            if (count($sub_categories)) {
-
-                if (count($selected_cities)) {
-
-                    if (count($sellers)) {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                                ->where($cond)
-                                ->whereIn('auctions.auction_status',$auction_status)
-                                ->whereIn('auctions.sub_category_id',$sub_categories)
-                                ->whereIn('users.city_id',$selected_cities)
-                                ->whereIn('users.id',$sellers)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-
-                    } else {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                                ->where($cond)
-                                ->whereIn('auctions.auction_status',$auction_status)
-                                ->whereIn('auctions.sub_category_id',$sub_categories)
-                                ->whereIn('users.city_id',$selected_cities)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    }
-
-                } else {
-
-                    if (count($sellers)) {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                                ->where($cond)
-                                ->whereIn('auctions.auction_status',$auction_status)
-                                ->whereIn('auctions.sub_category_id',$sub_categories)
-                                ->whereIn('users.id',$sellers)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                                ->where($cond)
-                                ->whereIn('auctions.auction_status',$auction_status)
-                                ->whereIn('auctions.sub_category_id',$sub_categories)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-
-                }
+
+                 if ($auction_date != '') {
+
+                     $cond[] = ['auctions.start_date', '<=', $auction_date];
+                     $cond[] = ['auctions.end_date', '>=', $auction_date];
+
+                 } else {
+
+                     if ((in_array('open', $auction_status) || in_array('new', $auction_status)) && !in_array('closed', $auction_status)) {
+                         $cond[] = ['auctions.start_date', '<=', NOW()];
+                         $cond[] = ['auctions.end_date', '>=', NOW()];
+
+                         /* $cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
+                          $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
+                     }
+                 }
+
+                 if ($featured == 'true') {
+                     $cond[] = ['auctions.make_featured', '=', 1];
+                 }
+
+
+                 if (count($sub_categories)) {
+
+                     if (count($selected_cities)) {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+
+                     } else {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+                     }
+
+                 } else {
+
+                     if (count($selected_cities)) {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+
+
+                     } else {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+
+                         }
+
+                     }
+                 }
+
+             } elseif ($item_type != '' && count($auction_status) <= 0) {
+
+                 if ($auction_date != '') {
+
+                     $cond[] = ['auctions.start_date', '<=', $auction_date];
+                     $cond[] = ['auctions.end_date', '>=', $auction_date];
+
+                 } else {
+
+                     $cond[] = ['auctions.start_date', '<=', NOW()];
+                     $cond[] = ['auctions.end_date', '>=', NOW()];
+
+                     /* $cond[] = ['auctions.start_date','<=',DATE('Y-m-d')];
+                      $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
+                 }
+
+
+                 if ($item_type === 'auction_items') {
+                     $cond[] = ['is_buynow', '!=', 1];
+
+                 } elseif ($item_type === 'buynow_items') {
+                     $cond[] = ['is_buynow', '=', 1];
+                 }
+
+                 // $cond[] = ['auctions.auction_status','=','open'];
+
+
+                 if ($featured == 'true') {
+                     $cond[] = ['auctions.make_featured', '=', 1];
+                 }
+
+                 if (count($sub_categories)) {
+
+                     if (count($selected_cities)) {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.sub_category_id', $sub_catogories)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.sub_category_id', $sub_catogories)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+
+                     } else {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.sub_category_id', $sub_catogories)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.sub_category_id', $sub_catogories)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         }
+
+                     }
+
+                 } else {
+
+                     if (count($selected_cities)) {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+
+
+                     } else {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date'])
+                                 ->where($cond)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+                     }
+                 }
+
+             } elseif ($item_type == '' && count($auction_status) > 0) {
+
+                 // dd($auction_status);
+                 //live = auction_staus=open
+                 //upcoming = auction_status=new
+                 //past = auction_status=closed
+
+                 //open
+                 //new
+                 //past
+                 //open,new
+                 //open,closed
+                 //new,closed
+                 //open,new,closed
+
+
+                 if ($auction_date != '') {
+
+                     $cond[] = ['auctions.start_date', '<=', $auction_date];
+                     $cond[] = ['auctions.end_date', '>=', $auction_date];
+
+                 } else {
+
+                     if ((in_array('open', $auction_status) || in_array('new', $auction_status)) && !in_array('closed', $auction_status)) {
+
+                         $cond[] = ['auctions.start_date', '<=', NOW()];
+                         $cond[] = ['auctions.end_date', '>=', NOW()];
+
+                         /*$cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
+                         $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
+
+                     }
+                 }
+
+
+                 /* $auctionstatus=[];
+
+                  foreach ($auction_status as $status) {
+                      array_push($auctionstatus, "'$status'");
+                  }*/
+
+                 if ($featured == 'true') {
+                     $cond[] = ['auctions.make_featured', '=', 1];
+                 }
+
+
+                 if (count($sub_categories)) {
+
+                     if (count($selected_cities)) {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         }
+
+                     } else {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('auctions.sub_category_id', $sub_categories)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+
+                     }
+
+                 } else {
+
+                     if (count($selected_cities)) {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('users.city_id', $selected_cities)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+
+
+                     } else {
+
+                         if (count($sellers)) {
+
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->whereIn('users.id', $sellers)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                         } else {
+                             $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                                 ->join('categories', 'auctions.category_id', 'categories.id')
+                                 ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                                 ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                                     'auctions.description', 'auctions.image',
+                                     'auctions.reserve_price', 'auctions.auction_status',
+                                     'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                                 ->where($cond)
+                                 ->whereIn('auctions.auction_status', $auction_status)
+                                 ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         }
+                     }
+                 }
 
              } else {
 
-                if (count($selected_cities)) {
 
-                    if (count($sellers)) {
+                 if (isset($request->category)) {
 
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                                    ->join('categories','auctions.category_id','categories.id')
-                                    ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                    ->select(['auctions.id','auctions.title','auctions.slug',
-                                              'auctions.description','auctions.image',
-                                              'auctions.reserve_price','auctions.auction_status',
-                                              'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                                    ->where($cond)
-                                    ->whereIn('auctions.auction_status',$auction_status)
-                                    ->whereIn('users.city_id',$selected_cities)
-                                    ->whereIn('users.id',$sellers)
-                                    ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-
-                         $auctions = Auction::join('users','auctions.user_id','users.id')
-                                ->join('categories','auctions.category_id','categories.id')
-                                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                                ->select(['auctions.id','auctions.title','auctions.slug',
-                                          'auctions.description','auctions.image',
-                                          'auctions.reserve_price','auctions.auction_status',
-                                          'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                                ->where($cond)
-                                ->whereIn('auctions.auction_status',$auction_status)
-                                ->whereIn('users.city_id',$selected_cities)
-                                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-
-                   
-
-                } else {
-
-                    if (count($sellers)) {
-
-                        $auctions = Auction::join('users','auctions.user_id','users.id')
-                            ->join('categories','auctions.category_id','categories.id')
-                            ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                            ->select(['auctions.id','auctions.title','auctions.slug',
-                                      'auctions.description','auctions.image',
-                                      'auctions.reserve_price','auctions.auction_status',
-                                      'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                            ->where($cond)
-                            ->whereIn('auctions.auction_status',$auction_status)
-                            ->whereIn('users.id',$sellers)
-                            ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-
-                    } else {
-                            $auctions = Auction::join('users','auctions.user_id','users.id')
-                            ->join('categories','auctions.category_id','categories.id')
-                            ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                            ->select(['auctions.id','auctions.title','auctions.slug',
-                                      'auctions.description','auctions.image',
-                                      'auctions.reserve_price','auctions.auction_status',
-                                      'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                            ->where($cond)
-                            ->whereIn('auctions.auction_status',$auction_status)
-                            ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                    }
-                }
-            }
-
-        } else {
-            
-
-            if (isset($request->category)) {
-
-                //Initial loading.. 
-                $cond[] = ['auctions.auction_status','=','open'];
+                     //Initial loading..
+                     $cond[] = ['auctions.auction_status', '=', 'open'];
 
 
-                $cond[] = ['auctions.start_date','<=',NOW()];
-                $cond[] = ['auctions.end_date','>=',NOW()];
+                     $cond[] = ['auctions.start_date', '<=', NOW()];
+                     $cond[] = ['auctions.end_date', '>=', NOW()];
 
-                /*$cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
-                $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
+                     /*$cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
+                     $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
 
 
-                 $auctions = Auction::join('users','auctions.user_id','users.id')
-                ->join('categories','auctions.category_id','categories.id')
-                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                ->select(['auctions.id','auctions.title','auctions.slug',
-                          'auctions.description','auctions.image',
-                          'auctions.reserve_price','auctions.auction_status',
-                          'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                ->where($cond)
-                ->whereIn('auctions.sub_category_id',$sub_categories)
-                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                // dd($request->category_id);
+                     $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                         ->join('categories', 'auctions.category_id', 'categories.id')
+                         ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                         ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                             'auctions.description', 'auctions.image',
+                             'auctions.reserve_price', 'auctions.auction_status',
+                             'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                         ->where($cond)
+                         ->whereIn('auctions.sub_category_id', $sub_categories)
+                         ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                     // dd($request->category_id);
 
-            } else {
+                 } else {
 
-                //Initial loading.. 
-                $cond[] = ['auctions.auction_status','=','open'];
+                     //Initial loading..
+                     $cond[] = ['auctions.auction_status', '=', 'open'];
 
-                $cond[] = ['auctions.start_date','<=',NOW()];
-                $cond[] = ['auctions.end_date','>=',NOW()];
+                     $cond[] = ['auctions.start_date', '<=', NOW()];
+                     $cond[] = ['auctions.end_date', '>=', NOW()];
 
-                /*$cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
-                $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
+                     /*$cond[] = ['auctions.start_date','<=',DATE("Y-m-d")];
+                     $cond[] = ['auctions.end_date','>=',DATE('Y-m-d')];*/
 
-                 $auctions = Auction::join('users','auctions.user_id','users.id')
-                ->join('categories','auctions.category_id','categories.id')
-                ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
-                ->select(['auctions.id','auctions.title','auctions.slug',
-                          'auctions.description','auctions.image',
-                          'auctions.reserve_price','auctions.auction_status',
-                          'auctions.start_date','auctions.end_date', 'auctions.sub_category_id'])
-                ->where($cond)
-                ->orderBy('auctions.id','desc')->paginate(PAGINATE_RECORDS);
-                
-            }
-            
-        }
+                     $auctions = Auction::join('users', 'auctions.user_id', 'users.id')
+                         ->join('categories', 'auctions.category_id', 'categories.id')
+                         ->join('sub_catogories', 'auctions.sub_category_id', 'sub_catogories.id')
+                         ->select(['auctions.id', 'auctions.title', 'auctions.slug',
+                             'auctions.description', 'auctions.image',
+                             'auctions.reserve_price', 'auctions.auction_status',
+                             'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                         ->where($cond)
+                         ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+
+                 }
+
+             }
+
+
+
         $auctions->withPath(URL_HOME_AUCTIONS);
         
         
         $data['auctions'] = $auctions;
        // dd($auctions);
+       $invitacion = DB::table('invitaciones')
+        ->get();
+        //dd($invitacion);
+        $user = DB::table('users')
+        ->first();
+
+
+
+        //CUANDO EXISTEN DATOS EN auctionbidders
+        $auctionbidders = AuctionBidder::select('auction_id', 'no_of_times', 'bidder_id')
+                                        ->get();
+                                 //dd($auctionbidders);
+         $users   = \Auth::user();
+
+        $auctionbidders = AuctionBidder::where('bidder_id', '=', $users->id)
+                                    ->where('auction_id', '=', $auction->id)
+                                     ->select('auction_id', 'no_of_times', 'bidder_id')
+                                        ->get();
+
+
         $subcategoria = DB::table('sub_catogories')
-                            ->select('id', 'articulos')
+                            ->first();
+
+
+                   //dd($user);
+
+        $lote = DB::table('sub_catogories')
                             ->get();
-                          // dd($subcategoria);
-  
-        $auctionbidders=DB::table('auctionbidders') 
-                           ->get();
-        
-        $invitacion = DB::table('invitaciones')
-                            ->get();
-                            //dd($invitacion);
-        
-        $cond2[] = ['auctionbidders.is_bidder_won','=','Yes'];
-               // dd($auctions);
-           
-        $auctionbidders2=DB::table('auctionbidders') 
-                        ->where($cond2)
-                        ->count();
-                       // dd( $auctionbidders2);
-        
-        $auction = DB::table('auctions')
-                    ->get();
+
+       //dd($lote);
+       $cond2[] = ['auctionbidders.is_bidder_won','=','Yes'];
+       $auctionbidders2 = DB::table('auctionbidders')
+                     ->select(DB::raw('count(*) as bidder_count'))
+                     ->where('bidder_id', '=', $users->id)
+                     ->where('sub', '=', $auction->sub_category_id)
+                     ->where($cond2)
+                     ->get();
 
 
         $data['active_class']   = 'auctions';
@@ -745,7 +753,7 @@ class AuctionController extends Controller
                          
         if ($request->ajax()) {
 
-            return view('home.pages.auctions.ajax_auctions',['auctions' => $auctions])->render();  
+            return view('home.pages.auctions.ajax_auctions',['auctions' => $auctions])->render();
         }
         // Auction::paginate(3);
         return view('home.pages.auctions.auctions', $data, compact('invitacion', 'subcategoria', 'auctionbidders2', 'auctionbidders', 'auction'));

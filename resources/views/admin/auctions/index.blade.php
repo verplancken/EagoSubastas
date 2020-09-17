@@ -21,9 +21,9 @@ $date_format = getSetting('date_format','site_settings');
             {{getPhrase('list')}}
 
 {{--             <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
-            <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right">Agregar</a>
-            <a href="{{ URL_CATEGORIES }}" class="btn btn-primary btn-add pull-right">Empresas</a>
-            <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right">Lotes</a>
+            <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+            <a href="{{ URL_CATEGORIES }}" class="btn btn-primary btn-add pull-right"> <i class="fa fa-building" aria-hidden="true"></i> Empresas</a>
+            <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right">  <i class="fa fa-cubes" aria-hidden="true"></i> Lotes</a>
 
         </div>
 

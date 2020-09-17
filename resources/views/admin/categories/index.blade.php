@@ -10,15 +10,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             {{ getPhrase('list')}}
+                    @can('category_create')
+        {{--                <a href="{{ URL_CATEGORIES_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
+                     <a href="{{ URL_CATEGORIES_ADD }}" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+                     <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right"> <i class="fa fa-cubes" aria-hidden="true"></i> Lotes</a>
 
-
-            @can('category_create')
-{{--                <a href="{{ URL_CATEGORIES_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
-             <a href="{{ URL_CATEGORIES_ADD }}" class="btn btn-success btn-add pull-right">Agregar</a>
-             <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right">Lotes</a>
-
-            @endcan
-
+                    @endcan
         </div>
 
         <div class="panel-body table-responsive">
@@ -67,6 +64,7 @@
                                     @can('category_delete')
 {{--                                    <a class="btn btn-xs btn-danger" href="javascript:void(0)" onclick="deleteRecord('{{$category->id}}')"> {{ getPhrase('delete') }}</a>--}}
                                         <a class="btn btn-xs btn-danger" href="javascript:void(0)" onclick="deleteRecord('{{$category->id}}')"> Eliminar</a>
+
                                     @endcan
                                 </td>
                                 

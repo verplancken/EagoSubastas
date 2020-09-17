@@ -17,10 +17,10 @@
 
 
 
-                <a href="<?php echo e(URL_SUB_CATEGORIES_ADD); ?>" class="btn btn-success btn-add pull-right">
+                <a href="<?php echo e(URL_SUB_CATEGORIES_ADD); ?>" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i>
                     Agregar
                 </a>
-                <a href="<?php echo e(URL_LIST_AUCTIONS); ?>" class="btn btn-info btn-add pull-right">Subastas</a>
+                <a href="<?php echo e(URL_LIST_AUCTIONS); ?>" class="btn btn-info btn-add pull-right"> <i class="fa fa-gavel" aria-hidden="true"></i> Subastas</a>
             <?php endif; ?>
 
         </div>

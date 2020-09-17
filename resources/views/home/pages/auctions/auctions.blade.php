@@ -25,12 +25,12 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
          <div class="row">
  
 
-          <!--ASIDE BAR SECTION-->
-          <div class="col-lg-3 col-md-4 col-sm-12">
+          <!--ASIDE BAR SECTION
+          <div class="col-lg-3 col-md-4 col-sm-12">-->
 
-              <!--Auction Date-->
-              <div class="au-all-category">
-{{--                <h6>{{getPhrase('auction_date')}}</h6>--}}
+              <!--Auction Date
+              <div class="au-all-category">-->
+{{--                <h6>{{getPhrase('auction_date')}}</h6>
                   <h6>Dia Subasta</h6>
                 <div class="form-group">
                   <div class="input-group date">
@@ -39,11 +39,11 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
                           <!-- <span class="glyphicon glyphicon-th"></span> -->
                           <span id="clear_date"><i class="fa fa-close"></i></span>
                       </div>
-                  </div>
+                  </div>--}}
                     <!-- <input type="text" class="form-control datepicker" name="auction_date" id="auction_date">
-                    <span id="clear_date"><i class="fa fa-close"></i></span> -->
+                    <span id="clear_date"><i class="fa fa-close"></i></span>
                 </div>
-              </div>
+              </div>-->
               <!--Auction Date-->
 
 
@@ -236,12 +236,12 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
                 </div>
               </div>
               @endif --}}
-              <!--Featured-->
+              <!--Featured
 
-            </div>
+            </div>-->
 
             <!--PRODUCTS SECTION-->
-             <div class="col-lg-9 col-md-8 col-sm-12 au-wrapper-main">
+             <div class="col-lg-12 col-md-12 col-sm-6 au-wrapper-main">
 
                <div class="row au-main-header">
                  <div class="col-lg-9 col-md-6 col-sm-12 au-body-header">

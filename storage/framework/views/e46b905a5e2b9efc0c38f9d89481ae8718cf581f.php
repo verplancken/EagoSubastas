@@ -22,9 +22,9 @@ $date_format = getSetting('date_format','site_settings');
 
 
 
-            <a href="<?php echo e(URL_AUCTIONS_ADD); ?>" class="btn btn-success btn-add pull-right">Agregar</a>
-            <a href="<?php echo e(URL_CATEGORIES); ?>" class="btn btn-primary btn-add pull-right">Empresas</a>
-            <a href="<?php echo e(URL_SUB_CATEGORIES); ?>" class="btn btn-info btn-add pull-right">Lotes</a>
+            <a href="<?php echo e(URL_AUCTIONS_ADD); ?>" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+            <a href="<?php echo e(URL_CATEGORIES); ?>" class="btn btn-primary btn-add pull-right"> <i class="fa fa-building" aria-hidden="true"></i> Empresas</a>
+            <a href="<?php echo e(URL_SUB_CATEGORIES); ?>" class="btn btn-info btn-add pull-right">  <i class="fa fa-cubes" aria-hidden="true"></i> Lotes</a>
 
         </div>
 

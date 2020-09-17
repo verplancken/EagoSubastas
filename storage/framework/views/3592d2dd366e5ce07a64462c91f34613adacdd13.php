@@ -13,9 +13,9 @@ $auctin_url = URL_HOME_AUCTIONS;
 
 $enter_amount = 'Ingresar cantidad ';
 if (isset($last_bid) && !empty($last_bid->bid_amount))
-  $enter_amount .= '> '.$last_bid->bid_amount;
+  $enter_amount .= '> '.number_format($last_bid->bid_amount);
 elseif ($auction->minimum_bid>0)
-  $enter_amount .= '> '.$auction->minimum_bid;
+  $enter_amount .= '> '.number_format($auction->minimum_bid);
 
 
 $total_bids = $auction->getAuctionBiddersCount();
@@ -211,10 +211,12 @@ use App\SubCatogory;
                       <span class="badge">
                         <?php if($total_bids>1): ?>
         
-                             <?php echo e($total_bids); ?>ofertas
+                             ofertas - <?php echo e($total_bids); ?>
+
                         <?php elseif($total_bids==1): ?>
         
-                            <?php echo e($total_bids); ?> oferta
+                              oferta - <?php echo e($total_bids); ?>
+
                         <?php else: ?>
                             0 <?php echo e(getPhrase('bids')); ?>
 
@@ -258,8 +260,10 @@ use App\SubCatogory;
                                           <div class="form-group">
                                             <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
                                             <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
-                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>Pujar</button>
-                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>Regresar a Subastas</button>
+                                              <div class="col-12">
+                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>  Pujar</button>
+                                                <a class="btn btn-danger"  href="<?php echo e(URL_HOME_AUCTIONS); ?>"> <i class="fa fa-arrow-left" aria-hidden="true"></i>  Volver a Subastas</a>
+                                              </div>
                                           </div>
                                           <?php echo Form::close(); ?>
 
@@ -273,7 +277,7 @@ use App\SubCatogory;
 <?php else: ?>
 
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
 
@@ -302,8 +306,10 @@ use App\SubCatogory;
                                   <div class="form-group">
                                     <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
                                     <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
-                                        <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>Pujar</button>
-                                        <button class="btn btn-success" href="<?php echo e(URL_HOME_AUCTIONS); ?>">Regresar a Subastas</button>
+                                      <div class="col-12">
+                                        <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>  Pujar</button>
+                                        <a class="btn btn-danger" href="<?php echo e(URL_HOME_AUCTIONS); ?>"> <i class="fa fa-arrow-left" aria-hidden="true"></i>  Volver a Subastas</a>
+                                      </div>
                                   </div>
                                   <?php echo Form::close(); ?>
 
@@ -790,7 +796,8 @@ use App\SubCatogory;
                                       <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                       <li class="list-group-item justify-content-between">
                                         <span><?php echo e($bid->username); ?></span>
-                                        <span style="float:right;"><?php echo e($currency_code); ?><?php echo e($bid->bid_amount); ?></span>
+
+                                        <span style="float:right;">$<?php echo number_format($bid->bid_amount); ?> MXN</span>
                                       </li>
                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                   </ul>

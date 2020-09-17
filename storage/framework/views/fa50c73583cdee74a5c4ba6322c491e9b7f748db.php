@@ -11,15 +11,12 @@
         <div class="panel-heading">
             <?php echo e(getPhrase('list')); ?>
 
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_create')): ?>
+        
+                     <a href="<?php echo e(URL_CATEGORIES_ADD); ?>" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+                     <a href="<?php echo e(URL_SUB_CATEGORIES); ?>" class="btn btn-info btn-add pull-right"> <i class="fa fa-cubes" aria-hidden="true"></i> Lotes</a>
 
-
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_create')): ?>
-
-             <a href="<?php echo e(URL_CATEGORIES_ADD); ?>" class="btn btn-success btn-add pull-right">Agregar</a>
-             <a href="<?php echo e(URL_SUB_CATEGORIES); ?>" class="btn btn-info btn-add pull-right">Lotes</a>
-
-            <?php endif; ?>
-
+                    <?php endif; ?>
         </div>
 
         <div class="panel-body table-responsive">
@@ -68,6 +65,7 @@
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_delete')): ?>
 
                                         <a class="btn btn-xs btn-danger" href="javascript:void(0)" onclick="deleteRecord('<?php echo e($category->id); ?>')"> Eliminar</a>
+
                                     <?php endif; ?>
                                 </td>
                                 

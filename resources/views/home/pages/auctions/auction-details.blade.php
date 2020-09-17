@@ -15,9 +15,9 @@ $auctin_url = URL_HOME_AUCTIONS;
 
 $enter_amount = 'Ingresar cantidad ';
 if (isset($last_bid) && !empty($last_bid->bid_amount))
-  $enter_amount .= '> '.$last_bid->bid_amount;
+  $enter_amount .= '> '.number_format($last_bid->bid_amount);
 elseif ($auction->minimum_bid>0)
-  $enter_amount .= '> '.$auction->minimum_bid;
+  $enter_amount .= '> '.number_format($auction->minimum_bid);
 
 
 $total_bids = $auction->getAuctionBiddersCount();
@@ -211,10 +211,10 @@ use App\SubCatogory;
                       <span class="badge">
                         @if ($total_bids>1)
         {{--{{$total_bids}} {{getPhrase('bids')}}--}}
-                             {{$total_bids}}ofertas
+                             ofertas - {{$total_bids}}
                         @elseif ($total_bids==1)
         {{--{{$total_bids}} {{getPhrase('bid')}}--}}
-                            {{$total_bids}} oferta
+                              oferta - {{$total_bids}}
                         @else
                             0 {{getPhrase('bids')}}
                         @endif
@@ -255,8 +255,10 @@ use App\SubCatogory;
                                           <div class="form-group">
                                             <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
                                             <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
-                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>Pujar</button>
-                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>Regresar a Subastas</button>
+                                              <div class="col-12">
+                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>  Pujar</button>
+                                                <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>  Volver a Subastas</a>
+                                              </div>
                                           </div>
                                           {!! Form::close() !!}
                       @else
@@ -269,7 +271,7 @@ use App\SubCatogory;
 @else
 
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
 
             {{-- Traer el id de la subasta en que se esta --}}
@@ -296,8 +298,10 @@ use App\SubCatogory;
                                   <div class="form-group">
                                     <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
                                     <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
-                                        <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>Pujar</button>
-                                        <button class="btn btn-success" href="{{URL_HOME_AUCTIONS}}">Regresar a Subastas</button>
+                                      <div class="col-12">
+                                        <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>  Pujar</button>
+                                        <a class="btn btn-danger" href="{{URL_HOME_AUCTIONS}}"> <i class="fa fa-arrow-left" aria-hidden="true"></i>  Volver a Subastas</a>
+                                      </div>
                                   </div>
                                   {!! Form::close() !!}
   @else
@@ -786,7 +790,8 @@ use App\SubCatogory;
                                       @foreach ($bidding_history as $bid)
                                       <li class="list-group-item justify-content-between">
                                         <span>{{$bid->username}}</span>
-                                        <span style="float:right;">{{$currency_code}}{{$bid->bid_amount}}</span>
+
+                                        <span style="float:right;">${!! number_format($bid->bid_amount) !!} MXN</span>
                                       </li>
                                       @endforeach
                                   </ul>
