@@ -71,17 +71,22 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
 
                <div class="row au-main-header">
                  <div class="col-lg-9 col-md-6 col-sm-12 au-body-header">
-                   <h5>Subastas</h5>
+                   <h5>AUCTIONS</h5>
                  </div>
-                 <div class="col-lg-3 col-md-6 col-sm-12 au-items-listt clearfix">
-                   <!--   <label>Show</label>
+                 <!--<div class="col-lg-3 col-md-6 col-sm-12 au-items-listt clearfix">
+                      <label>Show</label>
                        <select class="form-control form-control-sm au-form-dropdown">
                         <option>10</option>
                         <option>50</option>
                         <option>100</option>
                        </select>
-                       <label>Entries</label> -->
-                 </div>
+                       <label>Entries</label>
+                 </div>-->
+                   <div class="col-lg-3 col-md-6 col-sm-6 au-items-listt clearfix">
+                       <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Instrucciones">
+                           <i class="fa fa-question" aria-hidden="true"></i> 
+                       </button>
+                   </div>
                </div>
 
 
@@ -103,6 +108,25 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
       </div>
     </section>
     <!--CATEGORY BODY SECTION-->
+    <div class="modal" id="Instrucciones" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Instrucciones de ususario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="d-block w-100" src="<?php echo e(asset('public/images/imagenaucction.png')); ?>">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php $__env->stopSection(); ?>
 

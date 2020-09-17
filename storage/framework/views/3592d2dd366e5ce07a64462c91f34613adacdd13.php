@@ -155,6 +155,10 @@ use App\SubCatogory;
 
             <div class="col-lg-6">
 
+                       <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
+                           <i class="fa fa-question" aria-hidden="true"></i>
+                       </button>
+
                 <p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p>
                 <p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p>
                 <h4><?php echo e($auction->title); ?></h4>
@@ -847,6 +851,26 @@ use App\SubCatogory;
       <?php endif; ?>
       <?php endif; ?>
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+ <div class="modal" id="Instrucciones2" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Como subastar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="d-block w-100" src="<?php echo e(asset('public/images/imagenaucctio2n.png')); ?>">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
     <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer_scripts'); ?>

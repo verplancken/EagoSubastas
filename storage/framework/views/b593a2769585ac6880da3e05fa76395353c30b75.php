@@ -27,6 +27,9 @@ $user = Auth::user();
                     <p class="mt-0"><?php echo e($user->email); ?></p>
                    <!-- <p>User Login: 28/02/2018 16:50:55</p> -->
                   </div>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Instrucciones3">
+                           <i class="fa fa-question" aria-hidden="true"></i>
+                    </button>
                  </div>
 
 
@@ -188,7 +191,42 @@ $user = Auth::user();
                 </ul>
             </div>
 
-
+<div class="modal" id="Instrucciones3" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Manual de ususario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" src="<?php echo e(asset('public/images/dashboard.png')); ?>">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="<?php echo e(asset('public/images/dashboard2.png')); ?>">
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
