@@ -100,14 +100,14 @@ $user = Auth::user();
                        @include('bidder.common.notifications')
                        @endif
 
+                        <li><a href="{{URL_DASHBOARD}}" title="Dashboard" class="nav-link nav-press scroll"> Inicio </a></li>
+
 
                        @if (Auth::check())
 
                        <li><a  class="nav-link nav-press scroll"> Hola: {{$user->email}}</a></li>
 
                        @endif
-
-                        <li><a href="{{URL_DASHBOARD}}" title="Dashboard" class="nav-link nav-press scroll"> Inicio </a></li>
 
                        @if (!Auth::check())
                        <li><a href="javascript:void(0);" onclick="showModal('loginModal')" title="Login" class="nav-link nav-press scroll" >{{getPhrase('login')}}</a></li>

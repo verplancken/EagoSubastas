@@ -60,9 +60,10 @@ $user = Auth::user();
 
         @else
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <h4 class="text-center"> {{getPhrase('no_auctions_available')}} </h4>
+          <h4 class="text-center"> No hay subastas disponibles </h4>
         </div>
         @endif
+        @break
     @endif
   @endforeach
 </div>

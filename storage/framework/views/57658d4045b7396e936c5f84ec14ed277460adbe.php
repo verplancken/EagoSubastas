@@ -27,14 +27,6 @@
 <script src="<?php echo e(JS_HOME); ?>dashboard.js"></script>
 
 <script src="<?php echo e(JS); ?>sweetalert-dev.js"></script>
-<script src="<?php echo e(JS); ?>tinymce.min"></script>
-
-   <script>
-      tinymce.init({
-        selector: '#editor'
-      });
-    </script>
-
 
 <script src="<?php echo e(JS_HOME); ?>datatables.min.js"></script>
 

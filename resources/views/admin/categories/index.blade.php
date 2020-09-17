@@ -15,6 +15,7 @@
             @can('category_create')
 {{--                <a href="{{ URL_CATEGORIES_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
              <a href="{{ URL_CATEGORIES_ADD }}" class="btn btn-success btn-add pull-right">Agregar</a>
+             <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right">Lotes</a>
 
             @endcan
 

@@ -16,6 +16,7 @@
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_create')): ?>
 
              <a href="<?php echo e(URL_CATEGORIES_ADD); ?>" class="btn btn-success btn-add pull-right">Agregar</a>
+             <a href="<?php echo e(URL_SUB_CATEGORIES); ?>" class="btn btn-info btn-add pull-right">Lotes</a>
 
             <?php endif; ?>
 

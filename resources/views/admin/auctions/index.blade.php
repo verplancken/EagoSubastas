@@ -22,6 +22,8 @@ $date_format = getSetting('date_format','site_settings');
 
 {{--             <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
             <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right">Agregar</a>
+            <a href="{{ URL_CATEGORIES }}" class="btn btn-primary btn-add pull-right">Empresas</a>
+            <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right">Lotes</a>
 
         </div>
 

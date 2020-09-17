@@ -990,7 +990,7 @@ class AuctionController extends Controller
     {
       $timezone = env('SYSTEM_TIMEZONE');
       if (!$timezone)
-        $timezone = 'Asia/Kolkata';
+        $timezone = 'America/Mexico_City';
 
         date_default_timezone_set($timezone);
 
@@ -1028,7 +1028,7 @@ class AuctionController extends Controller
 
           $bid_div = false;
           //if already some one bought or some one paid auction amount-don't allow live auction
-          flash('info','Some one has already won/bought this auction..','info');
+          flash('info','Alguien ya ha ganado/compró esta subasta..','info');
           return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
 
         }
@@ -1165,7 +1165,7 @@ class AuctionController extends Controller
               }
         }
         if (!$live_auction) {
-          flash('info','Bidding time is not valid..can not place bid now', 'info');
+          flash('info','El tiempo de oferta no es válido... no se puede realizar una oferta ahora', 'info');
           return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
         }
 
@@ -1234,7 +1234,7 @@ class AuctionController extends Controller
         if (checkRole(getUserGrade(4))) {
 
             $response['status'] = 0;
-            $response['message'] = getPhrase('user_have_no_rights_to_add_favourites');
+            $response['message'] = getPhrase('el usuario no tiene derechos para agregar favoritos');
 
             return json_encode($response);
         }
@@ -1262,7 +1262,7 @@ class AuctionController extends Controller
         if ($existed) {
 
             $response['status'] = 0;
-            $response['message'] = getPhrase('auction_already_added_to_favourites');
+            $response['message'] = getPhrase('subasta ya agregada a favoritos');
 
         } else {
        
@@ -1273,7 +1273,7 @@ class AuctionController extends Controller
             $record->save();
 
             $response['status'] = 1;
-            $response['message'] = getPhrase('auction_added_to_favourites');
+            $response['message'] = getPhrase('subasta agregada a favoritos');
         }
 
         return json_encode($response);
@@ -1513,7 +1513,7 @@ class AuctionController extends Controller
     public function isValidRecord($record)
     {
        if ($record === null) {
-          flash('Ooops...!', getPhrase("page_not_found"), 'error');
+          flash('Ooops...!', getPhrase("página no encontrada"), 'error');
           return $this->getRedirectUrl();
        }
 
@@ -1670,7 +1670,7 @@ class AuctionController extends Controller
                                    if (!$live_auction) {
                                     //reached /> reserve price,display winner auction time is over
                                     $currency_code = getSetting('currency_code','site_settings');
-                                    $msg = $auction_last_bid->name.' has Won the Auction with the Highest Bid '.$currency_code.$auction_last_bid->bid_amount;
+                                    $msg = $auction_last_bid->name.' ha ganado la subasta con la oferta más alta '.$currency_code.$auction_last_bid->bid_amount;
                                      return json_encode(array('status'=>555,'msg'=>$msg));
                                     }
 
@@ -1783,6 +1783,22 @@ class AuctionController extends Controller
                         }
                         /**LIVE AUCTION**/
 
+                           $auctionbidder = AuctionBidder::where('auction_id',$auction_id)
+                                                            ->where('sub',$sub)
+                                                            ->where('bidder_id',$currentUser->id)
+                                                            ->select(['id','no_of_times'])
+                                                            ->first();
+
+                            if(count($auctionbidder)){
+                                if($auctionbidder->no_of_times < $auction->tiros){
+
+                                    $save=TRUE;
+                                    //dd($save);
+                                } else {
+                                     return json_encode(array('status'=>112));
+
+                                }
+                            }
 
 
                         
@@ -1821,7 +1837,7 @@ class AuctionController extends Controller
 
 
                             //placeholder
-                            $enter_amount = 'Enter amount ';
+                            $enter_amount = 'Ingrese monto';
                             if ($auction->is_bid_increment && $auction->bid_increment>0) {
                               //if increment = add incremental cost +current one=show to user
                               
@@ -1971,7 +1987,7 @@ class AuctionController extends Controller
 
         $data['active_class']   = 'live_auctions';
         $data['layout']         = getLayout();
-        $data['title']          = getPhrase('live_auctions');
+        $data['title']          = getPhrase('subastas en vivo');
 
         $invitacion = DB::table('invitaciones')
         ->get();

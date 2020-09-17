@@ -60,10 +60,12 @@ $user = Auth::user();
 
         <?php else: ?>
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <h4 class="text-center"> <?php echo e(getPhrase('no_auctions_available')); ?> </h4>
+          <h4 class="text-center"> <?php echo e(getPhrase('no hay subastas disponibles')); ?> </h4>
         </div>
         <?php endif; ?>
+          <?php break; ?>
     <?php endif; ?>
+
   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
 

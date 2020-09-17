@@ -82,9 +82,9 @@ use App\SubCatogory;
 
                         </ul>
                     </div> -->
-                    
+
                     <div class="sm-product-show">
-                      
+
                         <div class="sm-product-slider-img">
                             <img src="<?php echo e(getAuctionImage($auction->image)); ?>" id="sm-product-zoom" class="img-responsive" data-zoom-image="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="">
                             <i class="sm-zoom-icn fa fa-expand"></i>
@@ -158,7 +158,7 @@ use App\SubCatogory;
                 <p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p>
                 <p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p>
                 <h4><?php echo e($auction->title); ?></h4>
-                
+
 
                 <?php if(!$live_auction): ?> <!--normal auction happening-->
                   <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
@@ -235,7 +235,7 @@ use App\SubCatogory;
               <div class="col-lg-6">
                 <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
-        
+
                     
                   <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php if($auctionbidders2[0]->bidder_count < $lotes->articulos): ?>
@@ -254,7 +254,7 @@ use App\SubCatogory;
 
                                             <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
                                           </div>
-                    
+
                                           <div class="form-group">
                                             <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
                                             <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
@@ -283,22 +283,22 @@ use App\SubCatogory;
                         <?php if($auctionbidders2[0]->bidder_count < $lotes->articulos): ?>
                                   <div class="form-group">
                                     <?php echo e(Form::number('bid_amount', null, $attributes =
-                                
+
                                         array('class' => 'form-control',
-                                
+
                                         'placeholder' => $enter_amount,
-                                
+
                                         'ng-model' => 'bid_amount',
-                                
+
                                         'required' => 'true',
-                                
+
                                         'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}',
-                                
+
                                         ))); ?>
 
                                     <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
                                   </div>
-            
+
                                   <div class="form-group">
                                     <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
                                     <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
@@ -779,41 +779,31 @@ use App\SubCatogory;
                             <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
                                 <div class=" au-policy">
 
-
+                                <?php if(isset($bidding_history) && count($bidding_history)): ?>
+                                    <?php if($auction->visibilidad==1): ?>
                                   <ul class="list-group z-depth-0">
 
                                       <li class="list-group-item justify-content-between">
-
-                                          <span><b>Usuario</b></span>
-
-                                           <span style="float:right;"><b>Monto de la ofertas</b></span>
+                                          <span><b><?php echo e(getPhrase('username')); ?></b></span>
+                                          <span style="float:right;"><b><?php echo e(getPhrase('bid_amount')); ?></b></span>
                                       </li>
                                       <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                       <li class="list-group-item justify-content-between">
-
-
-                                        <?php if($auction->visibilidad==1): ?>
-
-
-                                            <span><?php echo e($bid->username); ?></span>
+                                        <span><?php echo e($bid->username); ?></span>
+                                        <span style="float:right;"><?php echo e($currency_code); ?><?php echo e($bid->bid_amount); ?></span>
+                                      </li>
+                                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                  </ul>
                                         <?php else: ?>
 
 
                                             <span>Usuario</span>
                                         <?php endif; ?>
+                                  <?php endif; ?>
 
-                                        <span style="float:right;"><?php echo e($currency_code); ?>
 
-                                             <?php echo number_format($auction->reserve_price); ?>
 
-                                        </span>
-                                      </li>
-                                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                  </ul>
-                                        <li ng-repeat="bid in bid_history" class="list-group-item justify-content-between">
-                                            <span><?php echo e($currency); ?>{{bid.bid_amount}}</span>
-                                            <span style="float:right;">{{bid.created_at}} </span>
-                                        </li>
+
 
                                 </div>
                               </div>
@@ -846,7 +836,7 @@ use App\SubCatogory;
 
     <?php else: ?>
     <div class="col-lg-12 col-md-12 col-sm-12">
-     
+
     </div>
       <?php endif; ?>
       <?php endif; ?>

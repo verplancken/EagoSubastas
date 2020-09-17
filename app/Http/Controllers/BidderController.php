@@ -84,7 +84,7 @@ class BidderController extends Controller
 
 
         if ($redirect = $this->check_isdemo()) {
-            flash('info','crud_operations_disabled_in_demo', 'info');
+            flash('info','operaciones de crud deshabilitadas en la demostración', 'info');
             return redirect($redirect);
         }
 
@@ -97,8 +97,8 @@ class BidderController extends Controller
         $record->billing_address    = $request->billing_address;
 
         $record->save();
-       
-        flash('success','record_updated_successfully', 'success');
+
+        flash('success','registro actualizado con éxito', 'success');
         return redirect(URL_USER_BILLING_ADDRESS);
 
     }
@@ -121,7 +121,7 @@ class BidderController extends Controller
 
         $user = \Auth::user();
         $data['countries']  = Country::getCountryOptions();
-        
+
         $data['title']         = getPhrase('shipping_address');
         $data['active_class']  = 'user_management';
 
@@ -163,10 +163,10 @@ class BidderController extends Controller
         $this->validate($request, $validation);
 
          if ($redirect = $this->check_isdemo()) {
-            flash('info','crud_operations_disabled_in_demo', 'info');
+            flash('info','operaciones de crud deshabilitadas en la demostración', 'info');
             return redirect($redirect);
         }
-        
+
 
         $record->shipping_name    = $request->shipping_name;
         $record->shipping_phone   = $request->shipping_phone;
@@ -177,8 +177,8 @@ class BidderController extends Controller
         $record->shipping_address = $request->shipping_address;
 
         $record->save();
-       
-        flash('success','record_updated_successfully', 'success');
+
+        flash('success','registro actualizado con éxito', 'success');
         return redirect(URL_USER_SHIPPING_ADDRESS);
 
     }
@@ -198,7 +198,7 @@ class BidderController extends Controller
         $user = \Auth::user();
 
         $auctions = $user->getBidderFavAuctions();
-       
+
         $data['title']              = getPhrase('favourite_auctions');
         $data['active_class']       = 'auctions';
 
@@ -214,23 +214,23 @@ class BidderController extends Controller
     {
 
         if ($redirect = $this->check_isdemo()) {
-            flash('info','crud_operations_disabled_in_demo', 'info');
+            flash('info','operaciones de crud deshabilitadas en la demostración', 'info');
             return redirect($redirect);
         }
 
         $fav_id = $request->remove_fav_id;
-       
+
         if ($fav_id) {
             $fav_auction = Favouriteauction::findOrFail($fav_id);
             if ($fav_auction) {
 
                  $fav_auction->delete();
-                 flash('success','record_removed_from_favourites', 'success'); 
+                 flash('success','registro eliminado de favoritos', 'success');
             } else {
-                flash('error','record_not_found', 'error'); 
+                flash('error','Registro no encontrado', 'error');
             }
         } else {
-            flash('error','invalid_operation', 'error'); 
+            flash('error','operación inválida', 'error');
         }
         return redirect(URL_USERS_FAV_AUCTIONS);
     }

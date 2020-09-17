@@ -164,7 +164,7 @@ class AuctionsController extends Controller
 
 
         if ($redirect = $this->check_isdemo()) {
-            flash('info','crud_operations_disabled_in_demo', 'info');
+            flash('info','operaciones de crud deshabilitadas en la demostración', 'info');
             return redirect($redirect);
         }
 
@@ -220,7 +220,7 @@ class AuctionsController extends Controller
 
         $record->international_shipping = $request->international_shipping;
 
-        $record->visibilidad = $request->visibilidad;
+         $record->visibilidad = $request->visibilidad;
 
         $record->shipping_terms         = $request->shipping_terms;
 
@@ -411,7 +411,7 @@ class AuctionsController extends Controller
 
 
         if ($redirect = $this->check_isdemo()) {
-            flash('info','crud_operations_disabled_in_demo', 'info');
+            flash('info','operaciones de crud deshabilitadas en la demostración', 'info');
             return redirect($redirect);
         }
 
@@ -468,7 +468,6 @@ class AuctionsController extends Controller
 
         $record->shipping_terms         = $request->shipping_terms;
 
-
         $record->make_featured          = $request->make_featured;
 
 
@@ -511,7 +510,7 @@ class AuctionsController extends Controller
 
         $record->save();
 
-        $message = 'record_updated_successfully';
+        $message = 'registro actualizado con éxito';
 
         try {
             if (!env('DEMO_MODE')) {
@@ -562,7 +561,7 @@ class AuctionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // function ganador(Request $request){
+        // function ganador(Request $request){
 
     // }
     //     $ab_id = $request->ab_id;
@@ -952,7 +951,7 @@ class AuctionsController extends Controller
       //send email,db notification to admin
 
         if ($redirect = $this->check_isdemo()) {
-            flash('info','crud_operations_disabled_in_demo', 'info');
+            flash('info','operaciones de crud deshabilitadas en la demostración', 'info');
             return redirect($redirect);
         }
 
@@ -965,7 +964,7 @@ class AuctionsController extends Controller
 
           //check payment done
           if (count($auction_payment)) {
-             flash('error','payment_already_done_for_this_auction', 'error');
+             flash('error','pago ya realizado para esta subasta', 'error');
              return redirect(URL_AUCTIONS_VIEW.$auction->slug);
           }
 
@@ -984,7 +983,7 @@ class AuctionsController extends Controller
               //check invoice sent to this bidder
               if ($auctionbidder->is_admin_sent_email=='Yes') {
 
-                 flash('error','invoice_already_sent_to_this_bidder', 'error');
+                 flash('error','factura ya enviada a este postor', 'error');
                  return redirect(URL_AUCTIONS_VIEW.$auction->slug);
               }
 
@@ -1066,20 +1065,20 @@ class AuctionsController extends Controller
                 $record->save();
 
 
-                flash('success','invoice_sent_to_bidder_successfully', 'success');
+                flash('success','factura enviada al postor con éxito', 'success');
                 return redirect(URL_AUCTIONS_VIEW.$auction->slug);
 
 
               } else {
-                  flash('error','bidder_highest_bid_not_found', 'error');
+                  flash('error','postor oferta más alta no encontrada', 'error');
                   return redirect(URL_AUCTIONS_VIEW.$auction->slug);
               }
           } else {
-             flash('error','auction_bidder_not_found', 'error');
+             flash('error','postor de subasta no encontrado', 'error');
              return redirect(URL_AUCTIONS_VIEW.$auction->slug);
           }
       } else {
-        flash('error','auction_not_found', 'error');
+        flash('error','subasta no encontrada', 'error');
         return redirect(URL_LIST_AUCTIONS);
       }
 

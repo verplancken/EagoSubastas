@@ -85,7 +85,9 @@ use App\Auction;
 use App\SubCatogory;
 
 ?>
-
+<?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php if($user->email == $item->email): ?>
+    <?php if($auction->sub_category_id == $item->auction_id): ?>
 <div class="row">
 
 	<div class="col-md-12">
@@ -98,20 +100,7 @@ use App\SubCatogory;
 			<p>Termina <?php echo e($live_auction_date); ?> <?php echo e($auction->live_auction_end_time); ?></p>
 			<p id="demo"></p> 
 		</div>
-  
-<?php if(AuctionBidder::where('auction_id', '=', $auction->id)->exists()): ?>
-        
-		<?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-		  <?php if($auction->id == $item->auction_id): ?>
-			<?php if(AuctionBidder::where('bidder_id', '=', $user->id)->exists()): ?> 
-			  <?php if($user->id == $item->bidder_id): ?>
-		
-				<?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				  <?php if($auction->sub_category_id == $lotes->id): ?>
-					<?php if($auctionbidders2[0]->bidder_count < $lotes->articulos): ?>
-		
-				
-						<?php if($item->no_of_times < $auction->tiros): ?>
+
 						<div class="form-group bid-form-group">
 							<input type="number" class="form-control form-control-sm" id="bid_amount" placeholder="<?php echo e($enter_amount); ?>">
 						
@@ -123,66 +112,7 @@ use App\SubCatogory;
 							<div class="form-group" align="right">
 								<button type="submit" id="au_submit" class="btn btn-success bid-submit-btn" style="padding:3px 16px;">pujar</button>
 							</div>
-		
-						  <?php else: ?>
-		
-							  <p>Lo sentimos, ya no tiene tiros</p>
-							  
-						<?php endif; ?>
-		
-						<?php else: ?>
-						<p>Lo sentimos, ya no puede seguir subastando</p>
-		
-					  <?php endif; ?>                     
-					<?php endif; ?>
-				  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-		
-				<?php break; ?>
-			  <?php endif; ?>
-		
-			  <?php else: ?>
-		
-			<div class="form-group bid-form-group">
-				<input type="number" class="form-control form-control-sm" id="bid_amount" placeholder="<?php echo e($enter_amount); ?>">
-			
-				<?php if($bid_options): ?>
-				  <small>+<?php echo e($auction->bid_increment); ?></small>
-				<?php endif; ?>
-			</div>
-			
-				<div class="form-group" align="right">
-					<button type="submit" id="au_submit" class="btn btn-success bid-submit-btn" style="padding:3px 16px;">pujar</button>
-				</div>
-			<?php endif; ?>
-		  <?php endif; ?>
-		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-		
-	<?php else: ?>
-		<?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-		  <?php if($auction->sub_category_id == $lotes->id): ?>
-			<?php if($auctionbidders2[0]->bidder_count < $lotes->articulos): ?>
-			<div class="form-group bid-form-group">
-				<input type="number" class="form-control form-control-sm" id="bid_amount" placeholder="<?php echo e($enter_amount); ?>">
-			
-				<?php if($bid_options): ?>
-				  <small>+<?php echo e($auction->bid_increment); ?></small>
-				<?php endif; ?>
-			</div>
-			
-				<div class="form-group" align="right">
-					<button type="submit" id="au_submit" class="btn btn-success bid-submit-btn" style="padding:3px 16px;">pujar</button>
-				</div>
-			
-			
-			
-			<?php else: ?>
-			
-			<p>Lo sentimos, ya no puede seguir subastando</p>
-		
-				<?php endif; ?>                     
-			<?php endif; ?>
-		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-<?php endif; ?>
+
 		  
 	  	<div class="bid-loader" style="display:none;" id="bid_loader"><img src="<?php echo e(AJAXLOADER); ?>"> <?php echo e(trans('please_wait')); ?>...</div>
 
@@ -222,6 +152,9 @@ use App\SubCatogory;
 </div>
 
 </div>
+  <?php endif; ?>
+ <?php endif; ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 
@@ -339,11 +272,11 @@ alertify.set('notifier','position', 'top-right');
 
 			        if (bid_status==999) {
 			        	// alert("Please Login to continue..or User is not authorized");
-			        	alertify.error("Please Login to continue..or User is not authorized");
+			        	alertify.error("Inicie sesión para continuar ... o el usuario no está autorizado");
 	  					return;
 		        	} else if (bid_status==99) {
 		        		// alert("Bid amount is not valid");
-		        		alertify.error("Bid amount is not valid");
+		        		alertify.error("El monto de la oferta no es válido");
 	  					return;
 		        	} else if (bid_status==555) {
 		        		// won auction, time is over, reached/> reserve price
@@ -352,19 +285,23 @@ alertify.set('notifier','position', 'top-right');
 	  					return;
 	  				} else if (bid_status==9999) {
 		        		// alert("Bidding time is not valid..can not pujar now");
-		        		alertify.error("Bidding time is not valid..can not place bid now");
+		        		alertify.error("El tiempo de oferta no es válido ... no se puede realizar una oferta ahora");
 	  					return;
 		        	} else if (bid_status==0) {
 		        		// alert("Auction record not found");
-		        		alertify.error("Auction record not found");
+		        		alertify.error("No se encontró el registro de subasta");
 	  					return;
 		        	} else if (bid_status==11) {
 		        		// alert("Bidding time is not valid..can not place bid now");
-		        		alertify.error("Bidding time is not valid..can not place bid now");
+		        		alertify.error("El tiempo de oferta no es válido ... no se puede realizar una oferta ahora");
+	  					return;
+					} else if (bid_status==112) {
+		        		// alert("Bidding time is not valid..can not place bid now");
+		        		alertify.error("Lo sentimos, no tiene mas tiros");
 	  					return;
 		        	} else if (bid_status==1111) {
 		        		// alert("Someone has already won/bought auction..can not place bid now");
-		        		alertify.error("Someone has already won/bought auction..can not place bid now");
+		        		alertify.error("Alguien ya ganó / compró la subasta ... no puede hacer una oferta ahora");
 	  					return;
 		        	} else if (bid_status==111) {
 

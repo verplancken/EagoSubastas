@@ -775,39 +775,31 @@ use App\SubCatogory;
                             <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
                                 <div class=" au-policy">
 
-
+                                @if (isset($bidding_history) && count($bidding_history))
+                                    @if ($auction->visibilidad==1)
                                   <ul class="list-group z-depth-0">
 
                                       <li class="list-group-item justify-content-between">
-{{--                                          <span><b>{{getPhrase('username')}}</b></span>--}}
-                                          <span><b>Usuario</b></span>
-{{--                                          <span style="float:right;"><b>{{getPhrase('bid_amount')}}</b></span>--}}
-                                           <span style="float:right;"><b>Monto de la ofertas</b></span>
+                                          <span><b>{{getPhrase('username')}}</b></span>
+                                          <span style="float:right;"><b>{{getPhrase('bid_amount')}}</b></span>
                                       </li>
                                       @foreach ($bidding_history as $bid)
                                       <li class="list-group-item justify-content-between">
-
-
-                                        @if ($auction->visibilidad==1)
-{{--                                            {{getPhrase('yes')}}--}}
-{{--                                            Abierta--}}
-                                            <span>{{$bid->username}}</span>
+                                        <span>{{$bid->username}}</span>
+                                        <span style="float:right;">{{$currency_code}}{{$bid->bid_amount}}</span>
+                                      </li>
+                                      @endforeach
+                                  </ul>
                                         @else
 {{--                                            {{getPhrase('no')}}--}}
 {{--                                            Cerrada--}}
                                             <span>Usuario</span>
                                         @endif
+                                  @endif
 
-                                        <span style="float:right;">{{$currency_code}}
-                                             {!! number_format($auction->reserve_price) !!}
-                                        </span>
-                                      </li>
-                                      @endforeach
-                                  </ul>
-                                        <li ng-repeat="bid in bid_history" class="list-group-item justify-content-between">
-                                            <span>{{$currency}}@{{bid.bid_amount}}</span>
-                                            <span style="float:right;">@{{bid.created_at}} </span>
-                                        </li>
+
+
+
 
                                 </div>
                               </div>

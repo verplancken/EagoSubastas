@@ -20,6 +20,7 @@
                 <a href="{{URL_SUB_CATEGORIES_ADD}}" class="btn btn-success btn-add pull-right">
                     Agregar
                 </a>
+                <a href="{{ URL_LIST_AUCTIONS }}" class="btn btn-info btn-add pull-right">Subastas</a>
             @endcan
 
         </div>
