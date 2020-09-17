@@ -58,7 +58,7 @@ $user = Auth::user();
 
                         <li><a href="<?php echo e(URL_HOME_AUCTIONS); ?>"> <?php echo e(getPhrase('auctions')); ?> </a></li>
 
-                        <li><a href="<?php echo e(URL_LIVE_AUCTIONS); ?>"> <?php echo e(getPhrase('live_auctions')); ?> </a></li>
+                      <!--   <li><a href="<?php echo e(URL_LIVE_AUCTIONS); ?>"> <?php echo e(getPhrase('live_auctions')); ?> </a></li>-->
 
                         <!--<?php if($categories): ?>-->
                         <!--<?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>-->

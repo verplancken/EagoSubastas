@@ -167,7 +167,7 @@ use App\SubCatogory;
 
 
                 <?php if($live_auction_starts): ?>
-                  <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i><?php echo e($auction->live_auction_start_time); ?>, Be ready to participate</p>
+                  <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i><?php echo e($auction->live_auction_start_time); ?>, Prepárate para participar</p>
                 <?php endif; ?>
 
 
@@ -199,16 +199,14 @@ use App\SubCatogory;
                  <!--product with border content-->
                  <?php if($bid_div): ?>
 <div class="product-border">
-                    <p class="text-blue"><b><i class="pe-7s-timer"> </i>
-                        <?php echo e(strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))); ?></b></p>
+                   <!-- <p class="text-blue"><b><i class="pe-7s-timer"> </i>
+                        <?php echo e(strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))); ?></b></p>-->
 
-                    <h4>
-                      <?php echo e($currency_code); ?>
-
-                        <?php echo number_format($auction->reserve_price); ?>
+                    <h4 >
+                        <strong data-toggle="tooltip" title="Precio de reserva" data-placement="top" >$<?php echo number_format($auction->reserve_price); ?> MXN</strong>
 
 
-                      <span class="badge">
+                      <span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >
                         <?php if($total_bids>1): ?>
         
                              ofertas - <?php echo e($total_bids); ?>
@@ -223,7 +221,7 @@ use App\SubCatogory;
                         <?php endif; ?>
                       </span>
                         <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <span class="badge">Tiros - <?php echo e($item->no_of_times); ?></span>
+                            <span class="badge" data-toggle="tooltip" title="No. de tiros que ha realizado" data-placement="top" >Tiros - <?php echo e($item->no_of_times); ?></span>
                             <?php break; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
@@ -261,8 +259,8 @@ use App\SubCatogory;
                                             <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
                                             <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
                                               <div class="col-12">
-                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>  Pujar</button>
-                                                <a class="btn btn-danger"  href="<?php echo e(URL_HOME_AUCTIONS); ?>"> <i class="fa fa-arrow-left" aria-hidden="true"></i>  Volver a Subastas</a>
+                                                <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid' data-toggle="tooltip" title="Subastar" data-placement="top" > <i class="fa fa-gavel"></i>  Pujar</button>
+                                                <a class="btn btn-danger"  href="<?php echo e(URL_HOME_AUCTIONS); ?>" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>Volver</a>
                                               </div>
                                           </div>
                                           <?php echo Form::close(); ?>
@@ -303,12 +301,13 @@ use App\SubCatogory;
                                     <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
                                   </div>
 
+
                                   <div class="form-group">
                                     <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
                                     <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
                                       <div class="col-12">
-                                        <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>  Pujar</button>
-                                        <a class="btn btn-danger" href="<?php echo e(URL_HOME_AUCTIONS); ?>"> <i class="fa fa-arrow-left" aria-hidden="true"></i>  Volver a Subastas</a>
+                                        <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>  Pujar</button>
+                                        <a class="btn btn-danger"  href="<?php echo e(URL_HOME_AUCTIONS); ?>" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>Volver</a>
                                       </div>
                                   </div>
                                   <?php echo Form::close(); ?>
@@ -378,7 +377,7 @@ use App\SubCatogory;
                 <div>
 
                   <?php if(Auth::user()): ?>
-                    <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)" title="Add to Wishlist" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
+                    <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)" title="añadir a la lista de deseos" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
 
                         añadir a la lista de deseos</a>
                   <?php else: ?>

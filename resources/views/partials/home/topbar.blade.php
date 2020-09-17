@@ -58,7 +58,7 @@ $user = Auth::user();
 
                         <li><a href="{{URL_HOME_AUCTIONS}}"> {{getPhrase('auctions')}} </a></li>
 
-                        <li><a href="{{URL_LIVE_AUCTIONS}}"> {{getPhrase('live_auctions')}} </a></li>
+                      <!--   <li><a href="{{URL_LIVE_AUCTIONS}}"> {{getPhrase('live_auctions')}} </a></li>-->
 
                         <!--@if ($categories)-->
                         <!--@foreach ($categories as $category)-->

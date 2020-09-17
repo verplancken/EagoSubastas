@@ -67,11 +67,11 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
             </div>-->
 
             <!--PRODUCTS SECTION-->
-             <div class="col-lg-12 col-md-12 col-sm-6 au-wrapper-main">
+             <div class="col-lg-12 col-md-12 col-sm-12 au-wrapper-main">
 
                <div class="row au-main-header">
                  <div class="col-lg-9 col-md-6 col-sm-12 au-body-header">
-                   <h5><?php echo e($auctions->total()); ?> AUCTIONS</h5>
+                   <h5>Subastas</h5>
                  </div>
                  <div class="col-lg-3 col-md-6 col-sm-12 au-items-listt clearfix">
                    <!--   <label>Show</label>

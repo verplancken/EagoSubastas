@@ -50,7 +50,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                 'id'=> 'lg_email',
 
-                                'placeholder' => getPhrase('username').'/'.getPhrase('email'),
+                                'placeholder' => 'Alias /'.getPhrase('email'),
 
                                 'ng-class'=>'{"has-error": loginForm.email.$touched && loginForm.email.$invalid}',
 
@@ -218,7 +218,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                     {{ Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Username',
+                                        'placeholder' => 'Alias',
 
                                         'ng-model'=>'username',
 

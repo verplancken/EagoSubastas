@@ -78,7 +78,7 @@
                                  
                                     {{ Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Username',
+                                        'placeholder' => 'Alias',
 
                                         'ng-model'=>'username',
 

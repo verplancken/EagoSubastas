@@ -17,7 +17,7 @@ $user = Auth::user();
      <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
     @endif
 
-    <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="View Auction Details"><img class="img-fluid auction-img" src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}"></a>
+    <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="View Auction Details"><img class="img-fluid " src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}"></a>
     <div class="card-block au-card-block">
       <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="View Auction Details"><h4 class="card-title au-title"> {!! str_limit($auction->title,40,'') !!} </h4></a>
 
