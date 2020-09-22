@@ -35,7 +35,7 @@ if ($loggedInUser) {
                         <div class="dropdown-menu-notif-item dropdown-list ">
 
                             <a href="{{$single_notification_url}}" class="note-menu">
-                                <h5>{{$title}}</h5>
+                                <p class="text-muted"><strong>{{$title}}</strong> </p>
 
                                 <p>{{$notification->updated_at->diffForHumans()}}</p>
                             </a>

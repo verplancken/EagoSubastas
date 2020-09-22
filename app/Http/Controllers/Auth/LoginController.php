@@ -111,11 +111,11 @@ class LoginController extends Controller
                 if ($this->checkIsUserAvailable($user)) {
 
                     Auth::login($this->dbuser, true);
-                    flash('Success...!', 'log_in_success', 'success');
-                    return redirect(PREFIX);    
+                    flash('Success...!', 'acceso exitoso', 'success');
+                    return redirect(PREFIX);
                 }
 
-                flash('Ooops...!', 'failed_to_login', 'error');
+                flash('Ooops...!', 'Error al iniciar sesión', 'error');
                 return redirect(PREFIX);
             }
 
@@ -292,7 +292,7 @@ class LoginController extends Controller
          */
             if($login_status)
             {
-                return redirect('home');
+                return redirect(URL_HOME_AUCTIONS);
             } 
         
     }

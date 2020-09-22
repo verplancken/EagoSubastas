@@ -19,6 +19,7 @@ use App\Bidding;
 
 use Input;
 use Image;
+use Illuminate\Support\Facades\Session;
 use App\ImageSettings;
 use File;
 use Response;
@@ -1049,9 +1050,8 @@ class AuctionsController extends Controller
 
                     flash('error',$message, 'error');
                     return redirect(URL_AUCTIONS_VIEW.$auction->slug);
+
                 }
-
-
 
                 //update auctionbidders table details
                 $record = AuctionBidder::where('id',$ab_id)->first();

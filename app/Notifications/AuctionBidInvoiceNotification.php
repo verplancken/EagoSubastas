@@ -122,8 +122,8 @@ class AuctionBidInvoiceNotification extends Notification
         if ($this->user_type=='bidder') {
 
             return [
-                'title'       => 'Auction Invoice sent by Admin',
-                'description' => 'Admin has sent an Invoice '.$this->details['auction_title'],
+                'title'       => 'Factura de subasta enviada por el administrador',
+                'description' => 'El administrador ha enviado una factura'.$this->details['auction_title'],
                 'url'         => URL_BIDDER_AUCTIONS,
                 'image'       => getAuctionImage($this->details['image'])
             ];
@@ -131,8 +131,8 @@ class AuctionBidInvoiceNotification extends Notification
         } elseif ($this->user_type=='admin') {
 
             return [
-                'title'       => 'Auction invoice to sent to bidder',
-                'description' => 'Invoice has been sent to bidder '.$this->details['auction_title'],
+                'title'       => 'Factura de subasta para enviar al postor',
+                'description' => 'La factura se ha enviado al postor'.$this->details['auction_title'],
                 'url'         => URL_AUCTIONS_VIEW.$this->details['auction_slug'],
                 'image'       => getAuctionImage($this->details['image'])
             ];

@@ -31,7 +31,6 @@ $active_class='';
 
 $user = Auth::user();
 use App\AuctionBidder;
-use App\Auction;
 use App\SubCatogory;
 
 ?>
@@ -272,6 +271,7 @@ use App\SubCatogory;
                       <?php else: ?>
                             <p>Lo sentimos, ya no puede subastar</p>
                         <?php endif; ?>
+                      <?php break; ?>
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
               </div>
@@ -434,7 +434,7 @@ use App\SubCatogory;
             </div>
 
           </div>
-
+ <?php echo $__env->make('home.pages.auctions.category-auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <!--AUCTION DETAILS SECTION-->
     <section class="au-premium-product">
         <div class="container">
@@ -789,27 +789,8 @@ use App\SubCatogory;
                                 <div class=" au-policy">
 
                                 <?php if(isset($bidding_history) && count($bidding_history)): ?>
-                                    <?php if($auction->visibilidad==1): ?>
-                                  <ul class="list-group z-depth-0">
-
-                                      <li class="list-group-item justify-content-between">
-                                          <span><b><?php echo e(getPhrase('username')); ?></b></span>
-                                          <span style="float:right;"><b><?php echo e(getPhrase('bid_amount')); ?></b></span>
-                                      </li>
-                                      <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                      <li class="list-group-item justify-content-between">
-                                        <span><?php echo e($bid->username); ?></span>
-
-                                        <span style="float:right;">$<?php echo number_format($bid->bid_amount); ?> MXN</span>
-                                      </li>
-                                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                  </ul>
-                                        <?php else: ?>
-
-
-                                            <span>Usuario</span>
-                                        <?php endif; ?>
-                                  <?php endif; ?>
+                                     <span>Usuario</span>
+                                <?php endif; ?>
 
 
 
@@ -871,6 +852,9 @@ use App\SubCatogory;
     </div>
   </div>
 </div>
+
+
+
     <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer_scripts'); ?>

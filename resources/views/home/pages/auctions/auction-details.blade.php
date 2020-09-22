@@ -33,7 +33,6 @@ $active_class='';
 
 $user = Auth::user();
 use App\AuctionBidder;
-use App\Auction;
 use App\SubCatogory;
 
 ?>
@@ -268,6 +267,7 @@ use App\SubCatogory;
                       @else
                             <p>Lo sentimos, ya no puede subastar</p>
                         @endif
+                      @break
                   @endforeach
 
               </div>
@@ -430,7 +430,7 @@ use App\SubCatogory;
             </div>
 
           </div>
-
+ @include('home.pages.auctions.category-auctions')
     <!--AUCTION DETAILS SECTION-->
     <section class="au-premium-product">
         <div class="container">
@@ -785,27 +785,8 @@ use App\SubCatogory;
                                 <div class=" au-policy">
 
                                 @if (isset($bidding_history) && count($bidding_history))
-                                    @if ($auction->visibilidad==1)
-                                  <ul class="list-group z-depth-0">
-
-                                      <li class="list-group-item justify-content-between">
-                                          <span><b>{{getPhrase('username')}}</b></span>
-                                          <span style="float:right;"><b>{{getPhrase('bid_amount')}}</b></span>
-                                      </li>
-                                      @foreach ($bidding_history as $bid)
-                                      <li class="list-group-item justify-content-between">
-                                        <span>{{$bid->username}}</span>
-
-                                        <span style="float:right;">${!! number_format($bid->bid_amount) !!} MXN</span>
-                                      </li>
-                                      @endforeach
-                                  </ul>
-                                        @else
-{{--                                            {{getPhrase('no')}}--}}
-{{--                                            Cerrada--}}
-                                            <span>Usuario</span>
-                                        @endif
-                                  @endif
+                                     <span>Usuario</span>
+                                @endif
 
 
 
@@ -867,6 +848,9 @@ use App\SubCatogory;
     </div>
   </div>
 </div>
+
+
+
     @endsection
 
 @section('footer_scripts')

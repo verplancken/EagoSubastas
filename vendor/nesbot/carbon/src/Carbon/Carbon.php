@@ -3893,7 +3893,7 @@ class Carbon extends DateTime implements JsonSerializable
 
         $parts = min(6, max(1, (int) $parts));
         $count = 1;
-        $unit = $short ? 's' : 'second';
+        $unit = $short ? 's' : 'segundo';
 
         if ($isNow) {
             $other = $this->nowWithSameTz();
@@ -3904,12 +3904,12 @@ class Carbon extends DateTime implements JsonSerializable
         $diffInterval = $this->diff($other);
 
         $diffIntervalArray = array(
-            array('value' => $diffInterval->y, 'unit' => 'year',    'unitShort' => 'y'),
-            array('value' => $diffInterval->m, 'unit' => 'month',   'unitShort' => 'm'),
-            array('value' => $diffInterval->d, 'unit' => 'day',     'unitShort' => 'd'),
-            array('value' => $diffInterval->h, 'unit' => 'hour',    'unitShort' => 'h'),
-            array('value' => $diffInterval->i, 'unit' => 'minute',  'unitShort' => 'min'),
-            array('value' => $diffInterval->s, 'unit' => 'second',  'unitShort' => 's'),
+            array('value' => $diffInterval->y, 'unit' => 'año',    'unitShort' => 'y'),
+            array('value' => $diffInterval->m, 'unit' => 'mes',   'unitShort' => 'm'),
+            array('value' => $diffInterval->d, 'unit' => 'dia',     'unitShort' => 'd'),
+            array('value' => $diffInterval->h, 'unit' => 'hora',    'unitShort' => 'h'),
+            array('value' => $diffInterval->i, 'unit' => 'minuto',  'unitShort' => 'min'),
+            array('value' => $diffInterval->s, 'unit' => 'segundo',  'unitShort' => 's'),
         );
 
         foreach ($diffIntervalArray as $diffIntervalData) {
@@ -3918,7 +3918,7 @@ class Carbon extends DateTime implements JsonSerializable
                 $count = $diffIntervalData['value'];
 
                 if ($diffIntervalData['unit'] === 'day' && $count >= static::DAYS_PER_WEEK) {
-                    $unit = $short ? 'w' : 'week';
+                    $unit = $short ? 'w' : 'semana';
                     $count = (int) ($count / static::DAYS_PER_WEEK);
 
                     $interval[] = static::translator()->transChoice($unit, $count, array(':count' => $count));
@@ -3927,7 +3927,7 @@ class Carbon extends DateTime implements JsonSerializable
                     $numOfDaysCount = (int) ($diffIntervalData['value'] - ($count * static::DAYS_PER_WEEK));
 
                     if ($numOfDaysCount > 0 && count($interval) < $parts) {
-                        $unit = $short ? 'd' : 'day';
+                        $unit = $short ? 'd' : 'dia';
                         $count = $numOfDaysCount;
                         $interval[] = static::translator()->transChoice($unit, $count, array(':count' => $count));
                     }
@@ -3951,7 +3951,7 @@ class Carbon extends DateTime implements JsonSerializable
                 }
             }
             $count = static::getHumanDiffOptions() & self::NO_ZERO_DIFF ? 1 : 0;
-            $unit = $short ? 's' : 'second';
+            $unit = $short ? 's' : 'segundo';
             $interval[] = static::translator()->transChoice($unit, $count, array(':count' => $count));
         }
 
@@ -4663,3 +4663,5 @@ class Carbon extends DateTime implements JsonSerializable
         return call_user_func_array($macro, $parameters);
     }
 }
+
+

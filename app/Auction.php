@@ -479,7 +479,7 @@ class Auction extends Model implements HasMedia
                         ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
                         ->select(['auctions.id','auctions.title','auctions.slug',
                                   'auctions.description','auctions.image',
-                                  'auctions.reserve_price','auctions.tiros','auctions.auction_status'])
+                                  'auctions.reserve_price','auctions.tiros','auctions.auction_status','auctions.sub_category_id'])
                         ->where('auctions.make_featured',1)
                         ->where('auctions.admin_status','approved')
                         ->where('users.role_id',getRoleData('seller'))
@@ -654,22 +654,21 @@ class Auction extends Model implements HasMedia
      * @param  [type] $category_id [description]
      * @return [type]              [description]
      */
-    public static function getCategoryAuctions($category_id) 
+     public static function getCategoryAuctions($sub_category_id)
     {
 
-       return Auction::join('categories','auctions.category_id','categories.id')
-                      ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
+       return Auction::join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
+                      ->join('invitaciones','auctions.sub_category_id','invitaciones.auction_id')
                       ->join('users','auctions.user_id','users.id')
                       ->select(['auctions.id','auctions.title','auctions.slug',
                                   'auctions.description','auctions.image',
                                   'auctions.reserve_price','auctions.tiros','auctions.auction_status'])
-                      ->where('auctions.category_id',$category_id)
+                      ->where('auctions.sub_category_id',$sub_category_id)
                       ->where('users.role_id',getRoleData('seller'))
                       ->where('users.approved',1)
-                      ->where('categories.status','Active')
                       ->where('sub_catogories.status','Active')
                       ->get();
-              
+
     }
 
     /**

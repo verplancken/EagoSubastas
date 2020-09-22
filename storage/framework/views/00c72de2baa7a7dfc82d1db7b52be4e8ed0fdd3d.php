@@ -363,7 +363,7 @@
 
                   <div class="form-group">
 
-                    <?php echo Form::label('reserve_price', getPhrase('precio de reserva'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('reserve_price', 'Precio Inicial', ['class' => 'control-label']); ?>
 
                     (<?php echo e($currency_code); ?>)
                     <span class="text-red">*</span>
@@ -379,7 +379,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'precio de reserva',
+                    'placeholder' => 'Precio Inicial',
 
                     'ng-model' => 'reserve_price', 
 

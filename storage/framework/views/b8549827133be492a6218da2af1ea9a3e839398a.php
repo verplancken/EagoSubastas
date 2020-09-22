@@ -18,95 +18,11 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
 
 
   <!--CATEGORY BODY SECTION-->
-     <section class="au-categorys">
-      <div class="container">
-         <div class="row">
- 
 
-          <!--ASIDE BAR SECTION
-          <div class="col-lg-3 col-md-4 col-sm-12">-->
-
-              <!--Auction Date
-              <div class="au-all-category">-->
-
-                    <!-- <input type="text" class="form-control datepicker" name="auction_date" id="auction_date">
-                    <span id="clear_date"><i class="fa fa-close"></i></span>
-                </div>
-              </div>-->
-              <!--Auction Date-->
-
-
-              <!--Item Type-->
-              
-              <!--Item Type-->
-
-
-              <!--Auction STATUS-->
-              
-              <!--Auction STATUS-->
-
-
-              <!--Categories-->
-              
-              <!--Categories-->
-
-
-               <!--Seller Location-->
-            
-              <!--Seller Location-->
-
-
-              <!--Sellers-->
-               
-              <!--Sellers-->
-
-              <!--Featured-->
-              
-              <!--Featured
-
-            </div>-->
-
-            <!--PRODUCTS SECTION-->
-             <div class="col-lg-12 col-md-12 col-sm-12 au-wrapper-main">
-
-               <div class="row au-main-header">
-                 <div class="col-lg-9 col-md-6 col-sm-12 au-body-header">
-                   <h5>AUCTIONS</h5>
-                 </div>
-                 <!--<div class="col-lg-3 col-md-6 col-sm-12 au-items-listt clearfix">
-                      <label>Show</label>
-                       <select class="form-control form-control-sm au-form-dropdown">
-                        <option>10</option>
-                        <option>50</option>
-                        <option>100</option>
-                       </select>
-                       <label>Entries</label>
-                 </div>-->
-                   <div class="col-lg-3 col-md-6 col-sm-6 au-items-listt clearfix">
-                       <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Instrucciones">
-                           <i class="fa fa-question" aria-hidden="true"></i> 
-                       </button>
-                   </div>
-               </div>
-
-
-                <div id="load" style="position: relative;">
-
-                  <section class="auctions">
 
                      <?php echo $__env->make('home.pages.auctions.ajax_auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-                  </section>
 
-                </div>
-
-            </div>
-            <!--PRODUCTS SECTION-->
-          
-
-         </div>
-      </div>
-    </section>
     <!--CATEGORY BODY SECTION-->
     <div class="modal" id="Instrucciones" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">

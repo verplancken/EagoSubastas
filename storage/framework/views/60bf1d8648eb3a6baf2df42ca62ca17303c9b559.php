@@ -35,7 +35,7 @@ if ($loggedInUser) {
                         <div class="dropdown-menu-notif-item dropdown-list ">
 
                             <a href="<?php echo e($single_notification_url); ?>" class="note-menu">
-                                <h5><?php echo e($title); ?></h5>
+                                <p class="text-muted"><strong><?php echo e($title); ?></strong> </p>
 
                                 <p><?php echo e($notification->updated_at->diffForHumans()); ?></p>
                             </a>
