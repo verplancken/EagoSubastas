@@ -19,33 +19,17 @@ $google_login = getSetting('google_plus_login','module');
                         <div class="col-md-6">
                             <h4>
 
-                                <a href="#" class="active" id="login-form-link">Iniciar sesi贸n</a>
+                                <a href="#" class="active" id="login-form-link">Login</a>
                   </h4> </div>
                         <div class="col-md-6">
                             <h4>
 
-                        <a href="#" id="register-form-link">Registrate</a>
+                        <a href="#" id="register-form-link">Registro</a>
                 </h4> </div>
                     </div>
                      </div>
 
           <div class="panel-body form-auth-style">
-
-              <p class="text-center p-3">
-
-              </p>
-
-                <?php if(Session::has('succes')): ?>
-                    <div class="col-lg-12">
-                        <div class="alert alert-danger alert-dismissible fade show mb-4 mt-4" role="alert">
-                            <?php echo e(Session::get('succes')); ?>
-
-                            <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
-                <?php endif; ?>
 
                 <!--form id="login-form" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;"-->
 
@@ -65,7 +49,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                 'id'=> 'lg_email',
 
-                                'placeholder' => 'Apellido / '.getPhrase('email'),
+                                'placeholder' => 'Alias /'.getPhrase('email'),
 
                                 'ng-class'=>'{"has-error": loginForm.email.$touched && loginForm.email.$invalid}',
 
@@ -132,7 +116,7 @@ $google_login = getSetting('google_plus_login','module');
                                     class="btn btn-primary login-bttn"
                                     style="margin-right: 15px;" ng-disabled='!loginForm.$valid'>
 
-                                    Ingresar
+                                    Login
                             </button>
                     </div>
                     <hr>
@@ -143,7 +127,11 @@ $google_login = getSetting('google_plus_login','module');
                   <div class="form-group col-lg-6 col-sm-6 col-xs-6">
 
 
-                      <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal">Recuperar contrasena</a>
+
+
+                      <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal"> Se te olvidó tu contraseña ? </a>
+
+
 
                   </div>
 
@@ -153,14 +141,14 @@ $google_login = getSetting('google_plus_login','module');
                       <div class="text-right login-icons">
 
 
-                           <!--<?php if($google_login): ?>-->
-                           <!-- <a href="<?php echo e(route('auth.login.social', 'google')); ?>" class="btn btn-primary login-bttn" data-toggle="tooltip" title="Inicio de sesion de Google">-->
-                           <!--     <i class="fa fa-google"></i>-->
-                           <!-- </a>-->
-                           <!-- <?php endif; ?>-->
+                           <?php if($google_login): ?>
+                            <a href="<?php echo e(route('auth.login.social', 'google')); ?>" class="btn btn-primary login-bttn" data-toggle="tooltip" title="Google Login Only For Bidder">
+                                <i class="fa fa-google"></i>
+                            </a>
+                            <?php endif; ?>
 
                             <?php if($fb_login): ?>
-                            <a href="<?php echo e(route('auth.login.social', 'facebook')); ?>" class="btn btn-primary login-bttn" data-toggle="tooltip" title="Inicio de sesion de Facebook">
+                            <a href="<?php echo e(route('auth.login.social', 'facebook')); ?>" class="btn btn-primary login-bttn" data-toggle="tooltip" title="Facebook Login Only For Bidder">
                                 <i class="fa fa-facebook"></i>
                             </a>
                             <?php endif; ?>
@@ -168,17 +156,17 @@ $google_login = getSetting('google_plus_login','module');
 
                       </div>
 
-
+                      
                   </div>
 
-
-                    <div class="col-12">
-                          <p class="text-center p-3">
-                              Puedes  Iniciar sesi贸n con Facebook  , <br>
-                              recuerda que  <strong>el correo debe coincidir a donde llego la invitacion.</strong>
-                          </p>
+                    <div class="row col-lg-12">
+                      <p class="alert alert-info">
+                          Inicios de sesión sociales
+                      </p>
                     </div>
+                 
 
+                  
               </div>
 
                 <?php echo Form::close(); ?>
@@ -193,22 +181,13 @@ $google_login = getSetting('google_plus_login','module');
 
 
   <div class="row">
-
-                    <div class="col-12">
-                          <h5 class="text-center p-3">
-                              <strong>Recuerda registrarte con el correo que te llego la invitacion</strong>
-                          </h5>
-                    </div>
-
-
                  <div class="form-group col-lg-12">
-
 
 
 
                                     <?php echo e(Form::text('name', old('name') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Nombre',
+                                        'placeholder' => 'Name',
 
                                         'ng-model'=>'name',
 
@@ -250,7 +229,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                     <?php echo e(Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Apellido',
+                                        'placeholder' => 'Alias',
 
                                         'ng-model'=>'username',
 
@@ -288,7 +267,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                    <?php echo e(Form::email('email', $value = null , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Correo',
+                                        'placeholder' => getPhrase("email"),
 
                                         'ng-model'=>'email',
 
