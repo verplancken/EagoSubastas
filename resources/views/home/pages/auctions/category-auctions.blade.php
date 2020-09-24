@@ -42,13 +42,9 @@ if (isset($auction) && !empty($auction)) {
                         <h6 class="card-title text-center"> {!! str_limit($auction->title,30,'..') !!}</h6>
                       </a>
 
-                      <!--<a href=""> -->
-                      <!--  <p class="card-title text-center"> Fecha de inicio <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>-->
-                      <!--</a>-->
+                            <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
 
-                      <!--<a href=""> -->
-                      <!--  <p class="card-title text-center"> Fecha final <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>-->
-                      <!--</a>-->
+                            <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
 
                   </div>
                 </div>
