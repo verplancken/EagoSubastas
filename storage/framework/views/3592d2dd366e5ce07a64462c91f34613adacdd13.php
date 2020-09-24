@@ -368,6 +368,8 @@ use App\SubCatogory;
                     </h4>
 
                 </div>
+                            <?php else: ?>
+                  <strong>La subasta inicia: <?php echo e($auction->start_date); ?> <br></strong>
                 <!--if auction status is closed end-->
                 <?php endif; ?>
 

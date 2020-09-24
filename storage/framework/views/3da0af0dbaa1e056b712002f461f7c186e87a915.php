@@ -13,7 +13,7 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
 
           <!--ASIDE BAR SECTION-->
             <div class="col-lg-3 col-md-4 col-sm-12">
-                <h3 class="text-center">Destacadas</h3>
+                <h3 class="text-center">Proximas Subastas</h3>
                           <!--featured auctions start-->
                 <?php if($featured_enable=='Yes'): ?>
                     <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -36,15 +36,8 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                                        <?php endif; ?>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
-                                  <?php else: ?>
-                                     <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12">
-                                          <h4 class="text-center"> No hay Destacados disponibles </h4>
-                                        </div>
-                                     </div>
                             <?php endif; ?>
                          <?php endif; ?>
-                       
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php endif; ?>
                           <!--featured auctions tab end-->

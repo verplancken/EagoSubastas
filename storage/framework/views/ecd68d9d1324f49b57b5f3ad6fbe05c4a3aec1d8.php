@@ -14,7 +14,32 @@
                    </div>
 
 
-                   <div> <?php echo $record->page_text; ?> </div>
+                    <p>
+                      <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                       Ver Instrucciones
+                      </a>
+
+                    </p>
+
+                    <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                       <div> <?php echo $record->page_text; ?> </div>
+                           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Cerrar
+                      </button>
+                      </div>
+                    </div>
+
+                    <strong>
+                        <h5>
+                            <a href="https://escuderiaservicios.com/eagosubastas/register">
+                                Registrarse
+                            </a>/
+                            <a href="https://escuderiaservicios.com/eagosubastas/login">
+                                Iniciar Sesion
+                            </a>
+                        </h5>
+                    </strong>
 
 
                 </div>
@@ -26,23 +51,6 @@
         <?php endif; ?>
     </section>
     <!--STATIC PAGE SECTION-->
-
-
-    <!--LATEST AUCTIONS SECTION-->
-    <?php echo $__env->make('home.pages.auctions.latest-auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <!--LATEST AUCTIONS SECTION-->
-
-
-
-    <!--RECENT WINNERS SECTION-->
-    <?php echo $__env->make('home.pages.auctions.recent-winners', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <!--RECENT WINNERS SECTION-->
-
-
-
-    <!--RECENT BUYERS SECTION-->
-    <?php echo $__env->make('home.pages.auctions.recent-buyers', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <!--RECENT BUYERS SECTION-->
 
 <?php $__env->stopSection(); ?>
 

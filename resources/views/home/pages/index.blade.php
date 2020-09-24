@@ -16,7 +16,32 @@
                    </div>
 
 
-                   <div> {!! $record->page_text !!} </div>
+                    <p>
+                      <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                       Ver Instrucciones
+                      </a>
+
+                    </p>
+
+                    <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                       <div> {!! $record->page_text !!} </div>
+                           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Cerrar
+                      </button>
+                      </div>
+                    </div>
+
+                    <strong>
+                        <h5>
+                            <a href="https://escuderiaservicios.com/eagosubastas/register">
+                                Registrarse
+                            </a>/
+                            <a href="https://escuderiaservicios.com/eagosubastas/login">
+                                Iniciar Sesion
+                            </a>
+                        </h5>
+                    </strong>
 
 
                 </div>
@@ -28,22 +53,5 @@
         @endif
     </section>
     <!--STATIC PAGE SECTION-->
-
-
-    <!--LATEST AUCTIONS SECTION-->
-    @include('home.pages.auctions.latest-auctions')
-    <!--LATEST AUCTIONS SECTION-->
-
-
-
-    <!--RECENT WINNERS SECTION-->
-    @include('home.pages.auctions.recent-winners')
-    <!--RECENT WINNERS SECTION-->
-
-
-
-    <!--RECENT BUYERS SECTION-->
-    @include('home.pages.auctions.recent-buyers')
-    <!--RECENT BUYERS SECTION-->
 
 @endsection

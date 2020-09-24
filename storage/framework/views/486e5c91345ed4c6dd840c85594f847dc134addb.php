@@ -8,7 +8,7 @@ $latest_auctions = \App\Auction::getLatestAuctions();
 
 ?>
 
- <!--LATEST AUCTIONS SECTION-->
+ <!--ÚLTIMA SECCIÓN DE SUBASTAS-->
     <?php if(count($latest_auctions)): ?>
     <section class="au-similar-products">
         <div class="container-fluid">

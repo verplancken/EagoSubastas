@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('articulos', getPhrase('Num. articulos'), ['class' => 'control-label']) !!}
+                    {!! Form::label('articulos', 'Num. articulos a ganar', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 

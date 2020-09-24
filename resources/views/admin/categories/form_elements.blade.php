@@ -2,17 +2,17 @@
 			<div class="col-xs-6"> 	
 
 				<div class="form-group">
-                    {!! Form::label('category', getPhrase('Lote'), ['class' => 'control-label']) !!}
+                    {!! Form::label('category', getPhrase('category'), ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
-                    {{ Form::text('category', old('category'), $attributes = 
+                    {{ Form::text('category', old('category'), $attributes =
 
-                    array('class' => 'form-control', 
+                    array('class' => 'form-control',
 
-                    'placeholder' => 'Lote',
+                    'placeholder' => 'Empresa',
 
-                    'ng-model' => 'category', 
+                    'ng-model' => 'category',
 
                     'required' => 'true',
 
@@ -27,7 +27,7 @@
                     )) }}
 
 
-                    
+
                     <div class="validation-error" ng-messages="formValidate.category.$error" >
 
 	    					{!! getValidationMessage()!!}
@@ -47,21 +47,21 @@
                 <div class="form-group">
                     {!! Form::label('description', getPhrase('Descripcion'), ['class' => 'control-label']) !!}
 
-                   
-                    {{ Form::textarea('description', old('description'), $attributes = 
 
-                    array('class' => 'form-control', 
+                    {{ Form::textarea('description', old('description'), $attributes =
+
+                    array('class' => 'form-control',
 
                     'placeholder' => 'Descripcion',
 
-                    'ng-model' => 'description', 
+                    'ng-model' => 'description',
 
 					'ng-maxlength' => '200',
 
                     )) }}
 
 
-                    
+
                     <div class="validation-error" ng-messages="formValidate.description.$error" >
 
 	    				{!! getValidationMessage('maxlength')!!}
@@ -71,10 +71,10 @@
                 </div>
 
 
-                 
+
                 <div class="form-group">
 
-                    {!! Form::label('status', getPhrase('Estado'), ['class' => 'control-label']) !!}
+                    {!! Form::label('status', getPhrase('status'), ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -85,10 +85,10 @@
 
                         $selected = null;
                         if($record)
-                        $selected = $record->status;      
+                        $selected = $record->status;
                     ?>
 
-                    
+
 
                     {{Form::select('status', activeinactive(), $selected, ['placeholder' => getPhrase('Seleccionar'),'class'=>'form-control select2',
 
@@ -96,14 +96,14 @@
 
                             'required'=> 'true',
 
-                            'ng-init'=>'status="'.$val.'"', 
+                            'ng-init'=>'status="'.$val.'"',
 
                             'ng-class'=>'{"has-error": formValidate.status.$touched && formValidate.status.$invalid}'
 
                          ])}}
 
 
-                    
+
                         <div class="validation-error" ng-messages="formValidate.status.$error" >
 
                             {!! getValidationMessage()!!}
@@ -117,8 +117,8 @@
 
                <div class="form-group pull-right">
 
-{{--					<button class="btn btn-success" ng-disabled='!formValidate.$valid'>{{ getPhrase('save') }}</button>--}}
-                    <button class="btn btn-success" ng-disabled='!formValidate.$valid'>Guardar</button>
+					<button class="btn btn-success" ng-disabled='!formValidate.$valid'>{{ getPhrase('save') }}</button>
+
 				</div>
 
 			</div>

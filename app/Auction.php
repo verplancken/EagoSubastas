@@ -475,7 +475,6 @@ class Auction extends Model implements HasMedia
     {
         //which are live and upcoming
         return Auction::join('users','auctions.user_id','users.id')
-                        ->join('categories','auctions.category_id','categories.id')
                         ->join('sub_catogories','auctions.sub_category_id','sub_catogories.id')
                         ->select(['auctions.id','auctions.title','auctions.slug',
                                   'auctions.description','auctions.image',
@@ -484,12 +483,8 @@ class Auction extends Model implements HasMedia
                         ->where('auctions.admin_status','approved')
                         ->where('users.role_id',getRoleData('seller'))
                         ->where('users.approved',1)
-                        ->where('auctions.start_date','<=',NOW())
-                        ->where('auctions.end_date','>=',NOW())
-                        /*->where('auctions.start_date','<=',DATE('Y-m-d'))
-                        ->where('auctions.end_date','>=',DATE('Y-m-d'))*/
-                        ->where('categories.status','Active')
                         ->where('sub_catogories.status','Active')
+                        ->where('auctions.start_date','>=',NOW())
                         ->where(function ($query) {
                         $query->where('auctions.auction_status', '=', 'open')
                               ->orWhere('auctions.auction_status', '=', 'new');

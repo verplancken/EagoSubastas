@@ -18,31 +18,42 @@ if (isset($auction) && !empty($auction)) {
             <div class="row">
 
               <div class="col-lg-12 col-md-12 col-sm-12 au-deals">
-                <h2 class="text-center"> Siguientes subastas</h2>
+                <h2 class="text-center">Siguientes subastas</h2>
               </div>
 
                <div class="screenshot-similar-product">
-                            @foreach ($category_auctions as $auction)
 
-                                <div class="card au-similar-card">
+                @foreach ($category_auctions as $auction)
+                <div class="card au-similar-card">
 
-                                  @if (Auth::user())
-                                    <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})"><i class="pe-7s-like like"></i></a>
-                                    @else
-                                     <a href="javascript:void(0);" onclick="showModal('loginModal')"><i class="pe-7s-like like"></i></a>
-                                  @endif
+                  @if (Auth::user())
+                    <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})"><i class="pe-7s-like like"></i></a>
+                    @else
+                     <a href="javascript:void(0);" onclick="showModal('loginModal')"><i class="pe-7s-like like"></i></a>
+                    @endif
 
-                                    <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="Auction Details">
-                                    <img class="img-fluid similar-img" src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}"></a>
+                    <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="Auction Details">
+                    <img class="img-fluid similar-img" src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}"></a>
 
 
-                                    <div class="card-block au-similar-block text-center">
+                    <div class="card-block au-similar-block text-center">
 
-                                      <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom"> <h6 class="card-title text-center"> {!! str_limit($auction->title,30,'..') !!}</h6></a>
+                      <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom">
+                        <h6 class="card-title text-center"> {!! str_limit($auction->title,30,'..') !!}</h6>
+                      </a>
 
-                                  </div>
-                                </div>
-                            @endforeach
+                      <!--<a href=""> -->
+                      <!--  <p class="card-title text-center"> Fecha de inicio <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>-->
+                      <!--</a>-->
+
+                      <!--<a href=""> -->
+                      <!--  <p class="card-title text-center"> Fecha final <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>-->
+                      <!--</a>-->
+
+                  </div>
+                </div>
+                @endforeach
+
             </div>
           </div>
         </div>
@@ -52,3 +63,8 @@ if (isset($auction) && !empty($auction)) {
     <!--SIMILAR CATEGORY PRODUCTS SECTION-->
 
     <?php } ?>
+                <style>
+		.owl-controls {
+		    display: none;
+		}
+                </style>
