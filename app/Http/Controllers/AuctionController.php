@@ -852,7 +852,7 @@ class AuctionController extends Controller
 
                 if ($auction->minimum_bid>0) {
 
-                    //options - start from minimum bid
+                    //opciones: empezar desde la oferta mínima
                     // $bid_options[] = $start;
                     
                     for ($i=$start;$i<=($reserve_price+$increment);$i=$i+$increment) {
@@ -861,7 +861,7 @@ class AuctionController extends Controller
                    
                 } else {
 
-                    //options - start from bid_increment amount
+                    //opciones - empezar desde la cantidad bid_increment
                     for ($i=$increment;$i<=($reserve_price+$increment);$i=$i+$increment) {
                         $bid_options[$i] = $i;
                     }
@@ -1024,18 +1024,18 @@ class AuctionController extends Controller
         $data['auction'] = $auction;
 
 
-        //bid payment - paid or not
+        //pago de oferta - pagado o no
         $bid_payment_record = $auction->getAuctionPayment();
         
 
-        //buy now payment - paid or not
+        //comprar ahora pago - pagado o no
         $buy_now_payment_record = $auction->getBuyNowAuctionPayment();
         
         $bid_div=true;
         if (count($bid_payment_record) || count($buy_now_payment_record)) {
 
           $bid_div = false;
-          //if already some one bought or some one paid auction amount-don't allow live auction
+          //si ya alguien compró o alguien pagó el monto de la subasta, no permita la subasta en vivo
           flash('info','Alguien ya ha ganado/compró esta subasta..','info');
           return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
 
@@ -1044,11 +1044,11 @@ class AuctionController extends Controller
         $data['bid_div'] = $bid_div;
 
         
-        //minimum_bid,is_bid_increment,bid_increment
+        //oferta mínima, es incremento de oferta, incremento de oferta
         $bid_options=[];
         $today=date('Y-m-d');
 
-        //if last bid there then that is starting amount in options
+        //si la última oferta está allí, entonces esa es la cantidad inicial en opciones
         $last_bid = Bidding::getLastBidRecord($auction->id);
         $data['last_bid'] = $last_bid;
 
@@ -1082,7 +1082,7 @@ class AuctionController extends Controller
                    
                 } else {
 
-                    //options - start from bid_increment amount
+                    //opciones - empezar desde la cantidad bid_increment
                     for ($i=$increment;$i<=($reserve_price+$increment);$i=$i+$increment) {
                         $bid_options[$i] = $i;
                     }
@@ -1093,9 +1093,9 @@ class AuctionController extends Controller
             } else {
 
                 if ($auction->minimum_bid>0) {
-                    //text - start from minimum bid
+                    //texto: comience desde la oferta mínima
                 } else {
-                    //text - start from 1
+                    //texto - empezar desde 1
                 }
 
             }
@@ -1158,7 +1158,7 @@ class AuctionController extends Controller
 
 
 
-         //live auction button show condition
+         //botón de subasta en vivo mostrar condición
         $live_auction=false;
         if ($auction->live_auction_date && $bid_div) {
 
@@ -1472,7 +1472,7 @@ class AuctionController extends Controller
                             }     
 
 
-                            //bidding table
+                            //tabla de ofertas
                             $bidding = new Bidding;
                             $bidding->ab_id = $auctionbidder->id;
                             $bidding->bid_amount = $bid_amount;
@@ -1629,7 +1629,7 @@ class AuctionController extends Controller
                   if (!empty($auction)) {
 
 
-                  //check already someone paid auction amount/bought auction
+                  //verifique que alguien pagó el monto de la subasta / compró la subasta
                   //bid payment - paid or not
                   $bid_payment_record = $auction->getAuctionPayment();
                   
@@ -1652,7 +1652,7 @@ class AuctionController extends Controller
 
 
 
-                     //live auction condition
+                     //condición de subasta en vivo
                       $live_auction=false;
                       $today = date('Y-m-d');
                       if ($auction->live_auction_date) {
@@ -1662,21 +1662,30 @@ class AuctionController extends Controller
                             $live_auction_start_time = strtotime($auction->live_auction_start_time);
                             $live_auction_end_time   = strtotime($auction->live_auction_end_time);
 
-                              //reached reserve price and time is over
-                              //display winner
+
+                              //alcanzado el precio de reserva y el tiempo ha terminado
+                              //mostrar ganador
                               $reserve_price = $auction->reserve_price;
 
-                              //check auction last recent bid
+                              //comprobar la última puja reciente de la subasta
                               $auction_last_bid = Bidding::getAuctionLastBid($auction->id);
                               if (!empty($auction_last_bid)) {
+
+                                if ($bid_amount>$auction_last_bid->bid_amount) {
+                                    //guardar en la mesa
+                                    $save=TRUE;
+                                } else {
+                                     return json_encode(array('status'=>99));
+                                }
+
                                 if ($auction_last_bid->bid_amount >= $reserve_price) {
-                                  //check if auction time is over
+                                  //comprobar si el tiempo de la subasta ha terminado
                                   if ($live_auction_start_time <= time() && $live_auction_end_time >= time()) {
                                     $live_auction=true;
                                   }
 
                                    if (!$live_auction) {
-                                    //reached /> reserve price,display winner auction time is over
+                                    //reached /> precio de reserva, muestra el ganador del tiempo de subasta ha terminado
                                     $currency_code = getSetting('currency_code','site_settings');
                                     $msg = $auction_last_bid->name.' ha ganado la subasta con la oferta más alta '.$currency_code.$auction_last_bid->bid_amount;
                                      return json_encode(array('status'=>555,'msg'=>$msg));
@@ -1688,7 +1697,7 @@ class AuctionController extends Controller
                              
 
 
-                              //not reached reserve price
+                              //precio de reserva no alcanzado
                               if ($live_auction_start_time <= time() && $live_auction_end_time >= time()) {
                                 $live_auction=true;
                               }
@@ -1943,7 +1952,7 @@ class AuctionController extends Controller
             return redirect(URL_DASHBOARD);
         }
 
-        //which are sold / auction amount paid - 
+        //que se venden / monto de la subasta pagado -
         $payment_auctions=Payment::where('payment_status','=','success')
                                     ->pluck('auction_id')
                                     ->toArray();

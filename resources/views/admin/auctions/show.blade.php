@@ -424,7 +424,7 @@
 
                                 <td> {{$user->no_of_times}} </td>
 
-                                <td> @if ($highest_bid) {{$currency}}{{$highest_bid}} @endif </td>
+                                <td> @if ($highest_bid) ${!! number_format($highest_bid) !!} MXN @endif</td>
 
 
                                 <td>
@@ -511,7 +511,8 @@
             </li>
 
             <li ng-repeat="bid in bid_history" class="list-group-item justify-content-between">
-                <span>{{$currency}} @{{bid.bid_amount}}</span>
+
+                <span>$ @{{bid.bid_amount}} MXN</span>
                 <span style="float:right;">@{{bid.created_at}}</span>
             </li>
         </ul>

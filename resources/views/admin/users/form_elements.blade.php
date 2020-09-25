@@ -509,7 +509,7 @@
 
                             'required'=> 'true',
 
-                            'ng-init'=>'approved="'.$val.'"', 
+                            'ng-init'=>'approved="'.$val.'"',
 
                             'ng-class'=>'{"has-error": formValidate.approved.$touched && formValidate.approved.$invalid}'
 

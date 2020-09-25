@@ -47,9 +47,9 @@
                             <th> {{getPhrase('status')}} </th>
                             <td field-key='status'>
                                 @if ($user->approved==1)
-                                {{getPhrase('approved')}}
+                                Aprovado
                                 @elseif ($user->approved==0)
-                                {{getPhrase('disapproved')}}
+                                Bloqueado
                                 @endif
                             </td>
                         </tr>

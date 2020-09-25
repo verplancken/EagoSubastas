@@ -100,20 +100,42 @@ use App\SubCatogory;
 			<p>Termina {{$live_auction_date}} {{$auction->live_auction_end_time}}</p>
 			<p id="demo"></p> 
 		</div>
+{{--	@if ($bid_options)--}}
+{{--{!! Form::open(array('url' => URL_SAVE_LIVE_AUCTION_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}--}}
+{{--                                         <div class="form-group bid-form-group">--}}
+{{--											  {{Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',--}}
+
+{{--                                                            'class'=>'form-control',--}}
+
+{{--                                                            'ng-model'=>'bid_amount',--}}
+
+{{--                                                            'required'=> 'true',--}}
+
+{{--                                                            'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'--}}
+
+{{--                                              ])}}--}}
+
+{{--											@if ($bid_options)--}}
+{{--											  <small>+{{$auction->bid_increment}}</small>--}}
+{{--											@endif--}}
+{{--										</div>--}}
+
+{{--										<div class="form-group" align="right">--}}
+{{--											<button type="submit" id="au_submit" class="btn btn-success bid-submit-btn" style="padding:3px 16px;">pujar</button>--}}
+{{--										</div>--}}
+
+{{-- {!! Form::close() !!}--}}
+{{--				--}}
+{{--            @else--}}
 
 						<div class="form-group bid-form-group">
 							<input type="number" class="form-control form-control-sm" id="bid_amount" placeholder="{{$enter_amount}}">
-						
-							@if ($bid_options)
-							  <small>+{{$auction->bid_increment}}</small>
-							@endif
 						</div>
-						
+
 							<div class="form-group" align="right">
 								<button type="submit" id="au_submit" class="btn btn-success bid-submit-btn" style="padding:3px 16px;">pujar</button>
-							</div>
-
-		  
+						</div>
+{{--	@endif--}}
 	  	<div class="bid-loader" style="display:none;" id="bid_loader"><img src="{{AJAXLOADER}}"> {{trans('please_wait')}}...</div>
 
 	</div>

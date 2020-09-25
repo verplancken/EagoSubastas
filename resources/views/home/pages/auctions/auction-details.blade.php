@@ -194,11 +194,11 @@ use App\SubCatogory;
               @endif
 
 
-              @if (!$live_auction)<!--if live auction not happening normal auction-->
+              @if (!$live_auction)<!--si la subasta en vivo no ocurre subasta normal-->
 
                 @if ($auction->auction_status=='open' && $auction->start_date<=now() && $auction->end_date>=now())
-                <!--if auction status is live start-->
-                 <!--product with border content-->
+                <!--si el estado de la subasta es inicio en vivo-->
+                 <!--producto con contenido de borde-->
                  @if ($bid_div)
      <div class="product-border">
                    <!-- <p class="text-blue"><b><i class="pe-7s-timer"> </i>
