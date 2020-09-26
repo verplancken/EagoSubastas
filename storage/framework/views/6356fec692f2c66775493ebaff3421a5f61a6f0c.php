@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="form-group">
-                    <?php echo Form::label('articulos', getPhrase('Num. articulos'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('articulos', 'Num. articulos a ganar', ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>

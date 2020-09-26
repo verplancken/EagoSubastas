@@ -408,7 +408,7 @@
 
                   <div class="form-group">
 
-                    <?php echo Form::label('tiros', getPhrase('tiros'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('tiros', 'Tiros por subasta', ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -450,28 +450,28 @@
                     </div>
 
                 </div>
-   
+
 
                 <div class="form-group">
 
-                    <?php echo Form::label('minimum_bid', getPhrase('oferta mínima'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('minimum_bid', getPhrase('minimum_bid'), ['class' => 'control-label']); ?>
 
                     (<?php echo e($currency_code); ?>)
-                   
+
                     <?php
                         $val=old('minimum_bid');
                         if ($record)
                          $val = $record->minimum_bid;
-    
+
                     ?>
 
-                    <?php echo e(Form::text('minimum_bid', old('minimum_bid'), $attributes = 
+                    <?php echo e(Form::text('minimum_bid', old('minimum_bid'), $attributes =
 
-                    array('class' => 'form-control', 
+                    array('class' => 'form-control',
 
                     'placeholder' => 'Oferta mínima',
 
-                    'ng-model' => 'minimum_bid', 
+                    'ng-model' => 'minimum_bid',
 
                     'ng-pattern' => getRegexPattern("price"),
 
@@ -484,7 +484,7 @@
 
                     <div class="validation-error" ng-messages="formValidate.minimum_bid.$error" >
 
-                           
+
                             <?php echo getValidationMessage('pattern'); ?>
 
 
@@ -496,25 +496,40 @@
 
                 <div class="form-group">
 
-                    <?php echo Form::label('is_it_bid_increment', getPhrase('es un incremento de la oferta'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('is_it_bid_increment', '¿La subasta del auto es incremento?', ['class' => 'control-label']); ?>
 
 
                     <div class="form-group row">
                         <div class="col-md-6">
-                        <?php echo e(Form::radio('is_bid_increment', 0, false, array('id'=>'bid_increment_no', 'name'=>'is_bid_increment'))); ?>
 
-                            
-                            <label for="bid_increment_no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>
+                        <?php echo e(Form::radio('is_bid_increment', 0, true, array('id'=>'bid_increment_no', 'name'=>'is_bid_increment'))); ?>
 
-                                NO
+
+                            <label for="bid_increment_no">
+
+                                <span class="fa-stack radio-button">
+                                    <i class="mdi mdi-check active"></i>
+                                </span>
+
+                                <?php echo e(getPhrase('No')); ?>
+
+
                             </label>
                         </div>
                         <div class="col-md-6">
-                        <?php echo e(Form::radio('is_bid_increment', 1, true, array('id'=>'bid_increment_yes', 'name'=>'is_bid_increment'))); ?>
 
-                            <label for="bid_increment_yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>
+                        <?php echo e(Form::radio('is_bid_increment', 1, false, array('id'=>'bid_increment_yes', 'name'=>'is_bid_increment'))); ?>
 
-                                SI
+
+                            <label for="bid_increment_yes">
+
+                            <span class="fa-stack radio-button">
+                                <i class="mdi mdi-check active"></i>
+                            </span>
+
+                                <?php echo e(getPhrase('Yes')); ?>
+
+
                             </label>
                         </div>
                     </div>
@@ -523,26 +538,26 @@
 
                 <div class="form-group">
 
-                    <?php echo Form::label('bid_increment', getPhrase('incremento de ofertat'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('bid_increment', getPhrase('bid_increment'), ['class' => 'control-label']); ?>
 
                     (<?php echo e($currency_code); ?>)
-                   
+
                     <?php
                         $val=old('bid_increment');
                         if ($record)
                          $val = $record->bid_increment;
-    
+
                     ?>
 
-                    <?php echo e(Form::text('bid_increment', old('bid_increment'), $attributes = 
+                    <?php echo e(Form::text('bid_increment', old('bid_increment'), $attributes =
 
-                    array('class' => 'form-control', 
+                    array('class' => 'form-control',
 
                     'placeholder' => 'incremento de oferta',
 
-                    'ng-model' => 'bid_increment', 
+                    'ng-model' => 'bid_increment',
 
-                  
+
                     'ng-init'=>'bid_increment="'.$val.'"',
 
                     'ng-pattern' => getRegexPattern("price"),
@@ -564,31 +579,30 @@
 
 
 
-               
+
 
 
                  <div class="form-group">
 
-                    <?php echo Form::label('is_buynow', getPhrase('es comprar ahora artículo'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('is_buynow', '¿Se puede comprar?', ['class' => 'control-label']); ?>
 
 
                     <div class="form-group row">
+
                         <div class="col-md-6">
-                        <?php echo e(Form::radio('is_buynow', 0, false, array('id'=>'buynow_no', 'name'=>'is_buynow'))); ?>
+                        <?php echo e(Form::radio('is_buynow', 0, true, array('id'=>'buynow_no', 'name'=>'is_buynow'))); ?>
 
-                            
-                            <label for="buynow_no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>
 
-                                NO
-                            </label>
+                            <label for="buynow_no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('No')); ?></label>
+
                         </div>
+
                         <div class="col-md-6">
-                        <?php echo e(Form::radio('is_buynow', 1, true, array('id'=>'buynow_yes', 'name'=>'is_buynow'))); ?>
+                        <?php echo e(Form::radio('is_buynow', 1, false, array('id'=>'buynow_yes', 'name'=>'is_buynow'))); ?>
 
-                            <label for="buynow_yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>
 
-                                SI
-                            </label>
+                            <label for="buynow_yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('Yes')); ?> </label>
+
                         </div>
                     </div>
                 </div>
@@ -596,26 +610,26 @@
 
                 <div class="form-group">
 
-                    <?php echo Form::label('buy_now_price', getPhrase('comprar ahora precio'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('buy_now_price', getPhrase('buy_now_price'), ['class' => 'control-label']); ?>
 
                     (<?php echo e($currency_code); ?>)
-                   
+
                     <?php
                         $val=old('buy_now_price');
                         if ($record)
                          $val = $record->buy_now_price;
-    
+
                     ?>
 
-                    <?php echo e(Form::text('buy_now_price', old('buy_now_price'), $attributes = 
+                    <?php echo e(Form::text('buy_now_price', old('buy_now_price'), $attributes =
 
-                    array('class' => 'form-control', 
+                    array('class' => 'form-control',
 
                     'placeholder' => 'comprar ahora precio',
 
-                    'ng-model' => 'buy_now_price', 
+                    'ng-model' => 'buy_now_price',
 
-                   
+
                     'ng-pattern' => getRegexPattern("price"),
 
                     'ng-init'=>'buy_now_price="'.$val.'"',
@@ -627,7 +641,7 @@
 
                     <div class="validation-error" ng-messages="formValidate.buy_now_price.$error" >
 
-                            
+
                             <?php echo getValidationMessage('pattern'); ?>
 
 
@@ -647,12 +661,12 @@
                         $val=old('description');
                         if ($record)
                          $val = $record->description;
-    
-                    ?>
-                   
-                    <?php echo e(Form::textarea('description', old('description'), $attributes = 
 
-                    array('class' => 'form-control ckeditor', 
+                    ?>
+
+                    <?php echo e(Form::textarea('description', old('description'), $attributes =
+
+                    array('class' => 'form-control ckeditor',
 
                     'placeholder' => 'Descripcion',
 
@@ -668,7 +682,7 @@
 
 
 
-                    
+
                     <div class="validation-error" ng-messages="formValidate.description.$error" >
 
                         <?php echo getValidationMessage(); ?>
@@ -683,24 +697,25 @@
 
 
 
-            <div class="col-xs-6">  
+            <div class="col-xs-6">
 
                 <div class="form-group">
 
-                    <?php echo Form::label('international_shipping', getPhrase('envío internacional'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('international_shipping', 'Envio nacional', ['class' => 'control-label']); ?>
 
 
                     <div class="form-group row">
                         <div class="col-md-6">
                         <?php echo e(Form::radio('international_shipping', 0, true, array('id'=>'yes', 'name'=>'international_shipping'))); ?>
 
-                            
-                            <label for="yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('No')); ?></label> 
+
+                            <label for="yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('No')); ?></label>
                         </div>
                         <div class="col-md-6">
                         <?php echo e(Form::radio('international_shipping', 1, false, array('id'=>'no', 'name'=>'international_shipping'))); ?>
 
-                            <label for="no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('Yes')); ?> 
+                            <label for="no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('Yes')); ?>
+
                             </label>
                         </div>
                     </div>
@@ -732,18 +747,18 @@
 
                 <div class="form-group">
 
-                    <?php echo Form::label('shipping_conditions', getPhrase('pago y envio'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('shipping_conditions', getPhrase('payment_and_shipping'), ['class' => 'control-label']); ?>
 
 
                     <?php
                         $val=old('shipping_conditions');
                         if ($record)
                          $val = $record->shipping_conditions;
-    
+
                     ?>
 
-                     
-                    <?php echo e(Form::textarea('shipping_conditions', old('condiciones de envío'), $attributes = 
+
+                    <?php echo e(Form::textarea('shipping_conditions', old('shipping_conditions'), $attributes =
 
                     array('class' => 'form-control ckeditor',
 
@@ -762,24 +777,24 @@
 
 
 
-                
+
 
 
 
                 <div class="form-group">
 
-                    <?php echo Form::label('shipping_terms', getPhrase('condiciones'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('shipping_terms', getPhrase('terms'), ['class' => 'control-label']); ?>
 
 
                       <?php
                         $val=old('shipping_terms');
                         if ($record)
                          $val = $record->shipping_terms;
-    
+
                     ?>
 
 
-                    <?php echo e(Form::textarea('shipping_terms', old('shipping_terms'), $attributes = 
+                    <?php echo e(Form::textarea('shipping_terms', old('shipping_terms'), $attributes =
 
                     array('class' => 'form-control ckeditor',
 
@@ -791,7 +806,7 @@
 
 
                     'ng-init'=>'shipping_terms="'.$val.'"',
-                    
+
                     ))); ?>
 
 
@@ -803,22 +818,22 @@
 
                  <div class="form-group">
 
-                    <?php echo Form::label('make_featured', getPhrase('Se factura'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('make_featured', 'proxima subasta', ['class' => 'control-label']); ?>
 
 
                     <div class="form-group row">
                         <div class="col-md-6">
                         <?php echo e(Form::radio('make_featured', 0, false, array('id'=>'featured_no', 'name'=>'make_featured'))); ?>
 
-                            
 
-                            <label for="featured_no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> No</label>
+                            <label for="featured_no"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('No')); ?></label>
                         </div>
                         <div class="col-md-6">
                         <?php echo e(Form::radio('make_featured', 1, true, array('id'=>'featured_yes', 'name'=>'make_featured'))); ?>
 
+                            <label for="featured_yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('Yes')); ?>
 
-                            <label for="featured_yes"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> Si</label>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -827,8 +842,7 @@
                 <?php if(checkRole(['admin'])): ?>
                 <div class="form-group">
 
-
-                         <?php echo Form::label('auction_status', 'Estado de Subasta', ['class' => 'control-label']); ?>
+                    <?php echo Form::label('auction_status', getPhrase('auction_status'), ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -845,9 +859,7 @@
 
 
 
-
-                    <?php echo e(Form::select('auction_status', auctionstatusoptions() , $selected, ['placeholder' => getPhrase('Seleccionar'),'class'=>'form-control select2',
-
+                    <?php echo e(Form::select('auction_status', auctionstatusoptions() , $selected, ['placeholder' => getPhrase('select'),'class'=>'form-control select2',
 
                             'ng-model'=>'auction_status',
 
@@ -874,8 +886,7 @@
 
                  <div class="form-group">
 
-
-                          <?php echo Form::label('admin_status','Estado de administrador', ['class' => 'control-label']); ?>
+                    <?php echo Form::label('admin_status', getPhrase('admin_status'), ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -887,7 +898,7 @@
 
                         $selected = null;
                         if($record)
-                        $selected = $record->admin_status;      
+                        $selected = $record->admin_status;
                     ?>
 
                     <?php echo e(Form::select('admin_status', adminstatusoptions() , $selected, ['placeholder' => getPhrase('Seleccionar'),'class'=>'form-control select2',
@@ -904,7 +915,7 @@
 
 
 
-                    
+
                         <div class="validation-error" ng-messages="formValidate.admin_status.$error" >
 
                             
@@ -921,7 +932,7 @@
 
                      <?php echo Form::label('image', getPhrase('image'), ['class' => 'control-label']); ?> <b><small style="color:red;">(950x650 para una buena resolución)</small></b>
 
-                    <div class="row"> 
+                    <div class="row">
 
                        <div class="col-md-6">
 
@@ -930,7 +941,7 @@
 
                         </div>
 
-                        <?php if(isset($record) && $record) { 
+                        <?php if(isset($record) && $record) {
 
                               if($record->image!='') {
 
@@ -944,7 +955,7 @@
 
                         <?php } } ?>
 
-                     </div>   
+                     </div>
 
                 </div>
 
@@ -952,15 +963,10 @@
 
                <div class="form-group pull-right">
 
-					<button class="btn btn-success" ng-disabled='!formValidate.$valid'>Guardar</button>
-
-
+					<button class="btn btn-success" ng-disabled='!formValidate.$valid'><?php echo e(getPhrase('save')); ?></button>
 
 				</div>
 
 			</div>
 
 </div>
-
-
-                

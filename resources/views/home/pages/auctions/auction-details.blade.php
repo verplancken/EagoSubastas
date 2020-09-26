@@ -346,7 +346,8 @@ use App\SubCatogory;
                                               </div>
                                               {!! Form::close() !!}
 
-                                        <p>Lo sentimos, ya no puede subastar</p>
+                                    @else
+                                        <p>Lo sentimos, ya no puede subastar, ha ganado el numero de articulos permitidos </p>
                                     @endif
                                 @endif
                               @endforeach
@@ -380,12 +381,6 @@ use App\SubCatogory;
                          <b> Subasta finalizada </b>
                      </p>
 
-                    <h4>{{$currency_code}}{{$auction->reserve_price}}
-                      <span class="badge">
-                           {{$auction->getAuctionBiddersCount()}} ofertas
-
-                      </span>
-                    </h4>
 
                 </div>
                  @else
@@ -396,7 +391,16 @@ use App\SubCatogory;
                 @endif <!--if live auction not happening-->
                 <br>
                 <div>
-
+            @if(Session::has('succes'))
+                <div class="col-lg-12">
+                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                        {{Session::get('succes')}}
+                        <button type="" class="close" data-dismiss="alert" arial-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            @endif
                   @if (Auth::user())
                     <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})" title="añadir a la lista de deseos" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
 {{--                    {{getPhrase('add_to_wish_list')}}</a>--}}

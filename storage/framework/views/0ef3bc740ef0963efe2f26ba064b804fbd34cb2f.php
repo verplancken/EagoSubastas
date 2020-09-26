@@ -47,11 +47,9 @@
                             <th> <?php echo e(getPhrase('status')); ?> </th>
                             <td field-key='status'>
                                 <?php if($user->approved==1): ?>
-                                <?php echo e(getPhrase('approved')); ?>
-
+                                Aprovado
                                 <?php elseif($user->approved==0): ?>
-                                <?php echo e(getPhrase('disapproved')); ?>
-
+                                Bloqueado
                                 <?php endif; ?>
                             </td>
                         </tr>

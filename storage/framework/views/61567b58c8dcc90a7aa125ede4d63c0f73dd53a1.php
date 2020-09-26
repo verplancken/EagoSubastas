@@ -429,7 +429,7 @@
 
                                 <td> <?php echo e($user->no_of_times); ?> </td>
 
-                                <td> <?php if($highest_bid): ?> <?php echo e($currency); ?><?php echo e($highest_bid); ?> <?php endif; ?> </td>
+                                <td> <?php if($highest_bid): ?> $<?php echo number_format($highest_bid); ?> MXN <?php endif; ?></td>
 
 
                                 <td>
@@ -516,7 +516,8 @@
             </li>
 
             <li ng-repeat="bid in bid_history" class="list-group-item justify-content-between">
-                <span><?php echo e($currency); ?> {{bid.bid_amount}}</span>
+
+                <span>$ {{bid.bid_amount}} MXN</span>
                 <span style="float:right;">{{bid.created_at}}</span>
             </li>
         </ul>

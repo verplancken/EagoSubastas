@@ -73,9 +73,9 @@ if ($auction->is_bid_increment && $auction->bid_increment>0) {
 } else {
   //if not incremental
   if (isset($bidding) && !empty($bidding->bid_amount))
-    $enter_amount .= '> '.$bidding->bid_amount;
+    $enter_amount .= '> '.number_format($bidding->bid_amount);
   elseif ($auction->minimum_bid>0)
-    $enter_amount .= '> '.$auction->minimum_bid;
+    $enter_amount .= '> '.number_format($auction->minimum_bid);
 }
 
 
@@ -96,24 +96,49 @@ use App\SubCatogory;
 
 		<div class="form-group bid-form-group">
 			<p><?php echo e($auction->sub_category_id); ?></p>
-			<p>Precio Reserva <?php echo e($currency_code); ?><?php echo e($auction->reserve_price); ?></p>
+			<p>Precio Reserva $<?php echo number_format($auction->reserve_price); ?> MXN</p>
 			<p>Termina <?php echo e($live_auction_date); ?> <?php echo e($auction->live_auction_end_time); ?></p>
 			<p id="demo"></p> 
 		</div>
+	<?php if($bid_options): ?>
+<?php echo Form::open(array('url' => URL_SAVE_LIVE_AUCTION_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
+
+                                         <div class="form-group bid-form-group">
+											  <?php echo e(Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',
+
+                                                            'class'=>'form-control',
+
+                                                            'ng-model'=>'bid_amount',
+
+                                                            'required'=> 'true',
+
+                                                            'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
+
+                                              ])); ?>
+
+
+											<?php if($bid_options): ?>
+											  <small>+<?php echo e($auction->bid_increment); ?></small>
+											<?php endif; ?>
+										</div>
+
+										<div class="form-group" align="right">
+											<button type="submit" id="bid_amount" class="btn btn-success bid-submit-btn" style="padding:3px 16px;">pujar</button>
+										</div>
+
+ <?php echo Form::close(); ?>
+
+
+            <?php else: ?>
 
 						<div class="form-group bid-form-group">
 							<input type="number" class="form-control form-control-sm" id="bid_amount" placeholder="<?php echo e($enter_amount); ?>">
-						
-							<?php if($bid_options): ?>
-							  <small>+<?php echo e($auction->bid_increment); ?></small>
-							<?php endif; ?>
 						</div>
-						
+
 							<div class="form-group" align="right">
 								<button type="submit" id="au_submit" class="btn btn-success bid-submit-btn" style="padding:3px 16px;">pujar</button>
-							</div>
-
-		  
+						</div>
+	<?php endif; ?>
 	  	<div class="bid-loader" style="display:none;" id="bid_loader"><img src="<?php echo e(AJAXLOADER); ?>"> <?php echo e(trans('please_wait')); ?>...</div>
 
 	</div>
@@ -127,15 +152,24 @@ use App\SubCatogory;
 			<?php if(count($live_biddings)): ?>
 			
 			
-			<ul class="list-group">
-			 <?php $__currentLoopData = $live_biddings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-	              <li class="list-group-item d-flex justify-content-between align-items-center">
-	              	<?php echo e($bid->name); ?>
 
-	                <span class="badge badge-primary badge-pill"><?php echo e($currency_code); ?><?php echo e($bid->bid_amount); ?></span>
-	              </li>
-              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-          	</ul>
+				<?php if($auction->visibilidad==1): ?>
+					<ul class="list-group">
+					 <?php $__currentLoopData = $live_biddings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						  <li class="list-group-item d-flex justify-content-between align-items-center">
+							<?php echo e($bid->name); ?>
+
+							<span class="badge badge-primary badge-pill"><?php echo e($currency_code); ?><?php echo e($bid->bid_amount); ?></span>
+						  </li>
+					  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					</ul>
+					<?php else: ?>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<p>Tipo de subasta cerrada, no podras ver a los apostadores</p>
+						<p>Usuario</p>
+					</li>
+				<?php endif; ?>
+
           	
           
             <?php endif; ?>  
@@ -353,7 +387,7 @@ alertify.set('notifier','position', 'top-right');
 
 		} else {
 
-			alertify.error("Please enter valid bid");
+			alertify.error("Ingrese una oferta válida");
 			return;
 
 			/*alert("Please enter valid bid");
@@ -399,7 +433,7 @@ var x = setInterval(function() {
     // If the count down is over, write some text 
     if (distance < 0) {
         clearInterval(x);
-        document.getElementById("demo").innerHTML = "BIDDING TIME IS OVER";
+        document.getElementById("demo").innerHTML = "EL TIEMPO DE OFERTA HA TERMINADO";
     }
 }, 1000);
 </script>

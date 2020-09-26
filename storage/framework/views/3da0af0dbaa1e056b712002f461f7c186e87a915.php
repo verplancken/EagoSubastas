@@ -31,6 +31,11 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                                                        <h6 class="card-title text-center" data-toggle="tooltip" title="<?php echo e($auction->title); ?>" data-placement="bottom"><a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>"><?php echo str_limit($auction->title,25,'..'); ?></a></h6>
                                                   </div>
 
+                                                  <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
+
+                                                  <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+
+
                                               </div>
                                           </div>
                                        <?php endif; ?>

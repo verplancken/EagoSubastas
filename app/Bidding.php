@@ -33,7 +33,7 @@ class Bidding extends Model
     {
         $record =  AuctionBidder::join('bidding','auctionbidders.id','bidding.ab_id')
                             ->join('users','auctionbidders.bidder_id','users.id')
-                            ->select(['bidding.bid_amount','users.name'])
+                            ->select(['bidding.bid_amount','users.name', 'bidding.ab_id'])
                             ->where('auctionbidders.auction_id',$auction_id)
                             ->orderBy('bidding.id','desc')->first();
         return $record;                    
