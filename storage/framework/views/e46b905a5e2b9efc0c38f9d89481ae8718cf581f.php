@@ -2,7 +2,7 @@
 
 
 <?php $__env->startSection('content'); ?>
-    <h3 class="page-title"> <?php echo e(getPhrase('auctions')); ?> </h3>
+    <h3 class="page-title">Subastas</h3>
 
 
 
@@ -18,8 +18,7 @@ $date_format = getSetting('date_format','site_settings');
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <?php echo e(getPhrase('list')); ?>
-
+            Lista
 
 
             <a href="<?php echo e(URL_AUCTIONS_ADD); ?>" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>

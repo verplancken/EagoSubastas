@@ -847,7 +847,7 @@ class Auction extends Model implements HasMedia
                    ->join('auctions','auctionbidders.auction_id','auctions.id')
                    ->join('users','auctionbidders.bidder_id','users.id')
                    ->select(['auctionbidders.id','users.slug','users.username',
-                    'users.email','users.image','auctionbidders.no_of_times'])
+                    'users.email','users.image','auctionbidders.no_of_times', 'auctionbidders.is_bidder_won'])
                    ->where('users.role_id',getRoleData('bidder'))
                    ->get();
 

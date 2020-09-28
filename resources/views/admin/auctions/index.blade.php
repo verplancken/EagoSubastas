@@ -2,7 +2,7 @@
 @extends($layout)
 
 @section('content')
-    <h3 class="page-title"> {{getPhrase('auctions')}} </h3>
+    <h3 class="page-title">Subastas</h3>
 
 
 
@@ -18,7 +18,7 @@ $date_format = getSetting('date_format','site_settings');
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            {{getPhrase('list')}}
+            Lista
 
 {{--             <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
             <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>

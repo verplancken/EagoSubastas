@@ -773,6 +773,7 @@ class AuctionController extends Controller
         }
 
         $auction = Auction::getRecordWithSlug($slug);
+           //dd($auction);
 
         if ($isValid = $this->isValidRecord($auction))
             return redirect($isValid);
@@ -997,28 +998,30 @@ class AuctionController extends Controller
                        //comprobar la última puja reciente de la subasta
                         $auction_last_bid = Bidding::getAuctionLastBid($auction->id);
 
-                        if ($end_date<=$now) {
 
 
-                             $record = AuctionBidder::where('id',$auction_last_bid->ab_id)
-                                                     ->first();
-                             $record->is_bidder_won        = 'Yes';
-                                //dd($record);
-                             $record->save();
+
+
+                                $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
+                                    ->first();
+                                 //dd($record);
+
+                        if ($end_date<=$now && $auction==$record->auction_id) {
+                            $record->is_bidder_won = 'Yes';
+                            //dd($record);
+                            $record->save();
 
 
                             //reached /> precio de reserva, muestra el ganador del tiempo de subasta ha terminado
-                            $currency_code = getSetting('currency_code','site_settings');
-                            $msg = $auction_last_bid->name.' ha ganado la subasta con la oferta más alta '.$currency_code.$auction_last_bid->bid_amount;
+                            $currency_code = getSetting('currency_code', 'site_settings');
+                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta ' . $currency_code . $auction_last_bid->bid_amount;
 
-                          if ($users->id == $record->bidder_id){
-                            flash('success', $msg, 'success');
-                            Session::flash('succes', $msg);
-                          }else{
-                              flash('info', 'Lo sentimos, no ganaste', 'info');
-                            Session::flash('succes', 'Lo sentimos, no ganaste');
-                          }
-
+                            if ($users->id == $record->bidder_id) {
+                                flash('success', $msg, 'success');
+                                Session::flash('succes', $msg);
+                            } else {
+                                Session::flash('warning', 'Lo sentimos, no ganaste');
+                            }
                         }
 
         return view('home.pages.auctions.auction-details', $data, compact('invitacion', 'auctionbidders', 'auctionbidders2', 'lote'));

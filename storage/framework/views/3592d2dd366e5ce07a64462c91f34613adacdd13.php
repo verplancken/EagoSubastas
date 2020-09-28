@@ -160,8 +160,28 @@ use App\SubCatogory;
                 <p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p>
                 <p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p>
                 <h4><?php echo e($auction->title); ?></h4>
+                            <?php if(Session::has('succes')): ?>
+                                <div class="col-lg-12">
+                                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                        <?php echo e(Session::get('succes')); ?>
 
+                                        <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                              <?php if(Session::has('warning')): ?>
+                                <div class="col-lg-12">
+                                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                        <?php echo e(Session::get('warning')); ?>
 
+                                        <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                 <?php if(!$live_auction): ?> <!--normal auction happening-->
                   <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
                 <?php endif; ?>
@@ -202,7 +222,7 @@ use App\SubCatogory;
                    <!-- <p class="text-blue"><b><i class="pe-7s-timer"> </i>
                         <?php echo e(strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))); ?></b></p>-->
                        <div class="row">
-                           <div class="col-6">
+                           <div class="col-4">
                                <h4>
                                     <strong data-toggle="tooltip" title="Precio de reserva" data-placement="top" >$<?php echo number_format($auction->reserve_price); ?> MXN</strong>
 
@@ -222,20 +242,34 @@ use App\SubCatogory;
                                     <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >El incremento es de: $<?php echo number_format($auction->bid_increment); ?> MXN</p>
                                <?php endif; ?>
                            </div>
-                           <div class="col-6 ">
+                           <div class="col-8">
                                <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <span class="badge" data-toggle="tooltip" title="No. de tiros que ha realizado" data-placement="top" >Tiros realizados- <?php echo e($item->no_of_times); ?></span>
+                                    <button class="btn mb-3 mr-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                      Tiros realizados <span class="badge" style="background-color: #0c100c;"><?php echo e($item->no_of_times); ?></span>
+                                    </button>
                                         <?php break; ?>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <span class="badge" data-toggle="tooltip" title="No. de tiros permitidos" data-placement="top" >Tiros permitidos- <?php echo e($auction->tiros); ?></span>
+                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                    <button class="btn mb-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                      Tiros permitidos <span class="badge" style="background-color: #0c100c;"><?php echo e($auction->tiros); ?></span>
+                                    </button>
+
+                               <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Articulos ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
+                                    </button>
+                                       <?php break; ?>
+                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                                <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                   <span class="badge" data-toggle="tooltip" title="No. de tiros permitidos" data-placement="top" >Articulos ganar- <?php echo e($lotes->articulos); ?></span>
+                                    <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Articulos a ganar <span class="badge" style="background-color: #0c100c;">9</span>
+                                    </button>
                                    <?php break; ?>
                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                               <span class="badge" data-toggle="tooltip" title="No. de tiros permitidos" data-placement="top" >Articulos ganados- <?php echo e($auction->tiros); ?></span>
+
                            </div>
                        </div>
-
 
 
             <?php if($bid_options): ?>
@@ -244,17 +278,7 @@ use App\SubCatogory;
                                 <p>seleccione oferta máxima</p>
                         <div class="row">
                           <div class="col-lg-6">
-                            <?php if(Session::has('succes')): ?>
-                                <div class="col-lg-12">
-                                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                        <?php echo e(Session::get('succes')); ?>
 
-                                        <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
                                 <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
 
@@ -301,19 +325,6 @@ use App\SubCatogory;
 
                 <div class="row">
                   <div class="col-lg-12">
-
-                        <?php if(Session::has('succes')): ?>
-                            <div class="col-lg-12">
-                                <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                    <?php echo e(Session::get('succes')); ?>
-
-                                    <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
 
                     <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
@@ -398,17 +409,7 @@ use App\SubCatogory;
                 <?php endif; ?> <!--if live auction not happening-->
                 <br>
                 <div>
-            <?php if(Session::has('succes')): ?>
-                <div class="col-lg-12">
-                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                        <?php echo e(Session::get('succes')); ?>
 
-                        <button type="" class="close" data-dismiss="alert" arial-label="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            <?php endif; ?>
                   <?php if(Auth::user()): ?>
                     <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)" title="añadir a la lista de deseos" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
 

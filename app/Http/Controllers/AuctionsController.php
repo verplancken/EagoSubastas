@@ -610,7 +610,7 @@ class AuctionsController extends Controller
         $data['record'] = $record;
 
 
-        //auction images
+        //imagenes de subasta
         $uploads_data = [];
 
         foreach($record->getAuctionImages as $upload)
@@ -630,16 +630,16 @@ class AuctionsController extends Controller
 
 
 
-        //get auction bidders
+        //conseguir postores de subasta
         $bidders = $record->getAuctionBidders();
         $data['bidders'] = $bidders;
 //dd($bidders);
 
-        //get auction payment
+        //obtener el pago de la subasta
         $payment = $record->getAuctionPayment();
         $data['payment'] = $payment;
 
-        //get buy now auction payment
+        //conseguir comprar ahora pago de subasta
         $buy_now_payment = $record->getBuyNowAuctionPayment();
         $data['buy_now_payment'] = $buy_now_payment;
 

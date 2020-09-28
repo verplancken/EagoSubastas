@@ -11,11 +11,11 @@
 @stop
 
 @section('content')
-    <h3 class="page-title"> {{getPhrase('auctions')}} </h3>
+    <h3 class="page-title">Subastas </h3>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-           {{ getPhrase('view') }}
+         Ver
         </div>
 
 
@@ -273,7 +273,7 @@
                                     <li>los archivos se cargan para que puedas soltarlos</li>
 
 {{--                                    <li>{{getPhrase('maximum_allowed_size_is_5MB')}}</li>--}}
-                                    <li>{{getPhrase('tamaño máximo permitido de 5 MB')}}</li>
+                                    <li>tamaño máximo permitido de 5 MB</li>
 
 {{--                                    <li style="color:red;">{{getPhrase('for_good_resolution_image_width_height_950x650')}}</li>--}}
                                       <li style="color:red;">para una buena resolución ancho de imagen altura 950x650</li>
@@ -285,7 +285,7 @@
 
                         <div class="col-sm-6">
                             <div class="scroll-height">
-                            <h3 class="files-title">{{getPhrase('total_uploaded_files')}} <span id="photoCounter"></span></h3>
+                            <h3 class="files-title">total de archivos cargados<span id="photoCounter"></span></h3>
                             <div class="dropzone-previews" id="dropzonePreview"></div>
                             </div>
                          </div>
@@ -321,8 +321,8 @@
             <div class="dz-success-mark">
                 <svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                     <!-- Generator: Sketch 3.2.1 (9971) - http://www.bohemiancoding.com/sketch -->
-                    <title>Check</title>
-                    <desc>Created with Sketch.</desc>
+                    <title>comprobar</title>
+                    <desc>Creado con Sketch.</desc>
                     <defs></defs>
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
                         <path d="M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z" id="Oval-2" stroke-opacity="0.198794158" stroke="#747474" fill-opacity="0.816519475" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
@@ -402,9 +402,9 @@
                        $highest_bid='';
                        $highestbid = $user->getHighestBid();
 
+
                        if (!empty($highestbid))
                         $highest_bid = $highestbid->bid_amount;
-
 
 
                        ?>
@@ -439,8 +439,14 @@
                                          <a href="#" onclick="auctionBidder({{$user->id}})" data-toggle="tooltip" data-placement="bottom" class="btn btn-xs btn-info" title="send email to {{$user->username}} regarding bidding payment"> enviar correo electrónico </a>
                                     @endif
 
+
+
                                         {{-- <a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-{{$user->id}}">Ganador</a> --}}
 
+                                    @endif
+
+                                    @if($user->is_bidder_won == 'Yes')
+                                        <a class="btn btn-success btn-xs"> Ganador</a>
                                     @endif
 
                                 </td>
@@ -534,7 +540,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{getPhrase('send_invoice_email_to_bidder_regarding_payment')}}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Enviar un correo electrónico con la factura al postor con respecto al pago</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -549,15 +555,13 @@
         <input type="hidden" name="ab_id" id="ab_id" value="">
         <input type="hidden" name="auction_id" value="{{$record->id}}">
 
-        <p>Enviar notificación por correo electrónico al usuario sobre el pago de la subasta</p>
-
          <div class="form-group">
 
             {{ Form::textarea('message', old('message'), $attributes =
 
                 array('class' => 'form-control ckeditor',
 
-                'placeholder' => 'Enter Email Content/Message to Bidder',
+                'placeholder' => 'Mensaje del correo electrónico al postor',
 
                 'ng-model' => 'message',
 
@@ -579,7 +583,7 @@
 
            <div class="form-group">
 
-            {!! Form::label('sent_at', getPhrase('start_date'), ['class' => 'control-label']) !!}
+            {!! Form::label('sent_at', 'Fecha de inicio', ['class' => 'control-label']) !!}
 
                 <span class="text-red">*</span>
 
@@ -589,7 +593,7 @@
 
                 'id' => 'datetimepicker6',
 
-                'placeholder'=>'Payment Start Date and Time',
+                'placeholder'=>'Fecha y hora de inicio del pago',
 
                 'ng-model' => 'sent_at',
 
@@ -601,7 +605,7 @@
 
             <div class="form-group">
 
-                {!! Form::label('end_date', getPhrase('end_date'), ['class' => 'control-label']) !!}
+                {!! Form::label('end_date', 'Fecha final', ['class' => 'control-label']) !!}
 
                 <span class="text-red">*</span>
 
@@ -613,7 +617,7 @@
 
                 'id' => 'datetimepicker7',
 
-                'placeholder'=>'Payment End Date and Time',
+                'placeholder'=>'Fecha y hora de finalización del pago',
 
                 'ng-model' => 'ended_at',
 

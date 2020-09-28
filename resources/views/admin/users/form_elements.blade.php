@@ -4,7 +4,7 @@
                
 
 				<div class="form-group">
-                    {!! Form::label('name', getPhrase('name'), ['class' => 'control-label']) !!}
+                    {!! Form::label('name', 'Nombre', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -18,7 +18,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Name',
+                    'placeholder' => 'Nombre',
 
                     'ng-model' => 'name', 
 
@@ -71,7 +71,7 @@
 
                     ?>
 
-                    {!! Form::label('username', getPhrase('username'), ['class' => 'control-label']) !!}
+                    {!! Form::label('username', 'Apellido', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -79,7 +79,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Username',
+                    'placeholder' => 'Apellido',
 
                     'ng-model' => 'username', 
 
@@ -137,7 +137,7 @@
 
                     ?>
 
-                    {!! Form::label('email', getPhrase('email'), ['class' => 'control-label']) !!}
+                    {!! Form::label('email', 'Correo', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -145,7 +145,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Email',
+                    'placeholder' => 'Correo',
 
                     'ng-model' => 'email', 
 
@@ -183,13 +183,13 @@
                 <div class="form-group">
 
 
-                    {!! Form::label('password', getPhrase('password'), ['class' => 'control-label']) !!}
+                    {!! Form::label('password', 'Contraseña', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
                     {{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
 
-                        'placeholder' => getPhrase("password"),
+                        'placeholder' => 'Contraseña',
 
                         'ng-model'=>'password',
 
@@ -218,13 +218,13 @@
                 <div class="form-group">
 
 
-                    {!! Form::label('confirm_password', getPhrase('confirm_password'), ['class' => 'control-label']) !!}
+                    {!! Form::label('confirm_password', 'Confirmar contraseña', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
                     {{ Form::password('password_confirmation', $attributes = array('class'=>'form-control instruction-call',
 
-                        'placeholder' => getPhrase("confirm_password"),
+                        'placeholder' => 'Confirmar contraseña',
 
                         'ng-model'=>'password_confirmation',
 
