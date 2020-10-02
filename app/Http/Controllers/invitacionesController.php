@@ -47,13 +47,42 @@ class InvitacionesController extends Controller
     }
 
     public function importExcel(Request $request){
-//        $auction_id = $request->get('auction_id');
-//        dd($auction_id);
-//        $auction_id->save();
+
         $file = $request->file('file');
         Excel::import(new InvitacionesImport, $file);
 
-        return back()->with('message',' Importacion de datos completada');
+        $lote = $request->get('auction_id');
+
+       $invitacion = Invitaciones::
+                    where('auction_id',$lote)
+                    ->first();
+                 //dd($invitacion);
+
+
+
+        if($lote == $invitacion->auction_id){
+
+         try {
+            sendEmail('news_letter_subscription',
+                array('title'=>$request->title,
+                      'message'=> htmlspecialchars($request->message),
+                      'to_email'=>$invitacion->email,
+                      'site_url'=>PREFIX,
+                      'date'=>date('d-m-Y')));
+
+            flash('success','email_sent_successfully', 'success');
+
+        } catch(Exception $ex) {
+
+            flash('oops...!', $ex->getMessage(), 'error');
+        }
+
+          return back()->with('message',' Entro');
+        }else{
+
+       //return view('admin.sub_catogories.invitaciones');
+       return back()->with('message',' Importacion de datos completada');
+        }
     }
 
     public function destroy($id){

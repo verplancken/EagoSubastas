@@ -145,8 +145,8 @@ class NewUserRegistration extends Notification
     {
          if ($this->user_type == 'admin') {
                return [
-                'title' => 'New User Registered',
-                'description' =>  $this->user->getUserTitle().' has been Successfully Registered as '.ucfirst(getRoleData($this->user->role_id)),
+                'title' => 'Nuevo usuario registrado',
+                'description' =>  $this->user->getUserTitle().' se ha registrado correctamente como '.ucfirst(getRoleData($this->user->role_id)),
                 'url' => URL_USERS_VIEW.'/'.$this->user->slug,
                 'image' => getProfilePath($this->user->image)
             ];

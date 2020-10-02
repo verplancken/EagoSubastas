@@ -111,7 +111,13 @@ class CreateLettersController extends Controller
         $subscriber = Subscriber::select('email')->where('id',$request->to)->first();
 
         try {
-            sendEmail('news_letter_subscription', array('title'=>$request->title, 'message'=> htmlspecialchars($request->message),'to_email'=>$subscriber->email, 'site_url'=>PREFIX, 'date'=>date('Y-m-d')));
+            sendEmail('news_letter_subscription',
+                array('title'=>$request->title,
+                      'message'=> htmlspecialchars($request->message),
+                      'to_email'=>$subscriber->email,
+                      'site_url'=>PREFIX,
+                      'date'=>date('Y-m-d')));
+
             flash('success','email_sent_successfully', 'success');
 
         } catch(Exception $ex) {
