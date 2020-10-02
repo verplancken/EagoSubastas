@@ -25,7 +25,6 @@ if (isset($auction) && !empty($auction)) {
 
                 @foreach ($category_auctions as $auction)
                 <div class="card au-similar-card">
-
                   @if (Auth::user())
                     <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})"><i class="pe-7s-like like"></i></a>
                     @else
@@ -48,6 +47,7 @@ if (isset($auction) && !empty($auction)) {
 
                   </div>
                 </div>
+
                 @endforeach
 
             </div>

@@ -14,9 +14,9 @@ trait ResetsPasswords
     use RedirectsUsers;
 
     /**
-     * Display the password reset view for the given token.
+     * Muestra la vista de restablecimiento de contraseña para el token dado.
      *
-     * If no token is present, display the link request form.
+     *Si no hay ningún token, muestre el formulario de solicitud de enlace.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string|null  $token
@@ -30,7 +30,7 @@ trait ResetsPasswords
     }
 
     /**
-     * Reset the given user's password.
+     * Restablecer la contraseña del usuario dado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
@@ -39,25 +39,25 @@ trait ResetsPasswords
     {
         $this->validate($request, $this->rules(), $this->validationErrorMessages());
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
+        // Aquí intentaremos restablecer la contraseña del usuario. Si tiene éxito,
+        // actualizará la contraseña en un modelo de usuario real y la conservará en el
+        //base de datos. De lo contrario, analizaremos el error y devolveremos la respuesta.
         $response = $this->broker()->reset(
             $this->credentials($request), function ($user, $password) {
                 $this->resetPassword($user, $password);
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
+        //Si la contraseña se restableció correctamente, redirigiremos al usuario a
+        //la vista autenticada de inicio de la aplicación. Si hay un error podemos
+        //redirigirlos de regreso al lugar de donde vinieron con su mensaje de error.
         return $response == Password::PASSWORD_RESET
                     ? $this->sendResetResponse($response)
                     : $this->sendResetFailedResponse($request, $response);
     }
 
     /**
-     * Get the password reset validation rules.
+     * Obtenga las reglas de validación de restablecimiento de contraseña.
      *
      * @return array
      */
@@ -71,7 +71,7 @@ trait ResetsPasswords
     }
 
     /**
-     * Get the password reset validation error messages.
+     * Obtenga los mensajes de error de validación de restablecimiento de contraseña.
      *
      * @return array
      */
@@ -94,7 +94,7 @@ trait ResetsPasswords
     }
 
     /**
-     * Reset the given user's password.
+     * Restablecer la contraseña del usuario dado
      *
      * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
      * @param  string  $password
@@ -114,7 +114,7 @@ trait ResetsPasswords
     }
 
     /**
-     * Get the response for a successful password reset.
+     * Obtenga la respuesta para un restablecimiento de contraseña exitoso.
      *
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
@@ -126,7 +126,7 @@ trait ResetsPasswords
     }
 
     /**
-     * Get the response for a failed password reset.
+     *Obtenga la respuesta para un restablecimiento de contraseña fallido.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
@@ -140,7 +140,7 @@ trait ResetsPasswords
     }
 
     /**
-     * Get the broker to be used during password reset.
+     *Consiga que el corredor se utilice durante el restablecimiento de la contraseña.
      *
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
@@ -150,7 +150,7 @@ trait ResetsPasswords
     }
 
     /**
-     * Get the guard to be used during password reset.
+     * Haga que el protector se use durante el restablecimiento de la contraseña.
      *
      * @return \Illuminate\Contracts\Auth\StatefulGuard
      */

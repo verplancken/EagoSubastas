@@ -26,9 +26,9 @@
 
 
                 	   <div class="form-group">
-                            {!! Form::label('current_password', getPhrase('current_password'), ['class' => 'control-label']) !!}
+                            {!! Form::label('current_password', 'contraseña actual', ['class' => 'control-label']) !!}
 
-                            {{ Form::password('old_password', $attributes = array('class'=>'form-control', 'placeholder' => getphrase('old_password'),
+                            {{ Form::password('old_password', $attributes = array('class'=>'form-control', 'placeholder' => 'Contraseña anterior',
 
                                     'ng-model'=>'old_password',
 
@@ -53,10 +53,10 @@
 
                     <div class="form-group">
 
-                        {!! Form::label('new_password', getPhrase('new_password'), ['class' => 'control-label']) !!}
+                        {!! Form::label('new_password', 'nueva contraseña', ['class' => 'control-label']) !!}
 
                         
-                        {{ Form::password('password', $attributes = array('class'=>'form-control', 'placeholder' => getphrase('new_password'),
+                        {{ Form::password('password', $attributes = array('class'=>'form-control', 'placeholder' => 'nueva contraseña',
 
                             'ng-model'=>'password',
 
@@ -80,10 +80,10 @@
                     </div>
 
                     <div class="form-group">
-                            {!! Form::label('new_password_confirmation', getPhrase('password_confirm'), ['class' => 'control-label']) !!}
+                            {!! Form::label('new_password_confirmation', 'contraseña confirmada', ['class' => 'control-label']) !!}
 
 
-                            {{ Form::password('password_confirmation', $attributes = array('class'=>'form-control', 'placeholder' => getphrase('retype_password'),
+                            {{ Form::password('password_confirmation', $attributes = array('class'=>'form-control', 'placeholder' => 'contraseña confirmada',
 
                                 'ng-model'=>'password_confirmation',
 
@@ -117,7 +117,7 @@
                 
                     <div class="form-group">
 
-                        <button class="btn btn-primary login-bttn" ng-disabled='!changePassword.$valid'>{{ getPhrase('save') }}</button>
+                        <button class="btn btn-primary login-bttn" ng-disabled='!changePassword.$valid'>Guardar</button>
 
                     </div>
 
@@ -129,10 +129,7 @@
             {!! Form::close() !!}
 
              </div> 
-    </div> 
-
-
-
+    </div>
 
         </div>
       </div>   

@@ -59,17 +59,17 @@ $user = Auth::user();
                   <!--Account-->
                   <li class="<?php echo e(bidderActive($active_class,'user_management')); ?>">
 
-                    <div class="link"><i class="fa fa-globe"></i><?php echo e(getPhrase('account')); ?><i class="fa fa-chevron-down"></i></div>
+                    <div class="link"><i class="fa fa-globe"></i>Cuenta<i class="fa fa-chevron-down"></i></div>
                     <ul class="submenu">
 
-                      <li class="<?php echo e($request->segment(2) == 'edit' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USERS_EDIT); ?>/<?php echo e($user->slug); ?>" title="Profile"><?php echo e(getPhrase('profile')); ?></a></li>
+                      <li class="<?php echo e($request->segment(2) == 'edit' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USERS_EDIT); ?>/<?php echo e($user->slug); ?>" title="Profile">Perfil</a></li>
 
 
-                      <li class="<?php echo e($request->segment(1) == 'billing-address' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USER_BILLING_ADDRESS); ?>" title="Billing Address"><?php echo e(getPhrase('billing_address')); ?></a></li>
+                      <li class="<?php echo e($request->segment(1) == 'billing-address' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USER_BILLING_ADDRESS); ?>" title="Billing Address">Facturación de Envio</a></li>
 
-                      <li class="<?php echo e($request->segment(1) == 'shipping-address' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USER_SHIPPING_ADDRESS); ?>" title="Shipping Address"><?php echo e(getPhrase('shipping_address')); ?></a></li>
+                      <li class="<?php echo e($request->segment(1) == 'shipping-address' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USER_SHIPPING_ADDRESS); ?>" title="Shipping Address">Dirección de Envío</a></li>
 
-                      <li class="<?php echo e($request->segment(2) == 'change-password' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USERS_CHANGE_PASSWORD); ?><?php echo e($user->slug); ?>" title="Change Password"><?php echo e(getPhrase('change_password')); ?></a></li>
+                      <li class="<?php echo e($request->segment(2) == 'change-password' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USERS_CHANGE_PASSWORD); ?><?php echo e($user->slug); ?>" title="Change Password">Cambia la contraseña</a></li>
                     </ul>
                   </li>
 
@@ -79,15 +79,15 @@ $user = Auth::user();
                   <!--Auctions-->
                   <li class="<?php echo e(bidderActive($active_class,'auctions')); ?>">
 
-                    <div class="link"><i class="fa fa-database"></i><?php echo e(getPhrase('auctions')); ?><i class="fa fa-chevron-down"></i></div>
+                    <div class="link"><i class="fa fa-database"></i>Subastas<i class="fa fa-chevron-down"></i></div>
 
                     <ul class="submenu">
 
-                      <li class="<?php echo e($request->segment(2) == 'fav-auctions' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USERS_FAV_AUCTIONS); ?>" title="Favourite Auctions"><?php echo e(getPhrase('favourite_auctions')); ?></a></li>
+                      <li class="<?php echo e($request->segment(2) == 'fav-auctions' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_USERS_FAV_AUCTIONS); ?>" title="Favourite Auctions">Subastas favoritas</a></li>
 
-                      <li class="<?php echo e($request->segment(2) == 'my-auctions' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_BIDDER_AUCTIONS); ?>" title="My Auctions"><?php echo e(getPhrase('my_auctions')); ?></a></li>
+                      <li class="<?php echo e($request->segment(2) == 'my-auctions' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_BIDDER_AUCTIONS); ?>" title="My Auctions">Mis subastas</a></li>
 
-                      <li class="<?php echo e($request->segment(2) == 'bought-auctions' ? 'active active-sub' : ''); ?>"><a href="<?php echo e(URL_BIDDER_BOUGHT_AUCTIONS); ?>" title="Bought Auctions"><?php echo e(getPhrase('bought_auctions')); ?> </a></li>
+
 
                     </ul>
                   </li>
@@ -96,12 +96,12 @@ $user = Auth::user();
 
 
                   <li class="<?php echo e(isActive($active_class,'payments')); ?>">
-                   <a href="<?php echo e(URL_BIDDER_PAYMENTS); ?>" title="Payments"><div class="link"><i class="fa fa-money"></i><?php echo e(getPhrase('payments')); ?></div></a>
+                   <a href="<?php echo e(URL_BIDDER_PAYMENTS); ?>" title="Payments"><div class="link"><i class="fa fa-money"></i>Pagos</div></a>
                   </li>
 
 
                   <li class="<?php echo e(isActive($active_class,'notifications')); ?>">
-                   <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>" title="Notifications"><div class="link"><i class="fa fa-briefcase"></i><?php echo e(getPhrase('notifications')); ?></div></a>
+                   <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>" title="Notifications"><div class="link"><i class="fa fa-briefcase"></i>Notificaciones</div></a>
                   </li>
 
 
@@ -117,7 +117,7 @@ $user = Auth::user();
                     </div> -->
 
 
-                     <div class="link"><i class="fa fa-envelope"></i><?php echo e(getPhrase('messages')); ?><i class="fa fa-chevron-down"></i>
+                     <div class="link"><i class="fa fa-envelope"></i>Mensajes<i class="fa fa-chevron-down"></i>
                       <?php if($unread > 0): ?>
                           <?php echo e(($unread > 0 ? '('.$unread.')' : '')); ?>
 
@@ -127,14 +127,14 @@ $user = Auth::user();
 
                     <ul class="submenu">
 
-                      <li class="<?php echo e(isActive($active_class,'all_messages')); ?>"><a href="<?php echo e(URL_MESSENGER); ?>" title="Messages"><?php echo e(getPhrase('all_messages')); ?></a></li>
+                      <li class="<?php echo e(isActive($active_class,'all_messages')); ?>"><a href="<?php echo e(URL_MESSENGER); ?>" title="Messages">Mensajes</a></li>
 
                       <?php ($unread_inbox = App\MessengerTopic::unreadInboxCount()); ?>
-                      <li class="<?php echo e(isActive($active_class,'inbox')); ?>"><a href="<?php echo e(URL_MESSENGER_INBOX); ?>" title="Inbox"><?php echo e(getPhrase('inbox')); ?> <?php echo e(($unread > 0 ? '('.$unread.')' : '')); ?> </a></li>
+                      <li class="<?php echo e(isActive($active_class,'inbox')); ?>"><a href="<?php echo e(URL_MESSENGER_INBOX); ?>" title="Inbox">Bandeja de entrada <?php echo e(($unread > 0 ? '('.$unread.')' : '')); ?> </a></li>
 
-                      <li class="<?php echo e(isActive($active_class,'outbox')); ?>"><a href="<?php echo e(URL_MESSENGER_OUTBOX); ?>" title="Outbox"><?php echo e(getPhrase('outbox')); ?></a></li>
+                      <li class="<?php echo e(isActive($active_class,'outbox')); ?>"><a href="<?php echo e(URL_MESSENGER_OUTBOX); ?>" title="Outbox">Bandeja de salida</a></li>
 
-                      <li class="<?php echo e(isActive($active_class,'create_message')); ?>"><a href="<?php echo e(URL_MESSENGER_ADD); ?>" title="Send Message"><?php echo e(getPhrase('create')); ?></a></li>
+                      <li class="<?php echo e(isActive($active_class,'create_message')); ?>"><a href="<?php echo e(URL_MESSENGER_ADD); ?>" title="Send Message">Crear</a></li>
 
                     </ul>
                   </li>
@@ -143,7 +143,7 @@ $user = Auth::user();
 
                   <li>
                     <a href="<?php echo e(URL_LOGOUT); ?>" title="Logout">
-                      <div class="link"><i class="fa fa-sign-out"></i><?php echo e(getPhrase('logout')); ?></div>
+                      <div class="link"><i class="fa fa-sign-out"></i>Cerrar Sesion</div>
                     </a>
                   </li>
 

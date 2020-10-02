@@ -113,7 +113,7 @@
 
       <div class="modal-header">
 
-        <h4 class="modal-title"><?php echo e(getPhrase('forgot_password')); ?></h4>
+        <h4 class="modal-title">Recuperar contraseña</h4>
 
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
@@ -186,9 +186,12 @@
 
       <div class="modal-header">
 
-            <h4><a href="#" class="active" id="login-form-modal-link"><?php echo e(getPhrase('login')); ?></a>
 
-            <a href="#" id="register-form-modal-link"><?php echo e(getPhrase('register')); ?></a></h4>
+           <h4><a href="#" class="active" id="login-form-modal-link">Login</a>
+
+
+
+               <a href="#" id="register-form-modal-link">Registrar</a></h4>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -289,15 +292,16 @@
                             <button type="submit"
                                     class="btn btn-primary login-bttn"
                                      ng-disabled='!loginFormModal.$valid'>
-                                <?php echo e(getPhrase('login')); ?>
 
+                                Login
                             </button>
                          </div>
                         <hr>
                     </div>
 
                         <div class="form-group col-lg-6">
-                        <a href="javascript:void(0);" onclick="showModal('myModal')" title="Forgot Password"> <?php echo e(getPhrase('forgot_password')); ?> ? </a>
+
+                              <a href="javascript:void(0);" onclick="showModal('myModal')" title="Forgot Password"> Olvidaste tu contrseña ? </a>
                     </div>
                     <div class="form-group col-lg-6">
 
@@ -333,12 +337,8 @@ $google_login = getSetting('google_plus_login','module');
                   <?php echo Form::open(array('url' => URL_USERS_REGISTER, 'method' => 'POST', 'novalidate'=>'', 'class'=>"form-horizontal", 'name'=>"registrationFormModal",'id'=>'register-form-modal', 'style'=>'display:none')); ?>
 
 
-<div class="row">
-                   <div class="form-group col-lg-12">
-
-
-
-
+            <div class="row">
+                                <div class="form-group col-lg-12">
 
                                     <?php echo e(Form::text('name', old('name') , $attributes = array('class'=>'form-control',
 
@@ -359,7 +359,6 @@ $google_login = getSetting('google_plus_login','module');
                                     ))); ?>
 
 
-
                                     <div class="validation-error" ng-messages="registrationFormModal.name.$error" >
 
                                         <?php echo getValidationMessage(); ?>
@@ -375,15 +374,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                 </div>
 
-
-
-
-
-
                             <div class="form-group  col-lg-12">
-
-
-
 
                                     <?php echo e(Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
@@ -402,7 +393,6 @@ $google_login = getSetting('google_plus_login','module');
                                     ))); ?>
 
 
-
                                     <div class="validation-error" ng-messages="registrationFormModal.username.$error" >
 
                                         <?php echo getValidationMessage(); ?>
@@ -416,16 +406,10 @@ $google_login = getSetting('google_plus_login','module');
 
                                     </div>
 
-
-
                             </div>
 
 
                   <div class="form-group  col-lg-12">
-
-
-
-
 
                                    <?php echo e(Form::email('email', $value = null , $attributes = array('class'=>'form-control',
 
@@ -442,9 +426,6 @@ $google_login = getSetting('google_plus_login','module');
                                     ))); ?>
 
 
-
-
-
                                     <div class="validation-error" ng-messages="registrationFormModal.email.$error" >
 
                                             <?php echo getValidationMessage(); ?>
@@ -454,21 +435,10 @@ $google_login = getSetting('google_plus_login','module');
 
 
                                      </div>
-
-
                             </div>
 
 
-
-
-
-
                             <div class="form-group  col-lg-12">
-
-
-
-
-
 
                                     <?php echo e(Form::password('password', $attributes = array('class'=>'form-control instruction-call',
 
@@ -503,10 +473,6 @@ $google_login = getSetting('google_plus_login','module');
 
 
                              <div class="form-group  col-lg-12 mb-4">
-
-
-
-
 
                                     <?php echo e(Form::password('password_confirmation', $attributes = array('class'=>'form-control instruction-call',
 
@@ -545,24 +511,26 @@ $google_login = getSetting('google_plus_login','module');
 
 
 
-                            <div class="form-group  col-lg-12">
-
-
-
-
-
+                            <div class="form-group  col-lg-12" style="display: none">
 
                                 <div class="form-group row">
 
                                     <div class="col-md-6">
-                                    <?php echo e(Form::radio('user_type','bidder', false, array('id'=>'bidder_modal', 'name'=>'user_type'))); ?>
+                                    <?php echo e(Form::radio('user_type','bidder', true, array('id'=>'bidder_modal', 'name'=>'user_type'))); ?>
 
-                                        <label for="bidder_modal"> <span class="radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('bidder')); ?>
+
+                                            <label for="bidder_modal"> <span class="radio-button"> <i class="mdi mdi-check active"></i> </span> licitador
 
                                         </label>
                                     </div>
 
-                                    
+                                    <div class="col-md-6">
+                                    <?php echo e(Form::radio('user_type','seller', false, array('id'=>'seller_modal', 'name'=>'user_type'))); ?>
+
+
+
+                                        <label for="seller_modal"> <span class="radio-button"> <i class="mdi mdi-check active"></i> </span> vendedor</label>
+                                    </div>
 
 
                                 </div>
@@ -574,8 +542,8 @@ $google_login = getSetting('google_plus_login','module');
                   <div class="form-group  col-lg-12">
                         <div class="text-center login-btn">
                             <button type="submit" class="btn btn-primary login-bttn" ng-disabled='!registrationFormModal.$valid'>
-                                <?php echo e(getPhrase('register')); ?>
 
+                                Registrar
                             </button>
                       </div>
 

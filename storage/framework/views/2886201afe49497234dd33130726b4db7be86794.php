@@ -25,7 +25,6 @@ if (isset($auction) && !empty($auction)) {
 
                 <?php $__currentLoopData = $category_auctions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="card au-similar-card">
-
                   <?php if(Auth::user()): ?>
                     <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)"><i class="pe-7s-like like"></i></a>
                     <?php else: ?>
@@ -48,6 +47,7 @@ if (isset($auction) && !empty($auction)) {
 
                   </div>
                 </div>
+
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>

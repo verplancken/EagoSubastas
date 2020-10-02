@@ -112,7 +112,7 @@
 
       <div class="modal-header">
 
-        <h4 class="modal-title">{{getPhrase('forgot_password')}}</h4>
+        <h4 class="modal-title">Recuperar contraseña</h4>
 
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>

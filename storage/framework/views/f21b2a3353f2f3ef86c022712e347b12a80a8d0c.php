@@ -33,7 +33,7 @@
 
                 	<div class="form-group">
 
-                    <?php echo Form::label('shipping_name', getPhrase('shipping_name'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('shipping_name', 'Nombre de envío', ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -48,7 +48,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Shipping Name',
+                    'placeholder' => 'Nombre de envío',
 
                     'ng-model' => 'shipping_name', 
 
@@ -90,7 +90,7 @@
 
                 <div class="form-group">
 
-                    <?php echo Form::label('shipping_phone', getPhrase('shipping_phone'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('shipping_phone', 'teléfono de envío', ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -105,7 +105,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Shipping Phone',
+                    'placeholder' => 'teléfono de envío',
 
                     'ng-model' => 'shipping_phone', 
 
@@ -141,7 +141,7 @@
                 
                  <div class="form-group">
 
-                        <label for="name"> <?php echo e(getPhrase('state')); ?> <span class="text-red">*</span></label>
+                        <label for="name"> Estado <span class="text-red">*</span></label>
 
 
                         <?php 
@@ -155,7 +155,7 @@
 
                         <select ng-init="shipping_state={id:<?php echo e($val); ?> }" name="shipping_state" ng-model="shipping_state" class="form-control select2" ng-options="item.id as item.state for item in states track by item.id" ng-change="getCities(shipping_state)" required="true">
 
-                          <option value="">Select</option>  
+                          <option value="">Seleccione</option>
 
                         </select>
 
@@ -173,7 +173,7 @@
 
                   <div class="form-group">
 
-                    <?php echo Form::label('shipping_address', getPhrase('shipping_address'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('shipping_address', 'Dirección de Envío', ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -188,7 +188,7 @@
 
                     array('class' => 'form-control', 'rows'=>3, 
 
-                    'placeholder' => 'Shipping Address',
+                    'placeholder' => 'Dirección de Envío',
 
                     'ng-model' => 'shipping_address', 
 
@@ -240,7 +240,7 @@
 
                     ?>
 
-                    <?php echo Form::label('shipping_email', getPhrase('shipping_email'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('shipping_email', 'correo electrónico de envío', ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -249,7 +249,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Shipping Email',
+                    'placeholder' => 'correo electrónico de envío',
 
                     'ng-model' => 'shipping_email', 
 
@@ -284,7 +284,7 @@
 
                 <div class="form-group">
 
-                    <?php echo Form::label('shipping_country', getPhrase('shipping_country'), ['class' => 'control-label']); ?>
+                    <?php echo Form::label('shipping_country', 'país de envío', ['class' => 'control-label']); ?>
 
 
                     <span class="text-red">*</span>
@@ -296,7 +296,7 @@
      
                     ?>
 
-                    <?php echo e(Form::select('shipping_country', $countries, $val, ['placeholder' => getPhrase('select_country'),'class'=>'form-control select2',
+                    <?php echo e(Form::select('shipping_country', $countries, $val, ['placeholder' => 'seleccionar país','class'=>'form-control select2',
 
                             'ng-model'=>'shipping_country',
 
@@ -327,7 +327,7 @@
 
                 <div class="form-group">
 
-                       <label for="name"> <?php echo e(getPhrase('city')); ?> <span class="text-red">*</span></label>
+                       <label for="name"> Ciudad <span class="text-red">*</span></label>
 
                         <?php 
 
@@ -339,7 +339,7 @@
 
                         <select ng-init="shipping_city={id:<?php echo e($val); ?> }" name="shipping_city" ng-model="shipping_city" class="form-control select2" ng-options="item.id as item.city for item in cities track by item.id" required="true">
 
-                          <option value="">Select</option>  
+                          <option value="">seleccionar</option>
 
                         </select>
 
@@ -354,7 +354,7 @@
 
                  <div class="form-group">
 
-					<button class="btn btn-primary login-bttn" ng-disabled='!formValidate.$valid'><?php echo e(getPhrase('save')); ?></button>
+					<button class="btn btn-primary login-bttn" ng-disabled='!formValidate.$valid'>Guardar</button>
 
 				</div>
 

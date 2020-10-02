@@ -33,14 +33,22 @@ $google_login = getSetting('google_plus_login','module');
 
           <div class="panel-body form-auth-style">
 
-              <p class="text-center p-3">
-
               </p>
 
                 @if(Session::has('succes'))
                     <div class="col-lg-12">
-                        <div class="alert alert-danger alert-dismissible fade show mb-4 mt-4" role="alert">
+                        <div class="alert alert-success alert-dismissible fade show mb-4 mt-4" role="alert">
                             {{Session::get('succes')}}
+                            <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+               @if(Session::has('warning'))
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger alert-dismissible fade show mb-4 mt-4" role="alert">
+                            {{Session::get('warning')}}
                             <button type="" class="close" data-dismiss="alert" arial-label="close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -168,7 +176,7 @@ $google_login = getSetting('google_plus_login','module');
 
                     <div class="col-12">
                           <p class="text-center p-3">
-                              Puedes  Iniciar sesi贸n con Facebook  , <br>
+                              Puedes  Iniciar sesion con Facebook  , <br>
                               recuerda que  <strong>el correo debe coincidir a donde llego la invitacion.</strong>
                           </p>
                     </div>

@@ -7,7 +7,7 @@
 
 <?php $__env->startSection('content'); ?>
 <?php
-$today = DATE('Y-m-d');
+$today = DATE('d-m-Y');
 $currency_code = getSetting('currency_code','site_settings');
 $auctin_url = URL_HOME_AUCTIONS;
 
@@ -16,7 +16,6 @@ if (isset($last_bid) && !empty($last_bid->bid_amount))
   $enter_amount .= 'mayor a '.number_format($last_bid->bid_amount);
 elseif ($auction->minimum_bid>0)
   $enter_amount .= 'mayor a '.number_format($auction->minimum_bid);
-
 
 $total_bids = $auction->getAuctionBiddersCount();
 
@@ -160,28 +159,32 @@ use App\SubCatogory;
                 <p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p>
                 <p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p>
                 <h4><?php echo e($auction->title); ?></h4>
-                            <?php if(Session::has('succes')): ?>
-                                <div class="col-lg-12">
-                                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                        <?php echo e(Session::get('succes')); ?>
+                <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if($auction->id == $bid->auction_id): ?>
+                                <?php if(Session::has('succes')): ?>
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                            <?php echo e(Session::get('succes')); ?>
 
-                                        <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php endif; ?>
-                              <?php if(Session::has('warning')): ?>
-                                <div class="col-lg-12">
-                                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                        <?php echo e(Session::get('warning')); ?>
+                                <?php endif; ?>
+                                  <?php if(Session::has('warning')): ?>
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                            <?php echo e(Session::get('warning')); ?>
 
-                                        <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php endif; ?>
+                                <?php endif; ?>
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php if(!$live_auction): ?> <!--normal auction happening-->
                   <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
                 <?php endif; ?>
@@ -402,7 +405,8 @@ use App\SubCatogory;
 
                 </div>
                  <?php else: ?>
-                  <strong>La subasta inicia: <?php echo e($auction->start_date); ?> <br></strong>
+
+                        <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?><br></strong>
                 <!--if auction status is closed end-->
                 <?php endif; ?>
 

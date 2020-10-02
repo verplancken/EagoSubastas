@@ -59,17 +59,17 @@ $user = Auth::user();
                   <!--Account-->
                   <li class="{{ bidderActive($active_class,'user_management')}}">
 
-                    <div class="link"><i class="fa fa-globe"></i>{{getPhrase('account')}}<i class="fa fa-chevron-down"></i></div>
+                    <div class="link"><i class="fa fa-globe"></i>Cuenta<i class="fa fa-chevron-down"></i></div>
                     <ul class="submenu">
 
-                      <li class="{{ $request->segment(2) == 'edit' ? 'active active-sub' : '' }}"><a href="{{URL_USERS_EDIT}}/{{$user->slug}}" title="Profile">{{getPhrase('profile')}}</a></li>
+                      <li class="{{ $request->segment(2) == 'edit' ? 'active active-sub' : '' }}"><a href="{{URL_USERS_EDIT}}/{{$user->slug}}" title="Profile">Perfil</a></li>
 
 
-                      <li class="{{ $request->segment(1) == 'billing-address' ? 'active active-sub' : '' }}"><a href="{{URL_USER_BILLING_ADDRESS}}" title="Billing Address">{{getPhrase('billing_address')}}</a></li>
+                      <li class="{{ $request->segment(1) == 'billing-address' ? 'active active-sub' : '' }}"><a href="{{URL_USER_BILLING_ADDRESS}}" title="Billing Address">Facturación de Envio</a></li>
 
-                      <li class="{{ $request->segment(1) == 'shipping-address' ? 'active active-sub' : '' }}"><a href="{{URL_USER_SHIPPING_ADDRESS}}" title="Shipping Address">{{getPhrase('shipping_address')}}</a></li>
+                      <li class="{{ $request->segment(1) == 'shipping-address' ? 'active active-sub' : '' }}"><a href="{{URL_USER_SHIPPING_ADDRESS}}" title="Shipping Address">Dirección de Envío</a></li>
 
-                      <li class="{{ $request->segment(2) == 'change-password' ? 'active active-sub' : '' }}"><a href="{{URL_USERS_CHANGE_PASSWORD}}{{$user->slug}}" title="Change Password">{{getPhrase('change_password')}}</a></li>
+                      <li class="{{ $request->segment(2) == 'change-password' ? 'active active-sub' : '' }}"><a href="{{URL_USERS_CHANGE_PASSWORD}}{{$user->slug}}" title="Change Password">Cambia la contraseña</a></li>
                     </ul>
                   </li>
 
@@ -79,15 +79,15 @@ $user = Auth::user();
                   <!--Auctions-->
                   <li class="{{ bidderActive($active_class,'auctions')}}">
 
-                    <div class="link"><i class="fa fa-database"></i>{{getPhrase('auctions')}}<i class="fa fa-chevron-down"></i></div>
+                    <div class="link"><i class="fa fa-database"></i>Subastas<i class="fa fa-chevron-down"></i></div>
 
                     <ul class="submenu">
 
-                      <li class="{{ $request->segment(2) == 'fav-auctions' ? 'active active-sub' : '' }}"><a href="{{URL_USERS_FAV_AUCTIONS}}" title="Favourite Auctions">{{getPhrase('favourite_auctions')}}</a></li>
+                      <li class="{{ $request->segment(2) == 'fav-auctions' ? 'active active-sub' : '' }}"><a href="{{URL_USERS_FAV_AUCTIONS}}" title="Favourite Auctions">Subastas favoritas</a></li>
 
-                      <li class="{{ $request->segment(2) == 'my-auctions' ? 'active active-sub' : '' }}"><a href="{{URL_BIDDER_AUCTIONS}}" title="My Auctions">{{getPhrase('my_auctions')}}</a></li>
+                      <li class="{{ $request->segment(2) == 'my-auctions' ? 'active active-sub' : '' }}"><a href="{{URL_BIDDER_AUCTIONS}}" title="My Auctions">Mis subastas</a></li>
 
-                      <li class="{{ $request->segment(2) == 'bought-auctions' ? 'active active-sub' : '' }}"><a href="{{URL_BIDDER_BOUGHT_AUCTIONS}}" title="Bought Auctions">{{getPhrase('bought_auctions')}} </a></li>
+{{--                      <li class="{{ $request->segment(2) == 'bought-auctions' ? 'active active-sub' : '' }}"><a href="{{URL_BIDDER_BOUGHT_AUCTIONS}}" title="Bought Auctions">Subastas compradas</a></li>--}}
 
                     </ul>
                   </li>
@@ -96,12 +96,12 @@ $user = Auth::user();
 
 
                   <li class="{{ isActive($active_class,'payments')}}">
-                   <a href="{{URL_BIDDER_PAYMENTS}}" title="Payments"><div class="link"><i class="fa fa-money"></i>{{getPhrase('payments')}}</div></a>
+                   <a href="{{URL_BIDDER_PAYMENTS}}" title="Payments"><div class="link"><i class="fa fa-money"></i>Pagos</div></a>
                   </li>
 
 
                   <li class="{{ isActive($active_class,'notifications')}}">
-                   <a href="{{URL_USER_NOTIFICATIONS}}" title="Notifications"><div class="link"><i class="fa fa-briefcase"></i>{{getPhrase('notifications')}}</div></a>
+                   <a href="{{URL_USER_NOTIFICATIONS}}" title="Notifications"><div class="link"><i class="fa fa-briefcase"></i>Notificaciones</div></a>
                   </li>
 
 
@@ -116,7 +116,7 @@ $user = Auth::user();
                     </div> -->
 
 
-                     <div class="link"><i class="fa fa-envelope"></i>{{getPhrase('messages')}}<i class="fa fa-chevron-down"></i>
+                     <div class="link"><i class="fa fa-envelope"></i>Mensajes<i class="fa fa-chevron-down"></i>
                       @if($unread > 0)
                           {{ ($unread > 0 ? '('.$unread.')' : '') }}
                         @endif
@@ -125,14 +125,14 @@ $user = Auth::user();
 
                     <ul class="submenu">
 
-                      <li class="{{ isActive($active_class,'all_messages')}}"><a href="{{URL_MESSENGER}}" title="Messages">{{getPhrase('all_messages')}}</a></li>
+                      <li class="{{ isActive($active_class,'all_messages')}}"><a href="{{URL_MESSENGER}}" title="Messages">Mensajes</a></li>
 
                       @php($unread_inbox = App\MessengerTopic::unreadInboxCount())
-                      <li class="{{ isActive($active_class,'inbox')}}"><a href="{{ URL_MESSENGER_INBOX }}" title="Inbox">{{getPhrase('inbox')}} {{ ($unread > 0 ? '('.$unread.')' : '') }} </a></li>
+                      <li class="{{ isActive($active_class,'inbox')}}"><a href="{{ URL_MESSENGER_INBOX }}" title="Inbox">Bandeja de entrada {{ ($unread > 0 ? '('.$unread.')' : '') }} </a></li>
 
-                      <li class="{{ isActive($active_class,'outbox')}}"><a href="{{ URL_MESSENGER_OUTBOX }}" title="Outbox">{{getPhrase('outbox')}}</a></li>
+                      <li class="{{ isActive($active_class,'outbox')}}"><a href="{{ URL_MESSENGER_OUTBOX }}" title="Outbox">Bandeja de salida</a></li>
 
-                      <li class="{{ isActive($active_class,'create_message')}}"><a href="{{ URL_MESSENGER_ADD }}" title="Send Message">{{getPhrase('create')}}</a></li>
+                      <li class="{{ isActive($active_class,'create_message')}}"><a href="{{ URL_MESSENGER_ADD }}" title="Send Message">Crear</a></li>
 
                     </ul>
                   </li>
@@ -141,7 +141,7 @@ $user = Auth::user();
 
                   <li>
                     <a href="{{URL_LOGOUT}}" title="Logout">
-                      <div class="link"><i class="fa fa-sign-out"></i>{{getPhrase('logout')}}</div>
+                      <div class="link"><i class="fa fa-sign-out"></i>Cerrar Sesion</div>
                     </a>
                   </li>
 

@@ -297,8 +297,8 @@ class AuctionsController extends Controller
 
         } catch(Exception $ex) {
 
-            $message = getPhrase('record_added_successfully ');
-            $message .= getPhrase('\ncannot_send_email_to_user, please_check_your_server_settings');
+            $message = 'registro agregado exitosamente';
+            $message .= getPhrase('\n cannot_send_email_to_user, please_check_your_server_settings');
         }
 
 
@@ -726,14 +726,14 @@ class AuctionsController extends Controller
                    if(getSetting('show_foreign_key_constraint','module'))
                     $response['message'] =  $e->errorInfo;
                    else
-                    $response['message'] =  getPhrase('this_record_is_in_use_in_other_modules');
+                    $response['message'] = 'este registro está en uso en otros módulos';
             }
 
 
         } else {
 
             $response['status'] = 0;
-            $response['message'] = getPhrase('invalid_operation');
+            $response['message'] = 'operación inválida';
         }
 
         return json_encode($response);

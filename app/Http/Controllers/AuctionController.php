@@ -797,9 +797,9 @@ class AuctionController extends Controller
         $data['bid_div'] = $bid_div;
 
         
-        //minimum_bid,is_bid_increment,bid_increment
+        //oferta mínima, es incremento de oferta, incremento de oferta
         $bid_options=[];
-        $today=date('Y-m-d');
+        $today=date('d-m-Y');
 
         //if last bid there then that is starting amount in options
         $last_bid = Bidding::getLastBidRecord($auction->id);
@@ -968,9 +968,9 @@ class AuctionController extends Controller
          $users   = \Auth::user();
 
         $auctionbidders = AuctionBidder::where('bidder_id', '=', $users->id)
-                                    ->where('auction_id', '=', $auction->id)
                                      ->select('auction_id', 'no_of_times', 'bidder_id')
                                         ->get();
+      //  dd($auctionbidders);
 
 
         $subcategoria = DB::table('sub_catogories')
@@ -991,7 +991,7 @@ class AuctionController extends Controller
                      ->where($cond2)
                      ->get();
       // dd($auctionbidders2);
-         $now = strtotime(date('Y-m-d H:i:s'));
+                    $now = strtotime(date('Y-m-d H:i:s'));
                     $start_date = strtotime($auction->start_date);
                     $end_date   = strtotime($auction->end_date);
 
@@ -1006,8 +1006,9 @@ class AuctionController extends Controller
                                     ->first();
                                  //dd($record);
 
-                        if ($end_date<=$now && $auction==$record->auction_id) {
+                        if ($end_date<=$now) {
                             $record->is_bidder_won = 'Yes';
+                            //dd($record);
                             //dd($record);
                             $record->save();
 
@@ -1276,7 +1277,7 @@ class AuctionController extends Controller
         if (checkRole(getUserGrade(4))) {
 
             $response['status'] = 0;
-            $response['message'] = getPhrase('el usuario no tiene derechos para agregar favoritos');
+            $response['message'] = 'El usuario no tiene derechos para agregar favoritos';
 
             return json_encode($response);
         }
@@ -1293,7 +1294,7 @@ class AuctionController extends Controller
         if ($redirect = $this->check_isdemo()) {
 
             $response['status']  = 0;
-            $response['message'] = getPhrase('crud_operations_disabled_in_demo');
+            $response['message'] = 'operaciones de crud deshabilitadas en la demostración';
             return json_encode($response);
         }
 
@@ -1304,7 +1305,7 @@ class AuctionController extends Controller
         if ($existed) {
 
             $response['status'] = 0;
-            $response['message'] = getPhrase('subasta ya agregada a favoritos');
+            $response['message'] = 'subasta ya agregada a favoritos';
 
         } else {
        
@@ -1315,7 +1316,7 @@ class AuctionController extends Controller
             $record->save();
 
             $response['status'] = 1;
-            $response['message'] = getPhrase('subasta agregada a favoritos');
+            $response['message'] ='subasta agregada a favoritos';
         }
 
         return json_encode($response);
@@ -1552,7 +1553,7 @@ class AuctionController extends Controller
     public function isValidRecord($record)
     {
        if ($record === null) {
-          flash('Ooops...!', getPhrase("página no encontrada"), 'error');
+          flash('Ooops...!', "página no encontrada", 'error');
           return $this->getRedirectUrl();
        }
 

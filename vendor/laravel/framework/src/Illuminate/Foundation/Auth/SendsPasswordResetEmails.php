@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Password;
 trait SendsPasswordResetEmails
 {
     /**
-     * Display the form to request a password reset link.
+     * Muestre el formulario para solicitar un enlace de restablecimiento de contraseña.
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,7 +18,7 @@ trait SendsPasswordResetEmails
     }
 
     /**
-     * Send a reset link to the given user.
+     * Envíe un enlace de restablecimiento al usuario dado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
@@ -27,9 +27,9 @@ trait SendsPasswordResetEmails
     {
         $this->validateEmail($request);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
+        // Enviaremos el enlace para restablecer la contraseña a este usuario. Una vez que hemos intentado
+        //para enviar el enlace, examinaremos la respuesta y luego veremos el mensaje que
+        // necesita mostrárselo al usuario. Finalmente, enviaremos una respuesta adecuada.
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );
@@ -40,7 +40,7 @@ trait SendsPasswordResetEmails
     }
 
     /**
-     * Validate the email for the given request.
+     * Valide el correo electrónico para la solicitud dada.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return void
@@ -51,7 +51,7 @@ trait SendsPasswordResetEmails
     }
 
     /**
-     * Get the response for a successful password reset link.
+     * Obtenga la respuesta para un enlace de restablecimiento de contraseña exitoso.
      *
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
@@ -62,7 +62,7 @@ trait SendsPasswordResetEmails
     }
 
     /**
-     * Get the response for a failed password reset link.
+     *Obtenga la respuesta para un enlace de restablecimiento de contraseña fallido.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
@@ -76,7 +76,7 @@ trait SendsPasswordResetEmails
     }
 
     /**
-     * Get the broker to be used during password reset.
+     * Consiga que el corredor se utilice durante el restablecimiento de la contraseña.
      *
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */

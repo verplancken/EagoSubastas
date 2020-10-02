@@ -100,7 +100,7 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                   <li><p><small title="Auction End Date">
                     <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?>
                   </small><span class="pull-right"><small><?php echo e(getAuctionDaysLeft($auction->start_date,$auction->end_date)); ?></small></span></p></li>
-                   <li><p><small title="Reserve Price"><?php echo e($currency_code); ?><?php echo e($auction->reserve_price); ?></small></p></li>
+                   <li><p><small title="Precio reserva"><?php echo e($currency_code); ?><?php echo e($auction->reserve_price); ?></small></p></li>
               </ul>
 
               <?php elseif($auction->auction_status=='new' && $auction->start_date<=NOW() && $auction->end_date>=NOW()): ?>
@@ -122,8 +122,9 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     <?php else: ?>
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <h4 class="text-center"> <?php echo e(getPhrase('no_auctions_available')); ?> </h4>
+      <h4 class="text-center">No hay subastas</h4>
     </div>
+                <?php break; ?>
     <?php endif; ?>
 
     <?php endif; ?>

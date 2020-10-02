@@ -35,7 +35,7 @@
                 	<div class="col-lg-6">
 
                 	<div class="form-group">
-                    {!! Form::label('name', getPhrase('name'), ['class' => 'control-label']) !!}
+                    {!! Form::label('name', 'Nombre', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -49,7 +49,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Name',
+                    'placeholder' => 'Nombre',
 
                     'ng-model' => 'name', 
 
@@ -105,7 +105,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Email',
+                    'placeholder' => 'Correo',
 
                     'ng-model' => 'email', 
 
@@ -132,7 +132,7 @@
 
                 <div class="form-group">
 
-                    {!! Form::label('country', getPhrase('country'), ['class' => 'control-label']) !!}
+                    {!! Form::label('country', 'país', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -143,7 +143,7 @@
      
                     ?>
 
-                    {{Form::select('country_id', $countries, $val, ['placeholder' => getPhrase('select_country'),'class'=>'form-control select2',
+                    {{Form::select('country_id', $countries, $val, ['placeholder' => 'seleccionar país','class'=>'form-control select2',
 
                             'ng-model'=>'country_id',
 
@@ -171,7 +171,7 @@
 
                  <div class="form-group">
 
-                       <label for="name"> {{ getPhrase('city') }} <span class="text-red">*</span></label>
+                       <label for="name"> ciudad <span class="text-red">*</span></label>
 
                         <?php 
 
@@ -183,7 +183,7 @@
 
                         <select ng-init="city_id={id:{{$val}} }" name="city_id" ng-model="city_id" class="form-control select2" ng-options="item.id as item.city for item in cities track by item.id" required="true">
 
-                          <option value="">Select</option>  
+                          <option value="">seleccionar</option>
 
                         </select>
 
@@ -201,7 +201,7 @@
 
                        <div class="col-md-6">
 
-                         {!! Form::label('profile_pic', getPhrase('profile_picture'), ['class' => 'control-label']) !!}    
+                         {!! Form::label('profile_pic', 'foto de perfil', ['class' => 'control-label']) !!}
 
                         {!! Form::file('image', array('id'=>'image_input', 'accept'=>'.png,.jpg,.jpeg')) !!}
 
@@ -243,7 +243,7 @@
 
                     ?>
 
-                    {!! Form::label('username', getPhrase('username'), ['class' => 'control-label']) !!}
+                    {!! Form::label('username', 'Apellido', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -251,7 +251,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Username',
+                    'placeholder' => 'Apellido',
 
                     'ng-model' => 'username', 
 
@@ -289,7 +289,7 @@
 
                 <div class="form-group">
 
-                    {!! Form::label('phone', getPhrase('phone'), ['class' => 'control-label']) !!}
+                    {!! Form::label('phone', 'teléfono', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -303,7 +303,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Phone',
+                    'placeholder' => 'teléfono',
 
                     'ng-model' => 'phone', 
 
@@ -334,7 +334,7 @@
 
                  <div class="form-group">
 
-                        <label for="name"> {{ getPhrase('state') }} <span class="text-red">*</span></label>
+                        <label for="name">Estado<span class="text-red">*</span></label>
 
 
                         <?php 
@@ -348,7 +348,7 @@
 
                         <select ng-init="state_id={id:{{$val}} }" name="state_id" ng-model="state_id" class="form-control select2" ng-options="item.id as item.state for item in states track by item.id" ng-change="getCities(state_id)" required="true">
 
-                          <option value="">Select</option>  
+                          <option value="">seleccionar</option>
 
                         </select>
 
@@ -363,7 +363,7 @@
 
                   <div class="form-group">
 
-                    {!! Form::label('address', getPhrase('address'), ['class' => 'control-label']) !!}
+                    {!! Form::label('address', 'Dirección', ['class' => 'control-label']) !!}
 
                    <?php
                         $val=old('address');
@@ -375,7 +375,7 @@
 
                     array('class' => 'form-control', 'rows'=>3, 
 
-                    'placeholder' => 'Address',
+                    'placeholder' => 'Dirección',
 
                     'ng-model' => 'address', 
 
@@ -403,7 +403,7 @@
 
                  <div class="form-group">
 
-					<button class="btn btn-primary login-bttn"  ng-disabled='!formValidate.$valid'>{{ getPhrase('save') }}</button>
+					<button class="btn btn-primary login-bttn"  ng-disabled='!formValidate.$valid'>Guardar</button>
 
 				</div>
 
@@ -451,7 +451,7 @@ file.onchange = function(e){
 
             break;
         default:
-               alertify.error("{{getPhrase('file_type_not_allowed')}}");
+               alertify.error("'Tipo de archivo no permitido'");
             this.value='';
     }
 };
