@@ -281,7 +281,6 @@ use App\SubCatogory;
                                 <p>seleccione oferta máxima</p>
                         <div class="row">
                           <div class="col-lg-6">
-
                                 <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
 

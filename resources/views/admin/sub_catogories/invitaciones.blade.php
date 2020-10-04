@@ -6,12 +6,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('email.import.excel')}}" method="POST" enctype="multipart/form-data">
-                {{csrf_field()}}
+
                 
                 <div class="row">
-
-
 
                     <div class="col-md-6">
                              <div class="form-group">
@@ -25,6 +22,8 @@
                              </div>
                     </div>
 
+              <form action="{{route('email.import.excel')}}" method="POST" enctype="multipart/form-data">
+                {{csrf_field()}}
                      <div class="col-md-4">
                          <div class="form-group">
                              <input type="hidden" name="auction_id" value="{{ $sub->id }}">
@@ -39,6 +38,21 @@
                             <a class="btn btn-info" href="javascript:window.open('https://us17.admin.mailchimp.com/#/create-campaign','','width=auto,height=auto,left=50,top=50,toolbar=yes');void 0">Envirar los correos</a>
                         </div>
                     </div>
+              </form>
+
+                    <form action="{{route('enviar.correo')}}"  method="POST" enctype="multipart/form-data">
+                        {{csrf_field()}}
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="hidden" name="auction_id" value="{{ $sub->id }}">
+
+                                <button class="btn btn-success">Enviar Correos</button>
+
+                            </div>
+                        </div>
+                    </form>
+
 
                 </div>
 
@@ -90,9 +104,6 @@
 
                 </table>
 
-
-                </div>
-            </form>
         </div>
     </div>
     @foreach ($invitacion as $item)

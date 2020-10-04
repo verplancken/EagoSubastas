@@ -711,6 +711,7 @@ class AuctionController extends Controller
        // dd($auctions);
        $invitacion = DB::table('invitaciones')
         ->get();
+
         //dd($invitacion);
         $user = DB::table('users')
         ->first();
@@ -801,7 +802,7 @@ class AuctionController extends Controller
         $bid_options=[];
         $today=date('d-m-Y');
 
-        //if last bid there then that is starting amount in options
+        //si la última oferta está allí, entonces esa es la cantidad inicial en opciones
         $last_bid = Bidding::getLastBidRecord($auction->id);
         $data['last_bid'] = $last_bid;
 
@@ -831,15 +832,15 @@ class AuctionController extends Controller
         $data['live_auction'] = $live_auction;
         $data['live_auction_starts'] = $live_auction_starts;
 
-        //if some one already paid auction amount or
-        //if some one already purchased 
-        //then normal auction and live auction will be not happen.
+        //si alguien ya pagó el monto de la subasta o
+        //si alguien ya compró
+        //entonces la subasta normal y la subasta en vivo no se realizarán.
 
 
 
         if ($auction->admin_status=='approved' && $auction->auction_status=='open' && $auction->start_date<=now() && $auction->end_date>=now()) {
             if ($auction->is_bid_increment && $auction->bid_increment>0) {
-                    
+
                 $start = $auction->minimum_bid;
 
                 if (isset($last_bid) && $last_bid->bid_amount) {
@@ -850,32 +851,33 @@ class AuctionController extends Controller
                     // $start = $last_bid->bid_amount;
                 }
 
+
                 $increment = $auction->bid_increment;
                 $reserve_price = $auction->reserve_price;
 
                 if ($auction->minimum_bid>0) {
 
-                    //opciones: empezar desde la oferta mínima
+                    // opciones: empezar desde la oferta mínima
                     // $bid_options[] = $start;
-                    
-                    for ($i=$start;$i<=($reserve_price+$increment);$i=$i+$increment) {
-                        $bid_options[$i] = $i;
+                   // dd($increment);
+                    for ($i=$start;$i<=($start+$increment);$i=$i+$increment) {
+                            $bid_options[$i] = $i;
                     }
-                   
+
                 } else {
 
                     //opciones - empezar desde la cantidad bid_increment
                     for ($i=$increment;$i<=($reserve_price+$increment);$i=$i+$increment) {
                         $bid_options[$i] = $i;
                     }
-                    
+
                 }
-                
+
 
             } else {
 
                 if ($auction->minimum_bid>0) {
-                    //text - start from minimum bid
+                    //texto: comience desde la oferta mínima
                 } else {
                     //text - start from 1
                 }
@@ -888,7 +890,7 @@ class AuctionController extends Controller
                                 ->where('role_id',getRoleData('seller'))
                                 ->first();
 
-        //bidding history
+        //historial de pujas
         //all bidders - name,last recent bid
         // $data['bidding_history'] = $auction->getAuctionBiddingHistory();
 

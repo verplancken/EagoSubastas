@@ -6,13 +6,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form action="<?php echo e(route('email.import.excel')); ?>" method="POST" enctype="multipart/form-data">
-                <?php echo e(csrf_field()); ?>
 
                 
                 <div class="row">
-
-
 
                     <div class="col-md-6">
                              <div class="form-group">
@@ -25,6 +21,9 @@
                                  <h2>El ID del lote es :  <strong><?php echo e($sub->id); ?></strong> Ingresar en el exel</h2>
                              </div>
                     </div>
+
+              <form action="<?php echo e(route('email.import.excel')); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo e(csrf_field()); ?>
 
                      <div class="col-md-4">
                          <div class="form-group">
@@ -40,6 +39,22 @@
                             <a class="btn btn-info" href="javascript:window.open('https://us17.admin.mailchimp.com/#/create-campaign','','width=auto,height=auto,left=50,top=50,toolbar=yes');void 0">Envirar los correos</a>
                         </div>
                     </div>
+              </form>
+
+                    <form action="<?php echo e(route('enviar.correo')); ?>"  method="POST" enctype="multipart/form-data">
+                        <?php echo e(csrf_field()); ?>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="hidden" name="auction_id" value="<?php echo e($sub->id); ?>">
+
+                                <button class="btn btn-success">Enviar Correos</button>
+
+                            </div>
+                        </div>
+                    </form>
+
 
                 </div>
 
@@ -91,9 +106,6 @@
 
                 </table>
 
-
-                </div>
-            </form>
         </div>
     </div>
     <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

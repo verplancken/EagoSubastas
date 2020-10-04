@@ -498,6 +498,7 @@ Route::get('{driver}/callback', 'Auth\LoginController@handleSocialCallback');
 
     // Enviar Invitaciones
     Route::post('import-list-exel', 'invitacionesController@importExcel')->name('email.import.excel');
+    Route::post('enviar/correos', 'invitacionesController@enviarCorreo')->name('enviar.correo');
 
     Route::post('invitaciones_mass_destroy', ['uses' => 'invitacionesController@massDestroy', 'as' => 'invitaciones.mass_destroy']);
     Route::delete('invitaciones/delete/{id}', 'invitacionesController@massDestroy');

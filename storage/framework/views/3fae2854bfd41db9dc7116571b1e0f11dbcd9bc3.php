@@ -91,7 +91,7 @@ file.onchange = function(e){
     $("form").submit( function(e) {
         var messageLength = CKEDITOR.instances['description'].getData().replace(/<[^>]*>/gi, '').length;
         if( !messageLength ) {
-            alert( 'Please enter description' );
+            alert( 'Introduzca una descripción' );
             e.preventDefault();
         }
     });
@@ -111,7 +111,7 @@ file.onchange = function(e){
     $(function () {
         $('#datetimepicker6').datetimepicker();
         $('#datetimepicker7').datetimepicker({
-            useCurrent: false //Important! See issue #1075
+            useCurrent: false //¡Importante! Ver el número 1075
         });
         $("#datetimepicker6").on("dp.change", function (e) {
             $('#datetimepicker7').data("DateTimePicker").minDate(e.date);

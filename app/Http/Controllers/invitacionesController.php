@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Imports\InvitacionesImport;
+use PHPMailer\PHPMailer\PHPMailer;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
 
 use App\Auction;
 use App\SubCatogory;
@@ -47,43 +52,70 @@ class InvitacionesController extends Controller
     }
 
     public function importExcel(Request $request){
+//        $auction_id = $request->get('auction_id');
+//        dd($auction_id);
+//        $auction_id->save();
 
         $file = $request->file('file');
         Excel::import(new InvitacionesImport, $file);
 
-        $lote = $request->get('auction_id');
-
-       $invitacion = Invitaciones::
-                    where('auction_id',$lote)
-                    ->first();
-                 //dd($invitacion);
-
-
-
-        if($lote == $invitacion->auction_id){
-
-         try {
-            sendEmail('news_letter_subscription',
-                array('title'=>$request->title,
-                      'message'=> htmlspecialchars($request->message),
-                      'to_email'=>$invitacion->email,
-                      'site_url'=>PREFIX,
-                      'date'=>date('d-m-Y')));
-
-            flash('success','email_sent_successfully', 'success');
-
-        } catch(Exception $ex) {
-
-            flash('oops...!', $ex->getMessage(), 'error');
-        }
-
-          return back()->with('message',' Entro');
-        }else{
-
-       //return view('admin.sub_catogories.invitaciones');
-       return back()->with('message',' Importacion de datos completada');
-        }
+        return back()->with('message',' Importacion de datos completada');
     }
+
+    public function enviarCorreo(Request $request){
+        $lote = $request->get('auction_id');//154
+        $invitacion = Invitaciones:://154
+                    where('auction_id',$lote)
+                    ->select('email')
+                    ->get();
+
+         $data['invitaciones'] = $invitacion;
+         $data['invitaciones']->implode('email', ', ');
+
+           dd($data['invitaciones']);
+
+          try {
+              $mail = new PHPMailer(true);
+                //Server settings
+                $mail->SMTPDebug = 0;                               // Enable verbose debug output
+                $mail->isSMTP();                                    // Send using SMTP
+                $mail->Host = 'smtp.gmail.com';
+
+                $mail->SMTPAuth = true;                            // Enable SMTP authentication ACCESO A CUENTA
+                $mail->Username = 'dinopiza@gmail.com';            // SMTP username ACCESO A CUENTA
+                $mail->Password = 'Ytumamatambien16486&';           // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+                $mail->Port = 587;
+
+                //Recipients
+                $mail->setfrom('contacto@eago.com.mx', 'EAGO'); //DESDE DONDE SE VA AENVIAR
+                $mail->addaddress($correo);//aldiazm.11@gmail.com
+
+                // Add a recipient
+                //  $mail->addaddress('contacto_webtech@yahoo.com', 'Information-copia');
+                $mail->isHTML(true);                               // Set email format to HTML
+                $mail->Subject = 'Recuperacion de contrasena Subastas';
+                $mail->Body = 'Hola';
+
+                if ($mail->send()) {
+                    $messages[] = "correo  ha sido enviado con éxito.";
+                    var_dump($messages);
+                    // dd($messages);
+                } else {
+                    $errors[] = "Lo sentimos, el correo falló. Por favor, regrese y vuelva a intentarlo.";
+                    //dd($errors);
+                }
+
+          } catch (Exception $e) {
+                echo "Hubo un error al enviar el mensaje: {$mail->ErrorInfo}";
+               // dd($e);
+          }
+
+        flash('Success', 'se envía una nueva contrasena a su cuenta de correo electronico', 'success');
+           return back()->with('message',' Importacion de datos completada');
+
+    }
+
 
     public function destroy($id){
       $invitacion = Invitaciones::findOrFail($id);

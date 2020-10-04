@@ -1,3 +1,4 @@
+
 @inject('request', 'Illuminate\Http\Request')
 @extends($layout)
 
