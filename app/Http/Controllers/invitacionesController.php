@@ -69,10 +69,13 @@ class InvitacionesController extends Controller
                     ->select('email')
                     ->get();
 
+        $email = $request->get('email');
+        dd($email);
+
          $data['invitaciones'] = $invitacion;
          $data['invitaciones']->implode('email', ', ');
 
-           dd($data['invitaciones']);
+           //dd($data['invitaciones']);
 
           try {
               $mail = new PHPMailer(true);

@@ -46,6 +46,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <input type="hidden" name="auction_id" value="{{ $sub->id }}">
+                                  @foreach ($invitacion as $item)
+                                        @if($sub->id == $item->auction_id)
+                                        <?php $i++;?>
+                                            <input type="hidden" name="{{ $item->email }}" value="{{ $item->email }}">
+                                        @else
+                                        @endif
+
+                                  @endforeach
 
                                 <button class="btn btn-success">Enviar Correos</button>
 

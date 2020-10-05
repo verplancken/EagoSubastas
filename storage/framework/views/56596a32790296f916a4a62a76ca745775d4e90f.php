@@ -48,6 +48,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <input type="hidden" name="auction_id" value="<?php echo e($sub->id); ?>">
+                                  <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($sub->id == $item->auction_id): ?>
+                                        <?php $i++;?>
+                                            <input type="hidden" name="email" value="<?php echo e($item->email); ?>">
+                                        <?php else: ?>
+                                        <?php endif; ?>
+
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                 <button class="btn btn-success">Enviar Correos</button>
 
