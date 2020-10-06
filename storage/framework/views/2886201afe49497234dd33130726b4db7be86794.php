@@ -3,7 +3,7 @@
           $user = Auth::user();
   use App\Auction;
 $category_auctions=[];
-if (isset($auction) && !empty($auction)) {
+if (isset($auctions) && !empty($auctions)) {
 
   $category_auctions = App\Auction::getCategoryAuctions($auction->sub_category_id);
   $currency_code = getSetting('currency_code','site_settings');
@@ -24,30 +24,34 @@ if (isset($auction) && !empty($auction)) {
                <div class="screenshot-similar-product">
 
                 <?php $__currentLoopData = $category_auctions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="card au-similar-card">
-                  <?php if(Auth::user()): ?>
-                    <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)"><i class="pe-7s-like like"></i></a>
-                    <?php else: ?>
-                     <a href="javascript:void(0);" onclick="showModal('loginModal')"><i class="pe-7s-like like"></i></a>
-                    <?php endif; ?>
+                    <?php if(count($auctions)>1): ?>
+                        <p><?php echo e($auctions); ?></p>
+                    <?php if($auction->auction_status=='open' && $auction->start_date<=NOW() && $auction->end_date>=NOW()): ?>
+                    <div class="card au-similar-card">
+                      <?php if(Auth::user()): ?>
+                        <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)"><i class="pe-7s-like like"></i></a>
+                        <?php else: ?>
+                         <a href="javascript:void(0);" onclick="showModal('loginModal')"><i class="pe-7s-like like"></i></a>
+                        <?php endif; ?>
 
-                    <a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>" title="Auction Details">
-                    <img class="img-fluid similar-img" src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="<?php echo e($auction->title); ?>"></a>
+                        <a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>" title="Auction Details">
+                        <img class="img-fluid similar-img" src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="<?php echo e($auction->title); ?>"></a>
 
 
-                    <div class="card-block au-similar-block text-center">
+                        <div class="card-block au-similar-block text-center">
 
-                      <a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>" data-toggle="tooltip" title="<?php echo e($auction->title); ?>" data-placement="bottom">
-                        <h6 class="card-title text-center"> <?php echo str_limit($auction->title,30,'..'); ?></h6>
-                      </a>
+                          <a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>" data-toggle="tooltip" title="<?php echo e($auction->title); ?>" data-placement="bottom">
+                            <h6 class="card-title text-center"> <?php echo str_limit($auction->title,30,'..'); ?></h6>
+                          </a>
 
-                            <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
+                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
 
-                            <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
 
-                  </div>
-                </div>
-
+                      </div>
+                    </div>
+                        <?php endif; ?>
+                       <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
@@ -55,6 +59,7 @@ if (isset($auction) && !empty($auction)) {
         </div>
     </section>
     <?php endif; ?>
+
 
     <!--SIMILAR CATEGORY PRODUCTS SECTION-->
 

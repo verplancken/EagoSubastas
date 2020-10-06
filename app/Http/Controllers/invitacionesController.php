@@ -44,17 +44,12 @@ class InvitacionesController extends Controller
         $invitacion = DB::table('invitaciones')
                  //   ->where('auction_id',$auction->id)
                     ->get();
-       //dd($sub);
-        //$data['invitaciones'] = $invitacion;
-        //dd($data);
 
         return view('admin.sub_catogories.invitaciones', $data, compact('invitacion'));
     }
 
     public function importExcel(Request $request){
-//        $auction_id = $request->get('auction_id');
-//        dd($auction_id);
-//        $auction_id->save();
+
 
         $file = $request->file('file');
         Excel::import(new InvitacionesImport, $file);
@@ -63,23 +58,23 @@ class InvitacionesController extends Controller
     }
 
     public function enviarCorreo(Request $request){
-        $lote = $request->get('auction_id');//154
-        $invitacion = Invitaciones:://154
+        $lote = $request->get('auction_id');
+
+        $invitacion = Invitaciones::
                     where('auction_id',$lote)
                     ->select('email')
                     ->get();
 
-        $email = $request->get('email');
-        dd($email);
+        $array = array_pluck($invitacion, 'email');
 
-         $data['invitaciones'] = $invitacion;
-         $data['invitaciones']->implode('email', ', ');
 
-           //dd($data['invitaciones']);
+
+
+
+
 
           try {
-              $mail = new PHPMailer(true);
-                //Server settings
+                $mail = new PHPMailer(true);
                 $mail->SMTPDebug = 0;                               // Enable verbose debug output
                 $mail->isSMTP();                                    // Send using SMTP
                 $mail->Host = 'smtp.gmail.com';
@@ -90,32 +85,73 @@ class InvitacionesController extends Controller
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
                 $mail->Port = 587;
 
-                //Recipients
                 $mail->setfrom('contacto@eago.com.mx', 'EAGO'); //DESDE DONDE SE VA AENVIAR
-                $mail->addaddress($correo);//aldiazm.11@gmail.com
 
-                // Add a recipient
                 //  $mail->addaddress('contacto_webtech@yahoo.com', 'Information-copia');
                 $mail->isHTML(true);                               // Set email format to HTML
-                $mail->Subject = 'Recuperacion de contrasena Subastas';
-                $mail->Body = 'Hola';
+
+                $mail->Body = '<!doctype html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport"
+                                  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                            <title>Document</title>
+                        </head>
+                        <body>
+							<div style="width:100%; background:#fff; position:relative; font-family:sans-serif; padding-bottom:40px">
+								<center>
+									<img style="padding:20px; width:10%" src="https://eago.com.mx/general/1595961692.gif">
+								</center>
+								<div style="position:relative; margin:auto; width:600px; background:#fff; padding:20px">
+									<center>
+									<h1 style="font-weight:100; color:#000"><strong>Bienvenido a EAGO</strong></h1>
+									<hr style="border:1px solid #ccc; width:80%">
+									<h4 style="font-weight:100; color:#000; padding:0 20px;font-size: 20px">Usted fue invitado a participar en una subasta por favor concluya el registro para poder participar.</h4>
+									<a href="https://escuderiaservicios.com/eagosubastas/login" target="_blank" style="text-decoration:none">
+									<div style="line-height:50px; background:#0e1c66; width:50%; color:white">Aceptar Invitacion</div>
+									</a>
+									<br>
+									<hr style="border:1px solid #ccc; width:80%">
+									<img style="padding:20px; width:40%" src="https://eago.com.mx/Eago-frontend/vistas/img/subastas-persona-bg.png">
+									</center>
+								</div>
+							</div>
+                        </body>
+                        </html>';
+
+                foreach ($array as $email) {
+                  $mail->Subject = 'Invitacion de subasta para '.$email.''  ;
+                  $mail->AddAddress($email); // Cargamos el e-mail destinatario a la clase PHPMailer
+
+                    $invitacion2 = Invitaciones::where('email', $email)
+                        ->first();
+
+                $invitacion2->estatus = 1;
+                $invitacion2->save();
 
                 if ($mail->send()) {
                     $messages[] = "correo  ha sido enviado con éxito.";
                     var_dump($messages);
-                    // dd($messages);
                 } else {
                     $errors[] = "Lo sentimos, el correo falló. Por favor, regrese y vuelva a intentarlo.";
-                    //dd($errors);
                 }
+
+                  $mail->ClearAddresses(); // Limpia los "Address" cargados previamente para volver a cargar uno.
+                }
+
+
 
           } catch (Exception $e) {
                 echo "Hubo un error al enviar el mensaje: {$mail->ErrorInfo}";
-               // dd($e);
+
           }
 
-        flash('Success', 'se envía una nueva contrasena a su cuenta de correo electronico', 'success');
-           return back()->with('message',' Importacion de datos completada');
+
+
+            flash('Success', 'Importacion de datos completada desde el sistema', 'success');
+           return back()->with('message',' Importacion de datos completada desde el sistema');
 
     }
 
@@ -123,7 +159,7 @@ class InvitacionesController extends Controller
     public function destroy($id){
       $invitacion = Invitaciones::findOrFail($id);
       $invitacion->delete();
-  
+
       return back()->with('message',' Eliminacion de dato completada');
     }
 

@@ -15,6 +15,7 @@ class Invitaciones extends Model
     	'name',
     	'email',
         'auction_id',
+        'estatus',
     ];
 
     protected $guarded=[

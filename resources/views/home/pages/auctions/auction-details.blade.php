@@ -162,7 +162,6 @@ use App\SubCatogory;
                 <p class="text-muted text-right">IDLote:{{$auction->sub_category_id}}</p>
                 <h4>{{$auction->title}}</h4>
                 @foreach($auctionbidders as $bid)
-                    @if($auction->id == $bid->auction_id)
                                 @if(Session::has('succes'))
                                     <div class="col-lg-12">
                                         <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
@@ -172,6 +171,7 @@ use App\SubCatogory;
                                             </button>
                                         </div>
                                     </div>
+                                     @break
                                 @endif
                                   @if(Session::has('warning'))
                                     <div class="col-lg-12">
@@ -183,7 +183,7 @@ use App\SubCatogory;
                                         </div>
                                     </div>
                                 @endif
-                    @endif
+                    @break
                 @endforeach
                 @if (!$live_auction) <!--normal auction happening-->
                   <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
@@ -247,10 +247,12 @@ use App\SubCatogory;
                            </div>
                            <div class="col-8">
                                @foreach($auctionbidders as $item)
+                                   @if($item->auction_id == $auction->id)
                                     <button class="btn mb-3 mr-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros realizados <span class="badge" style="background-color: #0c100c;">{{$item->no_of_times}}</span>
                                     </button>
-                                        @break
+                                   @endif
+
                                @endforeach
 
                                     <button class="btn mb-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
@@ -266,7 +268,7 @@ use App\SubCatogory;
 
                                @foreach($lote as $lotes)
                                     <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Articulos a ganar <span class="badge" style="background-color: #0c100c;">9</span>
+                                      Articulos a ganar <span class="badge" style="background-color: #0c100c;">{{$lotes->articulos}}</span>
                                     </button>
                                    @break
                                @endforeach

@@ -921,10 +921,6 @@ class AuctionController extends Controller
 
         $data['bidding_history'] = $auctionbidders;
 
-
-
-       
-
        
         //buynow condition
         $data['is_already_sold'] = 'No';
@@ -970,9 +966,10 @@ class AuctionController extends Controller
          $users   = \Auth::user();
 
         $auctionbidders = AuctionBidder::where('bidder_id', '=', $users->id)
-                                     ->select('auction_id', 'no_of_times', 'bidder_id')
+                                        ->where('auction_id', $auction->id)
+                                         ->select('auction_id', 'no_of_times', 'bidder_id')
                                         ->get();
-      //  dd($auctionbidders);
+      //dd($auctionbidders);
 
 
         $subcategoria = DB::table('sub_catogories')
@@ -982,6 +979,7 @@ class AuctionController extends Controller
                    //dd($user);
 
         $lote = DB::table('sub_catogories')
+                            ->where('id',$auction->sub_category_id)
                             ->get();                  
   
        //dd($lote);
@@ -1000,32 +998,33 @@ class AuctionController extends Controller
                        //comprobar la última puja reciente de la subasta
                         $auction_last_bid = Bidding::getAuctionLastBid($auction->id);
 
-
-
-
-
                                 $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
                                     ->first();
                                  //dd($record);
 
                         if ($end_date<=$now) {
+                            $auction->auction_status = 'closed';
+                            $auction->save();
+                        }
+
+                        if ($end_date<=$now) {
                             $record->is_bidder_won = 'Yes';
-                            //dd($record);
                             //dd($record);
                             $record->save();
 
 
                             //reached /> precio de reserva, muestra el ganador del tiempo de subasta ha terminado
                             $currency_code = getSetting('currency_code', 'site_settings');
-                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta ' . $currency_code . $auction_last_bid->bid_amount;
+                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta '. '$' . $auction_last_bid->bid_amount . 'mxn';
 
                             if ($users->id == $record->bidder_id) {
-                                flash('success', $msg, 'success');
                                 Session::flash('succes', $msg);
                             } else {
                                 Session::flash('warning', 'Lo sentimos, no ganaste');
                             }
                         }
+
+
 
         return view('home.pages.auctions.auction-details', $data, compact('invitacion', 'auctionbidders', 'auctionbidders2', 'lote'));
     }

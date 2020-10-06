@@ -160,7 +160,6 @@ use App\SubCatogory;
                 <p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p>
                 <h4><?php echo e($auction->title); ?></h4>
                 <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <?php if($auction->id == $bid->auction_id): ?>
                                 <?php if(Session::has('succes')): ?>
                                     <div class="col-lg-12">
                                         <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
@@ -171,6 +170,7 @@ use App\SubCatogory;
                                             </button>
                                         </div>
                                     </div>
+                                     <?php break; ?>
                                 <?php endif; ?>
                                   <?php if(Session::has('warning')): ?>
                                     <div class="col-lg-12">
@@ -183,7 +183,7 @@ use App\SubCatogory;
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                    <?php endif; ?>
+                    <?php break; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php if(!$live_auction): ?> <!--normal auction happening-->
                   <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
@@ -247,10 +247,12 @@ use App\SubCatogory;
                            </div>
                            <div class="col-8">
                                <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   <?php if($item->auction_id == $auction->id): ?>
                                     <button class="btn mb-3 mr-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros realizados <span class="badge" style="background-color: #0c100c;"><?php echo e($item->no_of_times); ?></span>
                                     </button>
-                                        <?php break; ?>
+                                   <?php endif; ?>
+
                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                     <button class="btn mb-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
@@ -266,7 +268,7 @@ use App\SubCatogory;
 
                                <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Articulos a ganar <span class="badge" style="background-color: #0c100c;">9</span>
+                                      Articulos a ganar <span class="badge" style="background-color: #0c100c;"><?php echo e($lotes->articulos); ?></span>
                                     </button>
                                    <?php break; ?>
                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

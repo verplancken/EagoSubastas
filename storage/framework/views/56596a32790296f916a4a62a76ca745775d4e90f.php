@@ -36,7 +36,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <button class="btn btn-success">Importar Usuarios</button>
-                            <a class="btn btn-info" href="javascript:window.open('https://us17.admin.mailchimp.com/#/create-campaign','','width=auto,height=auto,left=50,top=50,toolbar=yes');void 0">Envirar los correos</a>
+                            <a class="btn btn-warning" href="javascript:window.open('https://us17.admin.mailchimp.com/#/create-campaign','','width=auto,height=auto,left=50,top=50,toolbar=yes');void 0">Usar Mailchamp</a>
                         </div>
                     </div>
               </form>
@@ -48,17 +48,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <input type="hidden" name="auction_id" value="<?php echo e($sub->id); ?>">
-                                  <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if($sub->id == $item->auction_id): ?>
-                                        <?php $i++;?>
-                                            <input type="hidden" name="email" value="<?php echo e($item->email); ?>">
-                                        <?php else: ?>
-                                        <?php endif; ?>
-
-                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                <button class="btn btn-success">Enviar Correos</button>
-
+                                <button class="btn btn-info"> <i class="fa fa-envelope"></i> Enviar Correos</button>
                             </div>
                         </div>
                     </form>
@@ -73,6 +63,7 @@
                         <th>Id subasta</th>
                         <th>Nombre</th>
                         <th>Correo</th>
+                        <th>Estatus</th>
                         <th>Eliminar</th>
                     </thead>
 
@@ -90,6 +81,15 @@
                                                 <td><?php echo e($item->auction_id); ?></td>
                                                 <td><?php echo e($item->name); ?></td>
                                                 <td><?php echo e($item->email); ?></td>
+                                                <td>
+                                                    <?php if($item->estatus == 1): ?>
+
+                                                        <a class="btn btn-xs btn-info">Enviado</a>
+                                                    <?php else: ?>
+                                                        <a class="btn btn-xs btn-warning">No enviado</a>
+                                                    <?php endif; ?>
+
+                                                </td>
 
                                                 <td>
                                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('invitacion_delete')): ?>

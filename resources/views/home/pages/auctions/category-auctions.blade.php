@@ -24,30 +24,31 @@ if (isset($auction) && !empty($auction)) {
                <div class="screenshot-similar-product">
 
                 @foreach ($category_auctions as $auction)
-                <div class="card au-similar-card">
-                  @if (Auth::user())
-                    <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})"><i class="pe-7s-like like"></i></a>
-                    @else
-                     <a href="javascript:void(0);" onclick="showModal('loginModal')"><i class="pe-7s-like like"></i></a>
-                    @endif
+                    @if ($auction->auction_status=='open' && $auction->start_date<=NOW() && $auction->end_date>=NOW())
+                    <div class="card au-similar-card">
+                      @if (Auth::user())
+                        <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})"><i class="pe-7s-like like"></i></a>
+                        @else
+                         <a href="javascript:void(0);" onclick="showModal('loginModal')"><i class="pe-7s-like like"></i></a>
+                        @endif
 
-                    <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="Auction Details">
-                    <img class="img-fluid similar-img" src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}"></a>
+                        <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="Auction Details">
+                        <img class="img-fluid similar-img" src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}"></a>
 
 
-                    <div class="card-block au-similar-block text-center">
+                        <div class="card-block au-similar-block text-center">
 
-                      <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom">
-                        <h6 class="card-title text-center"> {!! str_limit($auction->title,30,'..') !!}</h6>
-                      </a>
+                          <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom">
+                            <h6 class="card-title text-center"> {!! str_limit($auction->title,30,'..') !!}</h6>
+                          </a>
 
-                            <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
+                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
 
-                            <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
 
-                  </div>
-                </div>
-
+                      </div>
+                    </div>
+                        @endif
                 @endforeach
 
             </div>
@@ -55,6 +56,7 @@ if (isset($auction) && !empty($auction)) {
         </div>
     </section>
     @endif
+
 
     <!--SIMILAR CATEGORY PRODUCTS SECTION-->
 

@@ -662,6 +662,7 @@ class Auction extends Model implements HasMedia
                       ->where('users.role_id',getRoleData('seller'))
                       ->where('users.approved',1)
                       ->where('sub_catogories.status','Active')
+                      ->where('auctions.auction_status','open')
                       ->get();
 
     }
