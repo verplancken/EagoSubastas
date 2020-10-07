@@ -1474,6 +1474,7 @@ class AuctionController extends Controller
                                     $save=TRUE;
                                     //dd($save);
                                 } else {
+                                    Session::flash('warning', 'Lo sentimos, no tienes mas tiros');
                                     flash('error','Lo sentimos, no tienes mas tiros', 'error');
                                     return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
                                 }

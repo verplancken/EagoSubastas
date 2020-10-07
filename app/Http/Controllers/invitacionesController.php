@@ -66,14 +66,18 @@ class InvitacionesController extends Controller
                     ->get();
 
         $array = array_pluck($invitacion, 'email');
+      //  dd($array);
 
+            $invitacion3 = Invitaciones::
+                    where('auction_id',$lote)
+                    ->where('estatus',0)
+                    ->select('email')
+                    ->get();
 
+            $array2 = array_pluck($invitacion3, 'email');
+          // dd($array2);
 
-
-
-
-
-          try {
+ try {
                 $mail = new PHPMailer(true);
                 $mail->SMTPDebug = 0;                               // Enable verbose debug output
                 $mail->isSMTP();                                    // Send using SMTP
@@ -121,7 +125,7 @@ class InvitacionesController extends Controller
                         </body>
                         </html>';
 
-                foreach ($array as $email) {
+                foreach ($array2 as $email) {
                   $mail->Subject = 'Invitacion de subasta para '.$email.''  ;
                   $mail->AddAddress($email); // Cargamos el e-mail destinatario a la clase PHPMailer
 
@@ -147,6 +151,7 @@ class InvitacionesController extends Controller
                 echo "Hubo un error al enviar el mensaje: {$mail->ErrorInfo}";
 
           }
+
 
 
 

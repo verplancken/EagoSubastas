@@ -14,14 +14,29 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
           <!--ASIDE BAR SECTION-->
             <div class="col-lg-3 col-md-4 col-sm-12">
                 <h3 class="text-center">Proximas Subastas</h3>
+
+
+
                           <!--featured auctions start-->
                 <?php if($featured_enable=='Yes'): ?>
                     <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php if($user->email == $item->email): ?>
                             <?php if(count($featured_records)): ?>
-                                <div class="row">
+ <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+                                                      <div class="carousel-inner ">
                                    <?php $__currentLoopData = $featured_records; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                        <?php if($auction->sub_category_id == $item->auction_id): ?>
+
+                                    <div class="row">
+
+
+
+                                                            <div class="carousel-item active">
+                                                                <img src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="<?php echo e($auction->title); ?>" class="d-block w-100">
+                                                            </div>
+
+
                                           <div class="col-lg-12 col-md-12 col-sm-12 p-3">
 
                                               <div class="au-accordina">
@@ -38,9 +53,12 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
 
                                               </div>
                                           </div>
+                                       </div>
                                        <?php endif; ?>
                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </div>
+</div>
+
+                                                    </div>
                             <?php endif; ?>
                          <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

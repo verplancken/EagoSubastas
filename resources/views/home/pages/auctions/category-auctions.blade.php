@@ -24,7 +24,7 @@ if (isset($auction) && !empty($auction)) {
                <div class="screenshot-similar-product">
 
                 @foreach ($category_auctions as $auction)
-                    @if ($auction->auction_status=='open' && $auction->start_date<=NOW() && $auction->end_date>=NOW())
+                    @if ($auction->auction_status=='open'  && $auction->end_date>=NOW())
                     <div class="card au-similar-card">
                       @if (Auth::user())
                         <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})"><i class="pe-7s-like like"></i></a>

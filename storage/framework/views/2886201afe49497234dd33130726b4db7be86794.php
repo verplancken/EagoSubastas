@@ -3,7 +3,7 @@
           $user = Auth::user();
   use App\Auction;
 $category_auctions=[];
-if (isset($auctions) && !empty($auctions)) {
+if (isset($auction) && !empty($auction)) {
 
   $category_auctions = App\Auction::getCategoryAuctions($auction->sub_category_id);
   $currency_code = getSetting('currency_code','site_settings');
@@ -24,9 +24,7 @@ if (isset($auctions) && !empty($auctions)) {
                <div class="screenshot-similar-product">
 
                 <?php $__currentLoopData = $category_auctions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <?php if(count($auctions)>1): ?>
-                        <p><?php echo e($auctions); ?></p>
-                    <?php if($auction->auction_status=='open' && $auction->start_date<=NOW() && $auction->end_date>=NOW()): ?>
+                    <?php if($auction->auction_status=='open'  && $auction->end_date>=NOW()): ?>
                     <div class="card au-similar-card">
                       <?php if(Auth::user()): ?>
                         <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)"><i class="pe-7s-like like"></i></a>
@@ -51,7 +49,6 @@ if (isset($auctions) && !empty($auctions)) {
                       </div>
                     </div>
                         <?php endif; ?>
-                       <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
