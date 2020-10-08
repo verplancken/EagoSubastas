@@ -82,7 +82,7 @@ use App\SubCatogory;
                         </ul>
                     </div> -->
 
-                    <div class="sm-product-show">
+            <div class="sm-product-show">
 
                         <div class="sm-product-slider-img">
                             <img src="<?php echo e(getAuctionImage($auction->image)); ?>" id="sm-product-zoom" class="img-responsive" data-zoom-image="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="">
@@ -142,23 +142,30 @@ use App\SubCatogory;
                         <?php endif; ?>
                     </div>
 
-
-
-
                     <!-- /Product-gallery-container-->
                <!-- <img id="zoom_01" src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" data-zoom-image="<?php echo e(IMAGES_HOME); ?>large/image1.jpg" class="img-fluid"> -->
-            </div>
+             </div>
 
 
             <div class="col-lg-6">
 
-                       <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
-                           <i class="fa fa-question" aria-hidden="true"></i>
-                       </button>
+                <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
+                     <i class="fa fa-question" aria-hidden="true"></i>
+                </button>
 
-                <p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p>
-                <p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p>
-                <h4><?php echo e($auction->title); ?></h4>
+                <div class="d-flex bd-highlight mb-3">
+                  <div class="mr-auto p-2 bd-highlight"><h4 class="text-left"><?php echo e($auction->title); ?></h4></div>
+                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p></div>
+                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p></div>
+                </div>
+
+                   <?php if(!$live_auction): ?> <!--normal auction happening-->
+                        <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                   <?php endif; ?>
+
+                    <?php if($live_auction_starts): ?>
+                      <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i><?php echo e($auction->live_auction_start_time); ?>, Prepárate para participar</p>
+                    <?php endif; ?>
                 <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php if(Session::has('succes')): ?>
                                     <div class="col-lg-12">
@@ -185,17 +192,6 @@ use App\SubCatogory;
                                 <?php endif; ?>
                     <?php break; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <?php if(!$live_auction): ?> <!--normal auction happening-->
-                  <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
-                <?php endif; ?>
-
-
-
-                <?php if($live_auction_starts): ?>
-                  <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i><?php echo e($auction->live_auction_start_time); ?>, Prepárate para participar</p>
-                <?php endif; ?>
-
-
 
               <?php if($live_auction): ?> <!--live auction happening-->
 
@@ -225,9 +221,9 @@ use App\SubCatogory;
                    <!-- <p class="text-blue"><b><i class="pe-7s-timer"> </i>
                         <?php echo e(strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))); ?></b></p>-->
                        <div class="row">
-                           <div class="col-4">
+                           <div class="col-6">
                                <h4>
-                                    <strong data-toggle="tooltip" title="Precio de reserva" data-placement="top" >$<?php echo number_format($auction->reserve_price); ?> MXN</strong>
+                                    <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >Precio Reserva <br> <strong>$<?php echo number_format($auction->reserve_price); ?> MXN</strong></p>
 
             
                                   <!--<span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >-->
@@ -241,34 +237,31 @@ use App\SubCatogory;
                                   <!--</span>-->
 
                                 </h4>
-                               <?php if($auction->is_bid_increment == 1): ?>
-                                    <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >El incremento es de: $<?php echo number_format($auction->bid_increment); ?> MXN</p>
-                               <?php endif; ?>
                            </div>
-                           <div class="col-8">
+                           <div class="col-6">
                                <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                    <?php if($item->auction_id == $auction->id): ?>
-                                    <button class="btn mb-3 mr-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros realizados <span class="badge" style="background-color: #0c100c;"><?php echo e($item->no_of_times); ?></span>
                                     </button>
                                    <?php endif; ?>
 
                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                    <button class="btn mb-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros permitidos <span class="badge" style="background-color: #0c100c;"><?php echo e($auction->tiros); ?></span>
                                     </button>
 
                                <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Articulos ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Art ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
                                     </button>
                                        <?php break; ?>
                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Articulos a ganar <span class="badge" style="background-color: #0c100c;"><?php echo e($lotes->articulos); ?></span>
+                                    <button class="btn mb-3 ml-4" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Art a ganar <span class="badge" style="background-color: #0c100c;"><?php echo e($lotes->articulos); ?></span>
                                     </button>
                                    <?php break; ?>
                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -280,9 +273,9 @@ use App\SubCatogory;
             <?php if($bid_options): ?>
 
               
-                                <p>seleccione oferta máxima</p>
+                                <p>Seleccione oferta máxima</p>
                         <div class="row">
-                          <div class="col-lg-6">
+                          <div class="col-lg-5">
                                 <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
 
@@ -304,6 +297,8 @@ use App\SubCatogory;
 
                                                         <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
                                                       </div>
+                          </div>
+                                <div class="col-lg-7">
 
                                                       <div class="form-group">
                                                         <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
@@ -317,9 +312,13 @@ use App\SubCatogory;
                                                       </div>
                                                       <?php echo Form::close(); ?>
 
-                                  <?php else: ?>
+
+                                                            <?php if($auction->is_bid_increment == 1): ?>
+                                                                <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>$<?php echo number_format($auction->bid_increment); ?> MXN</strong></p>
+                                                           <?php endif; ?>
+                                      <?php else: ?>
                                         <p>Lo sentimos, ya no puede subastar</p>
-                                    <?php endif; ?>
+                                      <?php endif; ?>
                                        <?php break; ?>
                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
@@ -406,8 +405,7 @@ use App\SubCatogory;
 
                 </div>
                  <?php else: ?>
-
-                        <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?><br></strong>
+                        <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?><br></strong>
                 <!--if auction status is closed end-->
                 <?php endif; ?>
 
@@ -466,7 +464,11 @@ use App\SubCatogory;
        </div>
 
    </div>
- <?php echo $__env->make('home.pages.auctions.category-auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Detalles de Subasta
+  </a>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
     <!--AUCTION DETAILS SECTION-->
     <section class="au-premium-product">
         <div class="container">
@@ -536,7 +538,7 @@ use App\SubCatogory;
                                      <li class="list-group-item d-flex justify-content-between align-items-center">
 
                                          Precio de reserva
-                                      <span><?php if($auction->reserve_price): ?> <?php echo e($currency_code); ?> <?php echo e(number_format($auction->reserve_price)); ?> <?php endif; ?></span>
+                                      <span><?php if($auction->reserve_price): ?> $ <?php echo e(number_format($auction->reserve_price)); ?> MXN <?php endif; ?></span>
                                      </li>
 
                                      <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -550,7 +552,7 @@ use App\SubCatogory;
                                      <li class="list-group-item d-flex justify-content-between align-items-center">
 
                                           Inicio de oferta
-                                      <span><?php if($auction->minimum_bid): ?> <?php echo e($currency_code); ?>  <?php echo e(number_format($auction->minimum_bid)); ?> <?php endif; ?></span>
+                                      <span><?php if($auction->minimum_bid): ?> $  <?php echo e(number_format($auction->minimum_bid)); ?> MXN <?php endif; ?></span>
                                      </li>
 
 
@@ -864,9 +866,12 @@ use App\SubCatogory;
       </div>
     </section>
     <!--AUCTION DETAILS SECTION END-->
+ </div>
+</div>
+
 
     <!--SAME CATEGORY AUCTIONS SECTION-->
-    
+     <?php echo $__env->make('home.pages.auctions.category-auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <!--SAME CATEGORY AUCTIONS SECTION-->
 

@@ -60,22 +60,25 @@ class InvitacionesController extends Controller
     public function enviarCorreo(Request $request){
         $lote = $request->get('auction_id');
 
-        $invitacion = Invitaciones::
-                    where('auction_id',$lote)
-                    ->select('email')
-                    ->get();
-
-        $array = array_pluck($invitacion, 'email');
-      //  dd($array);
-
             $invitacion3 = Invitaciones::
                     where('auction_id',$lote)
                     ->where('estatus',0)
-                    ->select('email')
+                    ->select('email', 'estatus')
                     ->get();
+           // dd($invitacion3);
 
             $array2 = array_pluck($invitacion3, 'email');
           // dd($array2);
+            foreach ($array2 as $email) {
+                $invitacion = Invitaciones::where('email', $email)
+                    ->where('auction_id',$lote)
+                    ->where('estatus',0)
+                    ->first();
+                //dd($invitacion);
+
+                $invitacion->estatus = 1;
+                $invitacion->save();
+            }
 
  try {
                 $mail = new PHPMailer(true);
@@ -128,12 +131,6 @@ class InvitacionesController extends Controller
                 foreach ($array2 as $email) {
                   $mail->Subject = 'Invitacion de subasta para '.$email.''  ;
                   $mail->AddAddress($email); // Cargamos el e-mail destinatario a la clase PHPMailer
-
-                    $invitacion2 = Invitaciones::where('email', $email)
-                        ->first();
-
-                $invitacion2->estatus = 1;
-                $invitacion2->save();
 
                 if ($mail->send()) {
                     $messages[] = "correo  ha sido enviado con éxito.";

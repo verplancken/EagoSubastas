@@ -84,7 +84,7 @@ use App\SubCatogory;
                         </ul>
                     </div> -->
 
-                    <div class="sm-product-show">
+            <div class="sm-product-show">
 
                         <div class="sm-product-slider-img">
                             <img src="{{getAuctionImage($auction->image)}}" id="sm-product-zoom" class="img-responsive" data-zoom-image="{{getAuctionImage($auction->image,'auction')}}" alt="">
@@ -144,23 +144,30 @@ use App\SubCatogory;
                         @endif
                     </div>
 
-
-
-
                     <!-- /Product-gallery-container-->
                <!-- <img id="zoom_01" src="{{getAuctionImage($auction->image,'auction')}}" data-zoom-image="{{IMAGES_HOME}}large/image1.jpg" class="img-fluid"> -->
-            </div>
+             </div>
 
 
             <div class="col-lg-6">
 
-                       <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
-                           <i class="fa fa-question" aria-hidden="true"></i>
-                       </button>
+                <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
+                     <i class="fa fa-question" aria-hidden="true"></i>
+                </button>
 
-                <p class="text-muted text-right">IDSubasta{{$auction->id}}</p>
-                <p class="text-muted text-right">IDLote:{{$auction->sub_category_id}}</p>
-                <h4>{{$auction->title}}</h4>
+                <div class="d-flex bd-highlight mb-3">
+                  <div class="mr-auto p-2 bd-highlight"><h4 class="text-left">{{$auction->title}}</h4></div>
+                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDSubasta{{$auction->id}}</p></div>
+                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDLote:{{$auction->sub_category_id}}</p></div>
+                </div>
+
+                   @if (!$live_auction) <!--normal auction happening-->
+                        <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                   @endif
+
+                    @if ($live_auction_starts)
+                      <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i>{{$auction->live_auction_start_time}}, Prepárate para participar</p>
+                    @endif
                 @foreach($auctionbidders as $bid)
                                 @if(Session::has('succes'))
                                     <div class="col-lg-12">
@@ -185,17 +192,6 @@ use App\SubCatogory;
                                 @endif
                     @break
                 @endforeach
-                @if (!$live_auction) <!--normal auction happening-->
-                  <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
-                @endif
-
-
-
-                @if ($live_auction_starts)
-                  <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i>{{$auction->live_auction_start_time}}, Prepárate para participar</p>
-                @endif
-
-
 
               @if ($live_auction) <!--live auction happening-->
 
@@ -225,9 +221,9 @@ use App\SubCatogory;
                    <!-- <p class="text-blue"><b><i class="pe-7s-timer"> </i>
                         {{strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))}}</b></p>-->
                        <div class="row">
-                           <div class="col-4">
+                           <div class="col-6">
                                <h4>
-                                    <strong data-toggle="tooltip" title="Precio de reserva" data-placement="top" >${!! number_format($auction->reserve_price) !!} MXN</strong>
+                                    <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >Precio Reserva <br> <strong>${!! number_format($auction->reserve_price) !!} MXN</strong></p>
 
             {{--                        {{$auction->reserve_price}}--}}
                                   <!--<span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >-->
@@ -241,34 +237,31 @@ use App\SubCatogory;
                                   <!--</span>-->
 
                                 </h4>
-                               @if($auction->is_bid_increment == 1)
-                                    <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >El incremento es de: ${!! number_format($auction->bid_increment) !!} MXN</p>
-                               @endif
                            </div>
-                           <div class="col-8">
+                           <div class="col-6">
                                @foreach($auctionbidders as $item)
                                    @if($item->auction_id == $auction->id)
-                                    <button class="btn mb-3 mr-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros realizados <span class="badge" style="background-color: #0c100c;">{{$item->no_of_times}}</span>
                                     </button>
                                    @endif
 
                                @endforeach
 
-                                    <button class="btn mb-3" style="padding: 5px;  background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros permitidos <span class="badge" style="background-color: #0c100c;">{{$auction->tiros}}</span>
                                     </button>
 
                                @foreach($auctionbidders as $item)
-                                    <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Articulos ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Art ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
                                     </button>
                                        @break
                                @endforeach
 
                                @foreach($lote as $lotes)
-                                    <button class="btn mb-3 mr-1" style="padding: 5px;  background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Articulos a ganar <span class="badge" style="background-color: #0c100c;">{{$lotes->articulos}}</span>
+                                    <button class="btn mb-3 ml-4" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Art a ganar <span class="badge" style="background-color: #0c100c;">{{$lotes->articulos}}</span>
                                     </button>
                                    @break
                                @endforeach
@@ -280,9 +273,9 @@ use App\SubCatogory;
             @if ($bid_options)
 
               {{-- <p>{{getPhrase('select_maximum_bid')}}</p>--}}
-                                <p>seleccione oferta máxima</p>
+                                <p>Seleccione oferta máxima</p>
                         <div class="row">
-                          <div class="col-lg-6">
+                          <div class="col-lg-5">
                                 {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
 
                                 {{-- Traer el id de la subasta en que se esta --}}
@@ -302,6 +295,8 @@ use App\SubCatogory;
                                                         ])}}
                                                         <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
                                                       </div>
+                          </div>
+                                <div class="col-lg-7">
 
                                                       <div class="form-group">
                                                         <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
@@ -314,9 +309,13 @@ use App\SubCatogory;
                                                           </div>
                                                       </div>
                                                       {!! Form::close() !!}
-                                  @else
+
+                                                            @if($auction->is_bid_increment == 1)
+                                                                <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
+                                                           @endif
+                                      @else
                                         <p>Lo sentimos, ya no puede subastar</p>
-                                    @endif
+                                      @endif
                                        @break
                               @endforeach
 
@@ -399,8 +398,7 @@ use App\SubCatogory;
 
                 </div>
                  @else
-
-                        <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?><br></strong>
+                        <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?><br></strong>
                 <!--if auction status is closed end-->
                 @endif
 
@@ -464,7 +462,11 @@ use App\SubCatogory;
        </div>
 
    </div>
- @include('home.pages.auctions.category-auctions')
+          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Detalles de Subasta
+  </a>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
     <!--AUCTION DETAILS SECTION-->
     <section class="au-premium-product">
         <div class="container">
@@ -534,7 +536,7 @@ use App\SubCatogory;
                                      <li class="list-group-item d-flex justify-content-between align-items-center">
 {{--                                      {{getPhrase('reserve_price')}}--}}
                                          Precio de reserva
-                                      <span>@if($auction->reserve_price) {{$currency_code}} {{ number_format($auction->reserve_price)}} @endif</span>
+                                      <span>@if($auction->reserve_price) $ {{ number_format($auction->reserve_price)}} MXN @endif</span>
                                      </li>
 
                                      <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -548,7 +550,7 @@ use App\SubCatogory;
                                      <li class="list-group-item d-flex justify-content-between align-items-center">
 {{--                                      {{getPhrase('bid_start')}}--}}
                                           Inicio de oferta
-                                      <span>@if ($auction->minimum_bid) {{$currency_code}}  {{ number_format($auction->minimum_bid) }} @endif</span>
+                                      <span>@if ($auction->minimum_bid) $  {{ number_format($auction->minimum_bid) }} MXN @endif</span>
                                      </li>
 
 
@@ -862,9 +864,12 @@ use App\SubCatogory;
       </div>
     </section>
     <!--AUCTION DETAILS SECTION END-->
+ </div>
+</div>
+
 
     <!--SAME CATEGORY AUCTIONS SECTION-->
-    {{-- @include('home.pages.auctions.category-auctions') --}}
+     @include('home.pages.auctions.category-auctions')
 
     <!--SAME CATEGORY AUCTIONS SECTION-->
 

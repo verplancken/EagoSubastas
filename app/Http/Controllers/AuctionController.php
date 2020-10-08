@@ -855,14 +855,18 @@ class AuctionController extends Controller
                 $increment = $auction->bid_increment;
                 $reserve_price = $auction->reserve_price;
 
+
+
+
                 if ($auction->minimum_bid>0) {
 
                     // opciones: empezar desde la oferta mínima
                     // $bid_options[] = $start;
                    // dd($increment);
-                    for ($i=$start;$i<=($start+$increment);$i=$i+$increment) {
+                    for ($i=$start;$i<=($reserve_price+$start+$increment);$i=$i+$increment) {
                             $bid_options[$i] = $i;
                     }
+
 
                 } else {
 
