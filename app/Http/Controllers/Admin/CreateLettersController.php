@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 use App\Subscriber;
+use App\User;
 use Exception;
 class CreateLettersController extends Controller
 {
@@ -66,7 +67,7 @@ class CreateLettersController extends Controller
         $data['active_class'] = 'news_letter';
      
 
-        $data['subscribers']  = Subscriber::getSubscriberOptions();
+        $data['subscribers']  = User::all()->pluck('email', 'id');
             
         return view('admin.create_letters.create', $data);
     }

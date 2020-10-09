@@ -37,10 +37,193 @@ use App\SubCatogory;
 
 ?>
 
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-3" >
+            <div class="d-flex justify-content-between">
+
+                  <a class="nav-item au-product-nav nav-link active d-inline" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
+                      detalles de la subasta
+                  </a>
+
+                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="true">
+                      Envío & pago
+                  </a>
+
+                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-terms" role="button" aria-controls="nav-terms" aria-expanded="false">
+                      condiciones de subasta & informacion
+                  </a>
+
+                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-bid" role="button" aria-controls="nav-bid" aria-expanded="false">
+                      historial de ofertas
+                  </a>
+
+            </div>
+
+                {{--  Detalles de la subasta--}}
+                 <div class="collapse" id="nav-auction">
+                  <div class="card card-body">
+                        <div class="row">
+
+                            <div class="col-4 ">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Fecha de inicio
+                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
+                                    </li>
+
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Fecha final
+                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
+                                    </li>
+                            </div>
+
+                            <div class="col-4 ">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                         Precio de reserva
+                                      <span>@if($auction->reserve_price) {{$currency_code}} {{ number_format($auction->reserve_price)}} @endif</span>
+                                     </li>
+
+
+                                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                                         Tiros por subasta
+                                      <span>@if($auction->tiros) {{$auction->tiros}} @endif</span>
+                                     </li>
+                            </div>
+
+                            <div class="col-4 ">
+
+                                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                                          Inicio de oferta
+                                      <span>@if ($auction->minimum_bid) {{$currency_code}}  {{ number_format($auction->minimum_bid) }} @endif</span>
+                                     </li>
+
+                                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                                         ¿La subasta de de auto incremento?
+                                        <span>
+                                            @if ($auction->is_bid_increment==1)
+                                                Si
+                                            @else
+                                                No
+                                            @endif
+                                        </span>
+                                     </li>
+
+                                    @if ($auction->bid_increment)
+                                         <li class="list-group-item d-flex justify-content-between align-items-center">
+                                             Incremento de oferta ($MXN)
+                                          <span>{{$currency_code}} {{$auction->bid_increment}}</span>
+                                         </li>
+                                     @endif
+
+                                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Tipo de subastas
+                                        <span>
+                                        @if ($auction->visibilidad==1)
+                                            Abierta
+                                        @else
+                                            Cerrada
+                                        @endif
+                                        </span>
+                                     </li>
+
+                                      @if ($auction->is_buynow==1)
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                              comprar ahora precio
+                                            <span>@if ($auction->buy_now_price) {{$currency_code}} {{$auction->buy_now_price}} @endif</span>
+                                          </li>
+                                      @endif
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{-- Fin  Detalles de la subasta--}}
+
+                {{--  Envio y Pago--}}
+                 <div class="collapse" id="nav-shipping">
+                      <div class="card card-body">
+                            <div class="row">
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                  <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
+
+                                    <p>{!! $auction->shipping_conditions !!}</p>
+
+                                  </div>
+                                </div>
+
+                            </div>
+                      </div>
+                 </div>
+                 {{-- Fin Envio y Pago--}}
+
+                 {{--  Condiciones De Subasta & Informacion--}}
+                 <div class="collapse" id="nav-terms">
+                      <div class="card card-body">
+                            <div class="row">
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
+
+                                      <p>{!! $auction->shipping_terms !!}</p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                      </div>
+                 </div>
+                 {{-- Fin Condiciones De Subasta & Informacion--}}
+
+                  {{--  Historial De Ofertas --}}
+                 <div class="collapse" id="nav-bid">
+                      <div class="card card-body">
+                            <div class="row">
+
+                              <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                  <div class=" au-policy">
+
+                                    @if (isset($bidding_history) && count($bidding_history))
+
+                                      @if ($auction->visibilidad==1)
+                                        <ul class="list-group z-depth-0">
+                                          <li class="list-group-item justify-content-between">
+                                              <span><b>{{getPhrase('username')}}</b></span>
+                                              <span style="float:right;"><b>{{getPhrase('bid_amount')}}</b></span>
+                                          </li>
+                                          @foreach ($bidding_history as $bid)
+                                              <li class="list-group-item justify-content-between">
+                                                <span>Usuario</span>
+                                                <span style="float:right;">${{$bid->bid_amount}} MXN</span>
+                                              </li>
+                                          @endforeach
+                                        </ul>
+                                       @else
+                                         <span>Usuario</span>
+                                      @endif
+                                    @endif
+
+                                  </div>
+                              </div>
+
+                            </div>
+                      </div>
+                 </div>
+                 {{-- Fin Historial De Ofertas --}}
+
+
+        </div>
+    </div>
+</div>
+
+
  <!--CATEGORY BODY SECTION-->
  @foreach ($invitacion as $item)
     @if ($user->email == $item->email)
     @if ($auction->sub_category_id == $item->auction_id)
+
      <section class="single-product section-pad">
       <div class="container">
 
@@ -83,7 +266,6 @@ use App\SubCatogory;
 
                         </ul>
                     </div> -->
-
             <div class="sm-product-show">
 
                         <div class="sm-product-slider-img">
@@ -462,417 +644,13 @@ use App\SubCatogory;
        </div>
 
    </div>
-          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Detalles de Subasta
-  </a>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
-    <!--AUCTION DETAILS SECTION-->
-    <section class="au-premium-product">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 au-deals">
-               <!--     <p class="text-center">Dummy text of the printing industry</p> -->
-                   <!-- <h2 class="text-center"> Auction Information </h2> </div> -->
 
-                  <div class="col-lg-12 col-md-12 col-sm-12 au-premium product-tabs">
-
-                    <nav class="au-tabs">
-                      <div class="nav au-product-tabs nav-tabs" id="nav-tab" role="tablist">
-
-{{--                        <a class="nav-item au-product-nav nav-link active" id="nav-auction-tab" data-toggle="tab" href="#nav-auction" role="tab" aria-controls="nav-auction" aria-selected="true"> {{getPhrase('auction_details')}} </a>--}}
-                          <a class="nav-item au-product-nav nav-link active" id="nav-auction-tab" data-toggle="tab" href="#nav-auction" role="tab" aria-controls="nav-auction" aria-selected="true"> detalles de la subasta </a>
-
-{{--                        <a class="nav-item au-product-nav nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-shipping" aria-selected="false"> {{getPhrase('shipping')}} & {{getPhrase('payment')}}</a>--}}
-
-                            <a class="nav-item au-product-nav nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-shipping" aria-selected="false"> Envío & pago</a>
-
-{{--                        <a class="nav-item au-product-nav nav-link" id="nav-terms-tab" data-toggle="tab" href="#nav-terms" role="tab" aria-controls="nav-terms" aria-selected="false"> {{getPhrase('auction_terms')}} & {{getPhrase('info')}} </a>--}}
-
-                          <a class="nav-item au-product-nav nav-link" id="nav-terms-tab" data-toggle="tab" href="#nav-terms" role="tab" aria-controls="nav-terms" aria-selected="false"> condiciones de subasta & informacion </a>
-
-{{--                        <a class="nav-item au-product-nav nav-link" id="nav-bid-tab" data-toggle="tab" href="#nav-bid" role="tab" aria-controls="nav-bid" aria-selected="false"> {{getPhrase('bid_history')}} </a>--}}
-
-                          <a class="nav-item au-product-nav nav-link" id="nav-bid-tab" data-toggle="tab" href="#nav-bid" role="tab" aria-controls="nav-bid" aria-selected="false"> historial de ofertas </a>
-
-                      </div>
-                    </nav>
-
-
-                    <!--tabs start-->
-                    <div class="tab-content au-product-content" id="nav-tabContent">
-
-
-                        <!--auction details tab start-->
-                        <div class="tab-pane au-tab-pane fade show active" id="nav-auction" role="tabpanel" aria-labelledby="nav-auction-tab">
-
-                            <div class="row">
-
-                              <div class="col-lg-12">
-                                  <!-- <h5><b>Description</b></h5> -->
-
-                                  <p>{!! $auction->description !!}</p>
-
-                              </div>
-
-
-                              <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-
-                                <ul class="list-group">
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-{{--                                      {{getPhrase('start_date')}}--}}
-                                        Fecha de inicio
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
-                                    </li>
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-{{--                                      {{getPhrase('end_date')}}--}}
-                                        Fecha final
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
-                                    </li>
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-{{--                                      {{getPhrase('reserve_price')}}--}}
-                                         Precio de reserva
-                                      <span>@if($auction->reserve_price) $ {{ number_format($auction->reserve_price)}} MXN @endif</span>
-                                     </li>
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-{{--                                      {{getPhrase('reserve_price')}}--}}
-                                         Tiros por subasta
-                                      <span>@if($auction->tiros) {{$auction->tiros}} @endif</span>
-                                     </li>
-
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-{{--                                      {{getPhrase('bid_start')}}--}}
-                                          Inicio de oferta
-                                      <span>@if ($auction->minimum_bid) $  {{ number_format($auction->minimum_bid) }} MXN @endif</span>
-                                     </li>
-
-
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                         ¿La subasta de de auto incremento?
-
-                                        <span>
-                                        @if ($auction->is_bid_increment==1)
-
-                                            Si
-                                        @else
-
-                                            No
-                                        @endif
-                                        </span>
-                                     </li>
-
-                                    @if ($auction->bid_increment)
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                         Incremento de oferta ($MXN)
-                                      <span>{{$currency_code}} {{$auction->bid_increment}}</span>
-                                    </li>
-                                     @endif
-
-
-
-
-<!--                                     <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--{{--                                      {{getPhrase('is_it_buynow_item')}}--}}-->
-<!--                                         comprar ahora artículo-->
-<!--                                        <span>-->
-<!--                                        @if ($auction->is_buynow==1)-->
-<!--{{--                                            {{getPhrase('yes')}}--}}-->
-<!--                                            SI-->
-<!--                                        @else-->
-<!--{{--                                            {{getPhrase('no')}}--}}-->
-<!--                                            NO-->
-<!--                                        @endif-->
-<!--                                        </span>-->
-<!--                                     </li>-->
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-{{--                                      {{getPhrase('is_it_buynow_item')}}--}}
-                                        Tipo de subastas
-                                        <span>
-                                        @if ($auction->visibilidad==1)
-{{--                                            {{getPhrase('yes')}}--}}
-                                            Abierta
-                                        @else
-{{--                                            {{getPhrase('no')}}--}}
-                                            Cerrada
-                                        @endif
-                                        </span>
-                                     </li>
-
-
-                                     @if ($auction->is_buynow==1)
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-{{--                                        {{getPhrase('buy_now_price')}}--}}
-                                          comprar ahora precio
-                                        <span>@if ($auction->buy_now_price) {{$currency_code}} {{$auction->buy_now_price}} @endif</span>
-                                      </li>
-
-                                     @endif
-
-                                  </ul>
-                              </div>
-
-
-                              @if (isset($seller) && !empty($seller))
-
-<!--                               <div class="col-lg-6 col-md-6 col-sm-12 au-terms">-->
-
-<!--                                <ul class="list-group">-->
-
-<!--                                    <li class="list-group-item">-->
-<!--{{--                                        <strong>{{getPhrase('seller_information')}}</strong>--}}-->
-<!--                                         <strong>Información del vendedor</strong>-->
-<!--                                    </li>-->
-
-<!--                                    <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--{{--                                      {{getPhrase('seller_name')}}--}}-->
-<!--                                        Nombre del vendedor-->
-<!--                                      <span>{{$seller->username}}</span>-->
-<!--                                    </li>-->
-
-
-<!--                                    <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--{{--                                      {{getPhrase('email')}}--}}-->
-<!--                                        Email-->
-<!--                                      <span>{{$seller->email}}</span>-->
-<!--                                    </li>-->
-
-
-<!--                                    <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--{{--                                      {{getPhrase('phone')}}--}}-->
-<!--                                         Telefono-->
-<!--                                      <span>{{$seller->phone}}</span>-->
-<!--                                    </li>-->
-
-
-                                    <!--live auction date&time-->
-<!--                                    @if ($auction->live_auction_date)-->
-<!--                                    <li class="list-group-item">-->
-<!--                                        <strong>-->
-<!--{{--                                            {{getPhrase('live_auction')}}--}}-->
-<!--                                            Subasta en vivo-->
-<!--                                        </strong>-->
-<!--                                    </li>-->
-
-<!--                                      <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--{{--                                        {{getPhrase('date')}}--}}-->
-<!--                                        Fecha-->
-<!--                                        @if ($auction->live_auction_date)-->
-<!--                                        <span>-->
-<!--                                          <?php echo date(getSetting('date_format','site_settings'),  strtotime($auction->live_auction_date));?>-->
-<!--                                        </span>-->
-<!--                                        @endif-->
-<!--                                      </li>-->
-
-
-<!--                                    <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--{{--                                      {{getPhrase('start_time')}}--}}-->
-<!--                                       Hora de inicio-->
-<!--                                      @if ($auction->live_auction_start_time)-->
-<!--                                      <span>{{$auction->live_auction_start_time}}</span>-->
-<!--                                      @endif-->
-<!--                                    </li>-->
-
-
-<!--                                    <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--{{--                                      {{getPhrase('end_time')}}--}}-->
-<!--                                       Hora de finalización-->
-<!--                                      @if ($auction->live_auction_end_time)-->
-<!--                                      <span>{{$auction->live_auction_end_time}}</span>-->
-<!--                                      @endif-->
-<!--                                    </li>-->
-<!--                                    @endif-->
-                                    <!--live auction date&time-->
-
-
-<!--                                </ul>-->
-<!--                               </div>-->
-
-                              @endif
-
-
-                               <!--  <div class="col-lg-7 col-md-7 col-sm-12 au-terms">
-
-                                   <table class="table table-responsive-xl table-bordered">
-
-                                     <tbody>
-                                      <tr>
-                                       <td>Start Date</td>
-                                       <td> {{$auction->start_date}}</td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>End Date</td>
-                                       <td> {{$auction->end_date}}</td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>Reserve Price </td>
-                                       <td> @if($auction->reserve_price) {{$currency_code}}{{$auction->reserve_price}} @endif</td>
-                                      </tr>
-
-
-                                      <tr>
-                                       <td>Bid Start </td>
-                                       <td> @if ($auction->minimum_bid) {{$currency_code}}{{$auction->minimum_bid}} @endif</td>
-                                      </tr>
-
-
-                                       <tr>
-                                       <td>Bid Increment </td>
-                                       <td> @if ($auction->bid_increment) {{$currency_code}}{{$auction->bid_increment}} @endif</td>
-                                      </tr>
-
-                                       <tr>
-                                       <td>Buy Now Price </td>
-                                       <td> @if ($auction->buy_now_price) {{$currency_code}}{{$auction->buy_now_price}} @endif</td>
-                                      </tr>
-
-
-                                    </tbody>
-                                  </table>
-
-                                    </div> -->
-
-
-                                  <!-- <div class="col-lg-5 col-md-5 col-sm-12 au-terms">
-                                  @if (isset($seller) && !empty($seller))
-                                  <table class="table table-responsive-xl table-bordered">
-                                    <tbody>
-                                      <thead>
-                                        <tr>
-                                          <th>Seller Information</th>
-                                          <th></th>
-                                        </tr>
-                                      </thead>
-                                      <tr>
-                                       <td>Seller Name</td>
-                                       <td>{{$seller->username}}</td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>Email</td>
-                                       <td>{{$seller->email}}</td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>Phone</td>
-                                       <td>{{$seller->phone}}</td>
-                                      </tr>
-
-                                    </tbody>
-                                  </table>
-                                  @endif
-                                </div> -->
-
-
-
-                            </div>
-
-                          </div>
-                          <!--auction details tab end-->
-
-                        <!--shipping and payment tab start-->
-                        <div class="tab-pane fade" id="nav-shipping" role="tabpanel" aria-labelledby="nav-shipping-tab">
-
-                          <div class="row">
-
-                              <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                              <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-
-                                <p>{!! $auction->shipping_conditions !!}</p>
-                             </div>
-                           </div>
-
-                          </div>
-                        </div>
-                        <!--Shipping and payment tab end-->
-
-                        <!--Auctiont terms and info tab start-->
-                        <div class="tab-pane fade" id="nav-terms" role="tabpanel" aria-labelledby="nav-terms-tab">
-
-                          <div class="row">
-
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-
-                                <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-                                  <p>{!! $auction->shipping_terms !!}</p>
-                                </div>
-
-                              </div>
-
-                           </div>
-                        </div>
-                        <!--auction terms and info tab end-->
-
-                        <!--Bidding history Tab Start-->
-                        <div class="tab-pane fade" id="nav-bid" role="tabpanel" aria-labelledby="nav-bid-tab">
-
-                          <div class="row">
-
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                <div class=" au-policy">
-
-                                @if (isset($bidding_history) && count($bidding_history))
-
-                                  @if ($auction->visibilidad==1)
-                                    <ul class="list-group z-depth-0">
-                                      <li class="list-group-item justify-content-between">
-                                          <span><b>{{getPhrase('username')}}</b></span>
-                                          <span style="float:right;"><b>{{getPhrase('bid_amount')}}</b></span>
-                                      </li>
-                                      @foreach ($bidding_history as $bid)
-                                          <li class="list-group-item justify-content-between">
-                                            <span>Usuario</span>
-                                            <span style="float:right;">${{$bid->bid_amount}} MXN</span>
-                                          </li>
-                                      @endforeach
-                                    </ul>
-                                   @else
-                                     <span>Usuario</span>
-                                  @endif
-                                @endif
-
-
-
-
-
-                                </div>
-                              </div>
-
-                           </div>
-                        </div>
-                        <!--Bidding Tab Section end-->
-
-
-                    </div>
-                    <!--tabs end-->
-
-                </div>
-            </div>
-        </div>
-      </div>
-    </section>
-    <!--AUCTION DETAILS SECTION END-->
- </div>
-</div>
 
 
     <!--SAME CATEGORY AUCTIONS SECTION-->
      @include('home.pages.auctions.category-auctions')
 
     <!--SAME CATEGORY AUCTIONS SECTION-->
-
 
     <!--SELLER AUCTIONS SECTION-->
     {{-- @include('home.pages.auctions.seller-auctions') --}}
