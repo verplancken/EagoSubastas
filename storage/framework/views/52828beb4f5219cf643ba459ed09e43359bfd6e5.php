@@ -83,7 +83,7 @@
                                  
                                     <?php echo e(Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Username',
+                                        'placeholder' => 'Alias',
 
                                         'ng-model'=>'username',
 
@@ -242,6 +242,11 @@
                                 
                             </div>
 
+                            <div class="form-group col-lg-12">
+                                        <strong>Al registrarse esta aceptando los terminos y condiciones</strong><br>
+                                        <a href="http://localhost/EagoSubastas/terminos-y-condiciones">Terminos y Condiciones</a>
+                            </div>
+
 
 
                             <div class="form-group">
@@ -249,25 +254,23 @@
                            <?php echo Form::label('user', getPhrase('user'), ['class' => 'control-label']); ?>
 
 
-                       
 
 
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                    <?php echo e(Form::radio('user_type','seller', true, array('id'=>'seller', 'name'=>'user_type'))); ?>
 
-                                        
-                                        <label for="seller"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('seller')); ?></label> 
-                                    </div>
-                                    <div class="col-md-6">
-                                    <?php echo e(Form::radio('user_type','bidder', false, array('id'=>'bidder', 'name'=>'user_type'))); ?>
 
-                                        <label for="bidder"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> <?php echo e(getPhrase('bidder')); ?> 
-                                        </label>
-                                    </div>
-                                </div>
 
-                                
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                             </div>

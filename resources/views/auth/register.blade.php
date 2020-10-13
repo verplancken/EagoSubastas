@@ -220,29 +220,27 @@
                                 
                             </div>
 
-
-
                             <div class="form-group">
 
                            {!! Form::label('user', getPhrase('user'), ['class' => 'control-label']) !!}
 
-                       
 
 
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                    {{ Form::radio('user_type','seller', true, array('id'=>'seller', 'name'=>'user_type')) }}
-                                        
-                                        <label for="seller"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> {{getPhrase('seller')}}</label> 
-                                    </div>
-                                    <div class="col-md-6">
-                                    {{ Form::radio('user_type','bidder', false, array('id'=>'bidder', 'name'=>'user_type')) }}
-                                        <label for="bidder"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> {{getPhrase('bidder')}} 
-                                        </label>
-                                    </div>
-                                </div>
 
-                                
+{{--                                <div class="form-group row">--}}
+{{--                                    <div class="col-md-6">--}}
+{{--                                    {{ Form::radio('user_type','seller', true, array('id'=>'seller', 'name'=>'user_type')) }}--}}
+{{--                                        --}}
+{{--                                        <label for="seller"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> {{getPhrase('seller')}}</label> --}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-6">--}}
+{{--                                    {{ Form::radio('user_type','bidder', false, array('id'=>'bidder', 'name'=>'user_type')) }}--}}
+{{--                                        <label for="bidder"> <span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span> {{getPhrase('bidder')}} --}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
+
 
 
                             </div>

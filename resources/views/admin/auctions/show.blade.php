@@ -30,12 +30,12 @@
 {{--        <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><i class="fa fa-list"></i> {{getPhrase('auction_details')}} </a>--}}
         <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><i class="fa fa-list"></i> Detalles de subasta </a>
     </li>
-
+@if (checkRole(['admin']))
     <li class="nav-item">
 {{--        <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><i class="far fa-image"></i> {{getPhrase('images')}} </a>--}}
          <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><i class="fa fa-image"></i>Imagenes </a>
     </li>
-
+@endif
     <li class="nav-item">
 {{--        <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><i class="fa fa-user"></i> {{getPhrase('auction_bidders')}} </a>--}}
         <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><i class="fa fa-user"></i> Licitadores de subasta </a>

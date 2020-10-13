@@ -21,9 +21,11 @@ $date_format = getSetting('date_format','site_settings');
             Lista
 
 {{--             <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
-            <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
-            <a href="{{ URL_CATEGORIES }}" class="btn btn-primary btn-add pull-right"> <i class="fa fa-building" aria-hidden="true"></i> Empresas</a>
-            <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right">  <i class="fa fa-cubes" aria-hidden="true"></i> Lotes</a>
+            @if (checkRole(['admin']))
+                <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+                <a href="{{ URL_CATEGORIES }}" class="btn btn-primary btn-add pull-right"> <i class="fa fa-building" aria-hidden="true"></i> Empresas</a>
+                <a href="{{ URL_SUB_CATEGORIES }}" class="btn btn-info btn-add pull-right">  <i class="fa fa-cubes" aria-hidden="true"></i> Lotes</a>
+            @endif
 
         </div>
 
@@ -120,7 +122,9 @@ $date_format = getSetting('date_format','site_settings');
 
 {{--                                    <a href="{{ URL_AUCTIONS_EDIT }}/{{$auction->slug}}" class="btn btn-xs btn-info"> {{getPhrase('edit')}} </a>--}}
                                     {{-- @if(date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date))  > $dt->format('d-m-Y H:i:s')) --}}
+                                    @if (checkRole(['admin']))
                                         <a href="{{ URL_AUCTIONS_EDIT }}/{{$auction->slug}}" class="btn btn-xs btn-info"> Editar</a>
+                                    @endif
 
                                         {{-- @else   
 

@@ -318,7 +318,7 @@ $active_class='';
             @endif
 
 
-       
+
 
              <li class="{{ isActive($active_class,'notifications')}}">
                 <a href="{{ URL_USER_NOTIFICATIONS }}">
@@ -337,7 +337,7 @@ $active_class='';
                 </a>
             </li>
             @endif --}}
-            
+
             @php ($unread = App\MessengerTopic::countUnread())
             <li class="{{ $request->segment(1) == 'messenger' ? 'active' : '' }} {{ ($unread > 0 ? 'unread' : '') }}">
                 <a href="{{ URL_MESSENGER }}">

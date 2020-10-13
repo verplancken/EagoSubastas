@@ -407,7 +407,6 @@ $google_login = getSetting('google_plus_login','module');
                             </div>
 
 
-
                             <div class=" col-lg-12" style="display: none">
 
                                 <div class="form-group row">
@@ -426,14 +425,10 @@ $google_login = getSetting('google_plus_login','module');
 
                                         <label for="seller"><span class="fa-stack radio-button"> <i class="mdi mdi-check active"></i> </span>
 
-                                            vendedor
                                         </label>
                                     </div>
                                 </div>
-
                             </div>
-
-
 
                   <div class="form-group col-lg-12">
                     <div class="text-center  login-btn">
@@ -445,8 +440,6 @@ $google_login = getSetting('google_plus_login','module');
                   </div>
               </div>
                 <?php echo Form::close(); ?>
-
-
 
 
 

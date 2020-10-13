@@ -14,14 +14,14 @@ $active_class='';
     <section class="sidebar">
         <ul class="sidebar-menu">
 
-             
 
-            <li class="<?php echo e(isActive($active_class,'dashboard')); ?>">
-                <a href="<?php echo e(PREFIX); ?>index">
-                    <i class="fa fa-wrench"></i>
-                    <span class="title"><?php echo app('translator')->getFromJson('global.app_dashboard'); ?></span>
-                </a>
-            </li>
+
+
+
+
+
+
+
 
 
 
@@ -29,7 +29,7 @@ $active_class='';
                 <a href="<?php echo e(URL_LIST_AUCTIONS); ?>">
                     <i class="fa fa-gavel"></i>
                     <span class="title">
-                       Auctions
+                       Subastas
                     </span>
                 </a>
             </li>
@@ -37,26 +37,25 @@ $active_class='';
 
 
             
-             <li class="<?php echo e(isActive($active_class,'notifications')); ?>">
-                <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>">
-                    <i class="fa fa-briefcase"></i>
-                    <span class="title"> <?php echo e(getPhrase('notifications')); ?> </span>
-                </a>
-            </li>
 
-            
-            <?php ($unread = App\MessengerTopic::countUnread()); ?>
-            <li class="<?php echo e($request->segment(1) == 'messenger' ? 'active' : ''); ?> <?php echo e(($unread > 0 ? 'unread' : '')); ?>">
-                <a href="<?php echo e(URL_MESSENGER); ?>">
-                    <i class="fa fa-envelope"></i>
 
-                    <span>Messages</span>
-                    <?php if($unread > 0): ?>
-                        <?php echo e(($unread > 0 ? '('.$unread.')' : '')); ?>
 
-                    <?php endif; ?>
-                </a>
-            </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <style>
                 .page-sidebar-menu .unread * {
                     font-weight:bold !important;
@@ -70,7 +69,7 @@ $active_class='';
             <li>
                 <a href="<?php echo e(URL_LOGOUT); ?>">
                     <i class="fa fa-arrow-left"></i>
-                    <span class="title"> <?php echo e(getPhrase('logout')); ?> </span>
+                    <span class="title"> Cerrar Sesion </span>
                 </a>
             </li>
         </ul>

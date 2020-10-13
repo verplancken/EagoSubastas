@@ -28,12 +28,12 @@
 
         <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><i class="fa fa-list"></i> Detalles de subasta </a>
     </li>
-
+<?php if(checkRole(['admin'])): ?>
     <li class="nav-item">
 
          <a class="nav-link" data-toggle="tab" href="#panel2" role="tab"><i class="fa fa-image"></i>Imagenes </a>
     </li>
-
+<?php endif; ?>
     <li class="nav-item">
 
         <a class="nav-link" data-toggle="tab" href="#panel3" role="tab"><i class="fa fa-user"></i> Licitadores de subasta </a>

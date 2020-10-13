@@ -212,17 +212,18 @@ $active_class='';
 
 
        
-
-             <li class="<?php echo e(isActive($active_class,'notifications')); ?>">
-                <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>">
-                    <i class="fa fa-briefcase"></i>
-                   <!-- <span class="title"> <?php echo e(getPhrase('notifications')); ?> </span> -->
-                    <span class="title">Notificaciones</span>
-                </a>
-            </li>
+            <?php if(checkRole(['admin'])): ?>
+                 <li class="<?php echo e(isActive($active_class,'notifications')); ?>">
+                    <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>">
+                        <i class="fa fa-briefcase"></i>
+                        <span class="title">Notificaciones</span>
+                    </a>
+                </li>
+            <?php endif; ?>
 
             
-            
+
+            <?php if(checkRole(['admin'])): ?>
             <?php ($unread = App\MessengerTopic::countUnread()); ?>
             <li class="<?php echo e($request->segment(1) == 'messenger' ? 'active' : ''); ?> <?php echo e(($unread > 0 ? 'unread' : '')); ?>">
                 <a href="<?php echo e(URL_MESSENGER); ?>">
@@ -241,7 +242,7 @@ $active_class='';
                     font-weight:bold !important;
                 }
             </style>
-
+            <?php endif; ?>
 
             
 

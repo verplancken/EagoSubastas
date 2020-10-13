@@ -47,7 +47,7 @@ use App\SubCatogory;
                       detalles de la subasta
                   </a>
 
-                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="true">
+                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="false">
                       Envío & pago
                   </a>
 
