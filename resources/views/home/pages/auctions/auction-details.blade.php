@@ -37,183 +37,204 @@ use App\SubCatogory;
 
 ?>
 
+<style>
+    .shadow{
+-webkit-box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+-moz-box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+    }
+@media screen and (max-width: 986px) {
+  .btn-res {
+     font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 536px) {
+  .btn-res {
+    font-size: 13px;
+  }
+    .au-product-nav{
+        padding: 5px !important;
+    }
+}
+</style>
 
 <div class="container">
     <div class="row">
-        <div class="col-12 mt-3" >
-            <div class="d-flex justify-content-between">
+        <div class="accordion" id="accordionExample">
+            <div class="col-12 mt-3" >
+                <div class="d-flex justify-content-between">
 
-                  <a class="nav-item au-product-nav nav-link active d-inline" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
-                      detalles de la subasta
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
+                          detalles de la subasta
+                      </a>
 
-                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="false">
-                      Envío & pago
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="false">
+                          Envío & pago
+                      </a>
 
-                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-terms" role="button" aria-controls="nav-terms" aria-expanded="false">
-                      condiciones de subasta & informacion
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-terms" role="button" aria-controls="nav-terms" aria-expanded="false">
+                          condiciones de subasta & informacion
+                      </a>
 
-                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-bid" role="button" aria-controls="nav-bid" aria-expanded="false">
-                      historial de ofertas
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-bid" role="button" aria-controls="nav-bid" aria-expanded="false">
+                          historial de ofertas
+                      </a>
 
-            </div>
+                </div>
 
-                {{--  Detalles de la subasta--}}
-                 <div class="collapse" id="nav-auction">
-                  <div class="card card-body">
-                        <div class="row">
+                    {{--  Detalles de la subasta--}}
+                     <div class="collapse" id="nav-auction" data-parent="#accordionExample">
+                      <div class="card card-body shadow">
+                            <div class="row">
 
-                            <div class="col-4 ">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Fecha de inicio
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
-                                    </li>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Fecha de inicio
+                                          <span class="btn-res"> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
+                                        </li>
 
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Fecha final
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
-                                    </li>
-                            </div>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Fecha final
+                                          <span class="btn-res"> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
+                                        </li>
+                                </div>
 
-                            <div class="col-4 ">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                         Precio de reserva
-                                      <span>@if($auction->reserve_price) {{$currency_code}} {{ number_format($auction->reserve_price)}} @endif</span>
-                                     </li>
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                         Tiros por subasta
-                                      <span>@if($auction->tiros) {{$auction->tiros}} @endif</span>
-                                     </li>
-                            </div>
-
-                            <div class="col-4 ">
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                          Inicio de oferta
-                                      <span>@if ($auction->minimum_bid) {{$currency_code}}  {{ number_format($auction->minimum_bid) }} @endif</span>
-                                     </li>
-
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                                         ¿La subasta de de auto incremento?
-                                        <span>
-                                            @if ($auction->is_bid_increment==1)
-                                                Si
-                                            @else
-                                                No
-                                            @endif
-                                        </span>
-                                     </li>
-
-                                    @if ($auction->bid_increment)
-                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                             Incremento de oferta ($MXN)
-                                          <span>{{$currency_code}} {{$auction->bid_increment}}</span>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             Precio de reserva
+                                          <span class="btn-res">@if($auction->reserve_price) $ {{ number_format($auction->reserve_price)}} mxn @endif</span>
                                          </li>
-                                     @endif
 
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Tipo de subastas
-                                        <span>
-                                        @if ($auction->visibilidad==1)
-                                            Abierta
-                                        @else
-                                            Cerrada
-                                        @endif
-                                        </span>
-                                     </li>
 
-                                      @if ($auction->is_buynow==1)
-                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             Tiros por subasta
+                                          <span class="btn-res">@if($auction->tiros) {{$auction->tiros}} @endif</span>
+                                         </li>
+                                </div>
 
-                                              comprar ahora precio
-                                            <span>@if ($auction->buy_now_price) {{$currency_code}} {{$auction->buy_now_price}} @endif</span>
-                                          </li>
-                                      @endif
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                              Inicio de oferta
+                                          <span class="btn-res">@if ($auction->minimum_bid) $  {{ number_format($auction->minimum_bid) }} mxn @endif</span>
+                                         </li>
+
+                                          <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             ¿La subasta de de auto incremento?
+                                            <span class="btn-res">
+                                                @if ($auction->is_bid_increment==1)
+                                                    Si
+                                                @else
+                                                    No
+                                                @endif
+                                            </span>
+                                         </li>
+
+                                        @if ($auction->bid_increment)
+                                             <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                                 Incremento de oferta ($MXN)
+                                              <span class="btn-res">{{$currency_code}} {{$auction->bid_increment}}</span>
+                                             </li>
+                                         @endif
+
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Tipo de subastas
+                                            <span class="btn-res">
+                                            @if ($auction->visibilidad==1)
+                                                Abierta
+                                            @else
+                                                Cerrada
+                                            @endif
+                                            </span>
+                                         </li>
+
+                                          @if ($auction->is_buynow==1)
+                                              <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+
+                                                  comprar ahora precio
+                                                <span class="btn-res">@if ($auction->buy_now_price) {{$currency_code}} {{$auction->buy_now_price}} @endif</span>
+                                              </li>
+                                          @endif
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
-                </div>
-                {{-- Fin  Detalles de la subasta--}}
+                    {{-- Fin  Detalles de la subasta--}}
 
-                {{--  Envio y Pago--}}
-                 <div class="collapse" id="nav-shipping">
-                      <div class="card card-body">
-                            <div class="row">
+                    {{--  Envio y Pago--}}
+                     <div class="collapse" id="nav-shipping" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                  <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                      <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
 
-                                    <p>{!! $auction->shipping_conditions !!}</p>
+                                        <p>{!! $auction->shipping_conditions !!}</p>
 
-                                  </div>
-                                </div>
-
-                            </div>
-                      </div>
-                 </div>
-                 {{-- Fin Envio y Pago--}}
-
-                 {{--  Condiciones De Subasta & Informacion--}}
-                 <div class="collapse" id="nav-terms">
-                      <div class="card card-body">
-                            <div class="row">
-
-                                <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-
-                                      <p>{!! $auction->shipping_terms !!}</p>
-
+                                      </div>
                                     </div>
+
                                 </div>
+                          </div>
+                     </div>
+                     {{-- Fin Envio y Pago--}}
 
-                            </div>
-                      </div>
-                 </div>
-                 {{-- Fin Condiciones De Subasta & Informacion--}}
+                     {{--  Condiciones De Subasta & Informacion--}}
+                     <div class="collapse" id="nav-terms" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
 
-                  {{--  Historial De Ofertas --}}
-                 <div class="collapse" id="nav-bid">
-                      <div class="card card-body">
-                            <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
 
-                              <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                  <div class=" au-policy">
+                                          <p>{!! $auction->shipping_terms !!}</p>
 
-                                    @if (isset($bidding_history) && count($bidding_history))
+                                        </div>
+                                    </div>
 
-                                      @if ($auction->visibilidad==1)
-                                        <ul class="list-group z-depth-0">
-                                          <li class="list-group-item justify-content-between">
-                                              <span><b>{{getPhrase('username')}}</b></span>
-                                              <span style="float:right;"><b>{{getPhrase('bid_amount')}}</b></span>
-                                          </li>
-                                          @foreach ($bidding_history as $bid)
+                                </div>
+                          </div>
+                     </div>
+                     {{-- Fin Condiciones De Subasta & Informacion--}}
+
+                      {{--  Historial De Ofertas --}}
+                     <div class="collapse" id="nav-bid" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                      <div class=" au-policy">
+
+                                        @if (isset($bidding_history) && count($bidding_history))
+
+                                          @if ($auction->visibilidad==1)
+                                            <ul class="list-group z-depth-0">
                                               <li class="list-group-item justify-content-between">
-                                                <span>Usuario</span>
-                                                <span style="float:right;">${{$bid->bid_amount}} MXN</span>
+                                                  <span><b>{{getPhrase('username')}}</b></span>
+                                                  <span style="float:right;"><b>{{getPhrase('bid_amount')}}</b></span>
                                               </li>
-                                          @endforeach
-                                        </ul>
-                                       @else
-                                         <span>Usuario</span>
-                                      @endif
-                                    @endif
+                                              @foreach ($bidding_history as $bid)
+                                                  <li class="list-group-item justify-content-between">
+                                                    <span>Usuario</span>
+                                                    <span style="float:right;">${{$bid->bid_amount}} MXN</span>
+                                                  </li>
+                                              @endforeach
+                                            </ul>
+                                           @else
+                                             <span>Usuario</span>
+                                          @endif
+                                        @endif
 
+                                      </div>
                                   </div>
-                              </div>
 
-                            </div>
-                      </div>
-                 </div>
-                 {{-- Fin Historial De Ofertas --}}
-
-
+                                </div>
+                          </div>
+                     </div>
+                     {{-- Fin Historial De Ofertas --}}
+            </div>
         </div>
     </div>
 </div>
@@ -269,7 +290,7 @@ use App\SubCatogory;
             <div class="sm-product-show">
 
                         <div class="sm-product-slider-img">
-                            <img src="{{getAuctionImage($auction->image)}}" id="sm-product-zoom" class="img-responsive" data-zoom-image="{{getAuctionImage($auction->image,'auction')}}" alt="">
+                            <img src="{{getAuctionImage($auction->image)}}" id="sm-product-zoom" class="img-responsive img-fluid" data-zoom-image="{{getAuctionImage($auction->image,'auction')}}" alt="">
                             <i class="sm-zoom-icn fa fa-expand"></i>
                         </div>
 
@@ -333,10 +354,13 @@ use App\SubCatogory;
 
             <div class="col-lg-6">
 
+            <div class="d-flex justify-content-between">
                 <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
                      <i class="fa fa-question" aria-hidden="true"></i>
                 </button>
 
+                 <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> <i class="fa fa-refresh" aria-hidden="true"></i> </a>
+            </div>
                 <div class="d-flex bd-highlight mb-3">
                   <div class="mr-auto p-2 bd-highlight"><h4 class="text-left">{{$auction->title}}</h4></div>
                   <div class="p-2 bd-highlight"><p class="text-muted text-right">IDSubasta{{$auction->id}}</p></div>

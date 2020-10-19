@@ -56,16 +56,17 @@ class AuctionsController extends Controller
 
         $where = array();
         if (checkRole(['seller']))
-            $where = array('auctions.user_id'=>$user->id);
+            $where = array('categories.user_id'=>$user->id);
 
 
-
-        $auctions = Auction::join('users','auctions.user_id','users.id')
-                            ->join('users as created_by', 'auctions.created_by_id', 'created_by.id')
-                            ->select(['auctions.id','auctions.slug','auctions.image','auctions.reserve_price','auctions.tiros','auctions.title','auctions.auction_status','auctions.admin_status','auctions.start_date','auctions.end_date','auctions.live_auction_date','auctions.live_auction_start_time','auctions.live_auction_end_time','users.username','users.slug as seller_slug','created_by.username as created_by'])
+        $auctions = Auction::join('categories','auctions.category_id','categories.id')
+                            ->join('users','categories.user_id','users.id')
+                            ->select(['auctions.id','auctions.slug','auctions.image','auctions.reserve_price','auctions.tiros','auctions.title','auctions.auction_status','auctions.admin_status','auctions.start_date','auctions.end_date','auctions.live_auction_date','auctions.live_auction_start_time','auctions.live_auction_end_time','users.username','users.slug as seller_slug'])
                             ->where($where)
                             ->orderBy('auctions.id','desc')
                             ->get();
+
+//dd($auctions);
 
         $data['title']              = getPhrase('auctions');
         $data['active_class']       = 'auctions';
@@ -73,6 +74,7 @@ class AuctionsController extends Controller
         $data['layout']        = getLayOut();
 
         $data['auctions']      = $auctions;
+
 
         return view('admin.auctions.index', $data);
     }

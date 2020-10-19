@@ -76,10 +76,10 @@
 
                         $selected = null;
                         if($record)
-                        $selected = $record->user_id;      
+                        $selected = $record->user_id;
                     ?>
 
-                    
+
 
                     
                     <?php echo e(Form::select('user_id', $users , $selected, ['placeholder' => getPhrase('Seleccionar Usuario'),'class'=>'form-control select2',
@@ -89,14 +89,14 @@
                             'required'=> 'true',
 
                             'ng-init'=>'user_id="'.$val.'"',
-                            
+
                             'ng-class'=>'{"has-error": formValidate.user_id.$touched && formValidate.user_id.$invalid}'
 
                          ])); ?>
 
 
 
-                    
+
                         <div class="validation-error" ng-messages="formValidate.user_id.$error" >
 
                             

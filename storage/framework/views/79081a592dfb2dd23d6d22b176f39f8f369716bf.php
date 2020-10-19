@@ -46,6 +46,51 @@
 
                 </div>
 
+                <div class="form-group">
+
+                    
+                    <?php echo Form::label('user_id', getPhrase('Usuario'), ['class' => 'control-label']); ?>
+
+
+                    <span class="text-red">*</span>
+
+                    <?php
+                        $val=old('user_id');
+                        if ($record)
+                         $val = $record->user_id;
+
+                        $selected = null;
+                        if($record)
+                        $selected = $record->user_id;
+                    ?>
+
+
+
+                    
+                    <?php echo e(Form::select('user_id', $users , $selected, ['placeholder' => getPhrase('Seleccionar Usuario'),'class'=>'form-control select2',
+
+                            'ng-model'=>'user_id',
+
+                            'required'=> 'true',
+
+                            'ng-init'=>'user_id="'.$val.'"',
+
+                            'ng-class'=>'{"has-error": formValidate.user_id.$touched && formValidate.user_id.$invalid}'
+
+                         ])); ?>
+
+
+
+
+                        <div class="validation-error" ng-messages="formValidate.user_id.$error" >
+
+                            
+                            Este campo es requerido
+
+                        </div>
+
+                </div>
+
 
 
 

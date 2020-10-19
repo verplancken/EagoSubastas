@@ -35,183 +35,204 @@ use App\SubCatogory;
 
 ?>
 
+<style>
+    .shadow{
+-webkit-box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+-moz-box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+    }
+@media  screen and (max-width: 986px) {
+  .btn-res {
+     font-size: 15px;
+  }
+}
+
+@media  screen and (max-width: 536px) {
+  .btn-res {
+    font-size: 13px;
+  }
+    .au-product-nav{
+        padding: 5px !important;
+    }
+}
+</style>
 
 <div class="container">
     <div class="row">
-        <div class="col-12 mt-3" >
-            <div class="d-flex justify-content-between">
+        <div class="accordion" id="accordionExample">
+            <div class="col-12 mt-3" >
+                <div class="d-flex justify-content-between">
 
-                  <a class="nav-item au-product-nav nav-link active d-inline" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
-                      detalles de la subasta
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
+                          detalles de la subasta
+                      </a>
 
-                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="false">
-                      Envío & pago
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="false">
+                          Envío & pago
+                      </a>
 
-                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-terms" role="button" aria-controls="nav-terms" aria-expanded="false">
-                      condiciones de subasta & informacion
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-terms" role="button" aria-controls="nav-terms" aria-expanded="false">
+                          condiciones de subasta & informacion
+                      </a>
 
-                  <a class="nav-item au-product-nav nav-link d-inline" data-toggle="collapse" href="#nav-bid" role="button" aria-controls="nav-bid" aria-expanded="false">
-                      historial de ofertas
-                  </a>
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-bid" role="button" aria-controls="nav-bid" aria-expanded="false">
+                          historial de ofertas
+                      </a>
 
-            </div>
+                </div>
 
-                
-                 <div class="collapse" id="nav-auction">
-                  <div class="card card-body">
-                        <div class="row">
+                    
+                     <div class="collapse" id="nav-auction" data-parent="#accordionExample">
+                      <div class="card card-body shadow">
+                            <div class="row">
 
-                            <div class="col-4 ">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Fecha de inicio
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
-                                    </li>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Fecha de inicio
+                                          <span class="btn-res"> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
+                                        </li>
 
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Fecha final
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
-                                    </li>
-                            </div>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Fecha final
+                                          <span class="btn-res"> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
+                                        </li>
+                                </div>
 
-                            <div class="col-4 ">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                         Precio de reserva
-                                      <span><?php if($auction->reserve_price): ?> <?php echo e($currency_code); ?> <?php echo e(number_format($auction->reserve_price)); ?> <?php endif; ?></span>
-                                     </li>
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                         Tiros por subasta
-                                      <span><?php if($auction->tiros): ?> <?php echo e($auction->tiros); ?> <?php endif; ?></span>
-                                     </li>
-                            </div>
-
-                            <div class="col-4 ">
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                          Inicio de oferta
-                                      <span><?php if($auction->minimum_bid): ?> <?php echo e($currency_code); ?>  <?php echo e(number_format($auction->minimum_bid)); ?> <?php endif; ?></span>
-                                     </li>
-
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                                         ¿La subasta de de auto incremento?
-                                        <span>
-                                            <?php if($auction->is_bid_increment==1): ?>
-                                                Si
-                                            <?php else: ?>
-                                                No
-                                            <?php endif; ?>
-                                        </span>
-                                     </li>
-
-                                    <?php if($auction->bid_increment): ?>
-                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                             Incremento de oferta ($MXN)
-                                          <span><?php echo e($currency_code); ?> <?php echo e($auction->bid_increment); ?></span>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             Precio de reserva
+                                          <span class="btn-res"><?php if($auction->reserve_price): ?> $ <?php echo e(number_format($auction->reserve_price)); ?> mxn <?php endif; ?></span>
                                          </li>
-                                     <?php endif; ?>
 
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Tipo de subastas
-                                        <span>
-                                        <?php if($auction->visibilidad==1): ?>
-                                            Abierta
-                                        <?php else: ?>
-                                            Cerrada
-                                        <?php endif; ?>
-                                        </span>
-                                     </li>
 
-                                      <?php if($auction->is_buynow==1): ?>
-                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             Tiros por subasta
+                                          <span class="btn-res"><?php if($auction->tiros): ?> <?php echo e($auction->tiros); ?> <?php endif; ?></span>
+                                         </li>
+                                </div>
 
-                                              comprar ahora precio
-                                            <span><?php if($auction->buy_now_price): ?> <?php echo e($currency_code); ?> <?php echo e($auction->buy_now_price); ?> <?php endif; ?></span>
-                                          </li>
-                                      <?php endif; ?>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                              Inicio de oferta
+                                          <span class="btn-res"><?php if($auction->minimum_bid): ?> $  <?php echo e(number_format($auction->minimum_bid)); ?> mxn <?php endif; ?></span>
+                                         </li>
+
+                                          <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             ¿La subasta de de auto incremento?
+                                            <span class="btn-res">
+                                                <?php if($auction->is_bid_increment==1): ?>
+                                                    Si
+                                                <?php else: ?>
+                                                    No
+                                                <?php endif; ?>
+                                            </span>
+                                         </li>
+
+                                        <?php if($auction->bid_increment): ?>
+                                             <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                                 Incremento de oferta ($MXN)
+                                              <span class="btn-res"><?php echo e($currency_code); ?> <?php echo e($auction->bid_increment); ?></span>
+                                             </li>
+                                         <?php endif; ?>
+
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Tipo de subastas
+                                            <span class="btn-res">
+                                            <?php if($auction->visibilidad==1): ?>
+                                                Abierta
+                                            <?php else: ?>
+                                                Cerrada
+                                            <?php endif; ?>
+                                            </span>
+                                         </li>
+
+                                          <?php if($auction->is_buynow==1): ?>
+                                              <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+
+                                                  comprar ahora precio
+                                                <span class="btn-res"><?php if($auction->buy_now_price): ?> <?php echo e($currency_code); ?> <?php echo e($auction->buy_now_price); ?> <?php endif; ?></span>
+                                              </li>
+                                          <?php endif; ?>
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
-                </div>
-                
+                    
 
-                
-                 <div class="collapse" id="nav-shipping">
-                      <div class="card card-body">
-                            <div class="row">
+                    
+                     <div class="collapse" id="nav-shipping" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                  <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                      <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
 
-                                    <p><?php echo $auction->shipping_conditions; ?></p>
+                                        <p><?php echo $auction->shipping_conditions; ?></p>
 
-                                  </div>
-                                </div>
-
-                            </div>
-                      </div>
-                 </div>
-                 
-
-                 
-                 <div class="collapse" id="nav-terms">
-                      <div class="card card-body">
-                            <div class="row">
-
-                                <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-
-                                      <p><?php echo $auction->shipping_terms; ?></p>
-
+                                      </div>
                                     </div>
+
                                 </div>
+                          </div>
+                     </div>
+                     
 
-                            </div>
-                      </div>
-                 </div>
-                 
+                     
+                     <div class="collapse" id="nav-terms" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
 
-                  
-                 <div class="collapse" id="nav-bid">
-                      <div class="card card-body">
-                            <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
 
-                              <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                  <div class=" au-policy">
+                                          <p><?php echo $auction->shipping_terms; ?></p>
 
-                                    <?php if(isset($bidding_history) && count($bidding_history)): ?>
+                                        </div>
+                                    </div>
 
-                                      <?php if($auction->visibilidad==1): ?>
-                                        <ul class="list-group z-depth-0">
-                                          <li class="list-group-item justify-content-between">
-                                              <span><b><?php echo e(getPhrase('username')); ?></b></span>
-                                              <span style="float:right;"><b><?php echo e(getPhrase('bid_amount')); ?></b></span>
-                                          </li>
-                                          <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                </div>
+                          </div>
+                     </div>
+                     
+
+                      
+                     <div class="collapse" id="nav-bid" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                      <div class=" au-policy">
+
+                                        <?php if(isset($bidding_history) && count($bidding_history)): ?>
+
+                                          <?php if($auction->visibilidad==1): ?>
+                                            <ul class="list-group z-depth-0">
                                               <li class="list-group-item justify-content-between">
-                                                <span>Usuario</span>
-                                                <span style="float:right;">$<?php echo e($bid->bid_amount); ?> MXN</span>
+                                                  <span><b><?php echo e(getPhrase('username')); ?></b></span>
+                                                  <span style="float:right;"><b><?php echo e(getPhrase('bid_amount')); ?></b></span>
                                               </li>
-                                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </ul>
-                                       <?php else: ?>
-                                         <span>Usuario</span>
-                                      <?php endif; ?>
-                                    <?php endif; ?>
+                                              <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                  <li class="list-group-item justify-content-between">
+                                                    <span>Usuario</span>
+                                                    <span style="float:right;">$<?php echo e($bid->bid_amount); ?> MXN</span>
+                                                  </li>
+                                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </ul>
+                                           <?php else: ?>
+                                             <span>Usuario</span>
+                                          <?php endif; ?>
+                                        <?php endif; ?>
 
+                                      </div>
                                   </div>
-                              </div>
 
-                            </div>
-                      </div>
-                 </div>
-                 
-
-
+                                </div>
+                          </div>
+                     </div>
+                     
+            </div>
         </div>
     </div>
 </div>
@@ -267,7 +288,7 @@ use App\SubCatogory;
             <div class="sm-product-show">
 
                         <div class="sm-product-slider-img">
-                            <img src="<?php echo e(getAuctionImage($auction->image)); ?>" id="sm-product-zoom" class="img-responsive" data-zoom-image="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="">
+                            <img src="<?php echo e(getAuctionImage($auction->image)); ?>" id="sm-product-zoom" class="img-responsive img-fluid" data-zoom-image="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="">
                             <i class="sm-zoom-icn fa fa-expand"></i>
                         </div>
 
@@ -331,10 +352,13 @@ use App\SubCatogory;
 
             <div class="col-lg-6">
 
+            <div class="d-flex justify-content-between">
                 <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
                      <i class="fa fa-question" aria-hidden="true"></i>
                 </button>
 
+                 <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> <i class="fa fa-refresh" aria-hidden="true"></i> </a>
+            </div>
                 <div class="d-flex bd-highlight mb-3">
                   <div class="mr-auto p-2 bd-highlight"><h4 class="text-left"><?php echo e($auction->title); ?></h4></div>
                   <div class="p-2 bd-highlight"><p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p></div>

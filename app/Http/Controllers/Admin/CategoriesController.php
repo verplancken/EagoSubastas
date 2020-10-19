@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\Auction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -58,6 +59,8 @@ class CategoriesController extends Controller
             prepareBlockUserMessage();
             return back();
         }
+        $users = Auction::getSellerOptions();
+        $data['users'] = $users;
 
         $data['title']        = getPhrase('create');
         $data['active_class'] = 'categories';
@@ -83,6 +86,7 @@ class CategoriesController extends Controller
         $this->validate($request, [
          'category'      => 'bail|required|max:50',
          'description'   => 'bail|max:200',
+         'user_id'     => 'bail|required',
         
         ]);
 
@@ -97,6 +101,7 @@ class CategoriesController extends Controller
 
         $record->category = $category;
         $record->slug            = $record->makeSlug($category, TRUE);
+        $record->user_id         = $request->user_id;
         $record->description     = $request->description;
         $record->status          = $request->status;
 
@@ -120,6 +125,8 @@ class CategoriesController extends Controller
             prepareBlockUserMessage();
             return back();
         }
+        $users = Auction::getSellerOptions();
+        $data['users'] = $users;
 
         $data['title']        = getPhrase('edit');
         $data['active_class'] = 'categories';
@@ -159,6 +166,7 @@ class CategoriesController extends Controller
         $this->validate($request, [
          'category'      => 'bail|required|max:50',
          'description'   => 'bail|max:200',
+         'user_id'     => 'bail|required',
         
         ]);
 
