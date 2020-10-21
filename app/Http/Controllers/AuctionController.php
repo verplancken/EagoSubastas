@@ -679,7 +679,7 @@ class AuctionController extends Controller
 
                  } else {
 
-                     //Initial loading..
+                     //Carga inicial ..
                      $cond[] = ['auctions.auction_status', '=', 'open'];
 
                      $cond[] = ['auctions.start_date', '<=', NOW()];
@@ -774,7 +774,7 @@ class AuctionController extends Controller
         }
 
         $auction = Auction::getRecordWithSlug($slug);
-           //dd($auction);
+        //dd($auction);
 
         if ($isValid = $this->isValidRecord($auction))
             return redirect($isValid);
@@ -785,50 +785,51 @@ class AuctionController extends Controller
 
         //bid payment - paid or not
         $bid_payment_record = $auction->getAuctionPayment();
-        
+
 
         //buy now payment - paid or not
         $buy_now_payment_record = $auction->getBuyNowAuctionPayment();
-        
-        $bid_div=true;
+
+        $bid_div = true;
         if (count($bid_payment_record) || count($buy_now_payment_record)) {
-          $bid_div = false;
+            $bid_div = false;
         }
 
         $data['bid_div'] = $bid_div;
 
-        
+
         //oferta mínima, es incremento de oferta, incremento de oferta
-        $bid_options=[];
-        $today=date('d-m-Y');
+        $bid_options = [];
+        $today = date('d-m-Y');
 
         //si la última oferta está allí, entonces esa es la cantidad inicial en opciones
         $last_bid = Bidding::getLastBidRecord($auction->id);
         $data['last_bid'] = $last_bid;
 
-
+        $last_bidcerrada = Bidding::getLastBidRecordCerrada($auction->id);
+        $data['$last_bidcerrada'] = $last_bidcerrada;
 
 
         //live auction button show condition
-        $live_auction=false;
-        $live_auction_starts=false;
-        
+        $live_auction = false;
+        $live_auction_starts = false;
+
         if ($auction->live_auction_date && $bid_div) {
 
-            if ($auction->admin_status=='approved' && $auction->auction_status=='open' && $auction->live_auction_date==$today) {
+            if ($auction->admin_status == 'approved' && $auction->auction_status == 'open' && $auction->live_auction_date == $today) {
 
-              $live_auction_start_time = strtotime($auction->live_auction_start_time);
-              $live_auction_end_time   = strtotime($auction->live_auction_end_time);
+                $live_auction_start_time = strtotime($auction->live_auction_start_time);
+                $live_auction_end_time = strtotime($auction->live_auction_end_time);
 
                 if ($live_auction_start_time <= time() && $live_auction_end_time >= time()) {
-                  $live_auction=true; //live auction happening currently
+                    $live_auction = true; //live auction happening currently
 
                 } else if ($live_auction_start_time > time() && $live_auction_end_time > time()) {
-                  $live_auction_starts = true;//live auction gonna start 
+                    $live_auction_starts = true;//live auction gonna start
                 }
-              }
+            }
         }
-        
+
         $data['live_auction'] = $live_auction;
         $data['live_auction_starts'] = $live_auction_starts;
 
@@ -837,26 +838,74 @@ class AuctionController extends Controller
         //entonces la subasta normal y la subasta en vivo no se realizarán.
 
 
+        if ($auction->visibilidad == 1){
+            if ($auction->admin_status == 'approved' && $auction->auction_status == 'open' && $auction->start_date <= now() && $auction->end_date >= now()) {
+                if ($auction->is_bid_increment && $auction->bid_increment > 0) {
 
-        if ($auction->admin_status=='approved' && $auction->auction_status=='open' && $auction->start_date<=now() && $auction->end_date>=now()) {
+                    $start = $auction->minimum_bid;
+
+                    if (isset($last_bid) && $last_bid->bid_amount) {
+
+                        if ($last_bid->bid_amount >= $start) {
+                            $start = $last_bid->bid_amount + $auction->bid_increment;
+                        }
+                        // $start = $last_bid->bid_amount;
+                    }
+
+
+                    $increment = $auction->bid_increment;
+                    $reserve_price = $auction->reserve_price;
+
+
+                    if ($auction->minimum_bid > 0) {
+
+                        // opciones: empezar desde la oferta mínima
+                        // $bid_options[] = $start;
+                        // dd($increment);
+                        for ($i = $start; $i <= ($reserve_price + $start + $increment); $i = $i + $increment) {
+                            $bid_options[$i] = $i;
+                        }
+
+
+                    } else {
+
+                        //opciones - empezar desde la cantidad bid_increment
+                        for ($i = $increment; $i <= ($reserve_price + $increment); $i = $i + $increment) {
+                            $bid_options[$i] = $i;
+                        }
+
+                    }
+
+
+                } else {
+
+                    if ($auction->minimum_bid > 0) {
+                        //texto: comience desde la oferta mínima
+                    } else {
+                        //text - start from 1
+                    }
+
+                }
+            }
+        $data['bid_options'] = $bid_options;
+
+    }else{
+            //*******************Subasta Cerrada*************
+          if ($auction->admin_status=='approved' && $auction->auction_status=='open' && $auction->start_date<=now() && $auction->end_date>=now()) {
             if ($auction->is_bid_increment && $auction->bid_increment>0) {
 
                 $start = $auction->minimum_bid;
 
-                if (isset($last_bid) && $last_bid->bid_amount) {
+                if (isset($last_bidcerrada) && $last_bidcerrada->bid_amount) {
 
-                    if ($last_bid->bid_amount >= $start) {
-                        $start = $last_bid->bid_amount+$auction->bid_increment;
+                    if ($last_bidcerrada->bid_amount >= $start) {
+                        $start = $last_bidcerrada->bid_amount+$auction->bid_increment;
                     }
                     // $start = $last_bid->bid_amount;
                 }
 
-
                 $increment = $auction->bid_increment;
                 $reserve_price = $auction->reserve_price;
-
-
-
 
                 if ($auction->minimum_bid>0) {
 
@@ -864,7 +913,7 @@ class AuctionController extends Controller
                     // $bid_options[] = $start;
                    // dd($increment);
                     for ($i=$start;$i<=($reserve_price+$start+$increment);$i=$i+$increment) {
-                            $bid_options[$i] = $i;
+                            $bid_options2[$i] = $i;
                     }
 
 
@@ -872,7 +921,7 @@ class AuctionController extends Controller
 
                     //opciones - empezar desde la cantidad bid_increment
                     for ($i=$increment;$i<=($reserve_price+$increment);$i=$i+$increment) {
-                        $bid_options[$i] = $i;
+                        $bid_options2[$i] = $i;
                     }
 
                 }
@@ -887,9 +936,9 @@ class AuctionController extends Controller
                 }
 
             }
-        }
-        $data['bid_options'] = $bid_options;
-
+          }
+        $data['bid_options2'] = $bid_options2;
+}
         $data['seller'] = User::where('id',$auction->user_id)
                                 ->where('role_id',getRoleData('seller'))
                                 ->first();
@@ -995,6 +1044,7 @@ class AuctionController extends Controller
                      ->where($cond2)
                      ->get();
       // dd($auctionbidders2);
+
                     $now = strtotime(date('Y-m-d H:i:s'));
                     $start_date = strtotime($auction->start_date);
                     $end_date   = strtotime($auction->end_date);
@@ -1027,8 +1077,6 @@ class AuctionController extends Controller
                                 Session::flash('warning', 'Lo sentimos, no ganaste');
                             }
                         }
-
-
 
         return view('home.pages.auctions.auction-details', $data, compact('invitacion', 'auctionbidders', 'auctionbidders2', 'lote'));
     }
@@ -1428,17 +1476,32 @@ class AuctionController extends Controller
 
                         //comprobar la última oferta reciente
                         $last_bid = Bidding::getLastBidRecord($auction->id);
+                        $last_bidcerrada = Bidding::getLastBidRecordCerrada($auction->id);
 
 
                         if (!empty($last_bid)) {
+                            if ($auction->visibilidad == 1){ //Subasta Abierta
 
-                            if ($bid_amount>$last_bid->bid_amount) {
-                                //guardar en la mesa
-                                $save=TRUE;
-                            } else {
-                                //redireccionamiento: el monto de la oferta no es válido
-                                flash('error','el monto de la oferta no es válido', 'error');
-                                return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
+                                if ($bid_amount > $last_bid->bid_amount) {
+                                    //guardar en la mesa
+                                    $save = TRUE;
+                                } else {
+                                    //redireccionamiento: el monto de la oferta no es válido
+                                    flash('error', 'el monto de la oferta no es válido', 'error');
+                                    return redirect(URL_HOME_AUCTION_DETAILS . '/' . $auction->slug);
+                                }
+
+                            } else { //Subasta Cerrada
+
+                                if ($bid_amount > $last_bidcerrada->bid_amount) {
+                                    //guardar en la mesa
+                                    $save = TRUE;
+                                } else {
+                                    //redireccionamiento: el monto de la oferta no es válido
+                                    flash('error', 'el monto de la oferta no es válido', 'error');
+                                    return redirect(URL_HOME_AUCTION_DETAILS . '/' . $auction->slug);
+                                }
+
                             }
 
                         } elseif ($auction->minimum_bid>0) {
