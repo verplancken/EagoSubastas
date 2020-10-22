@@ -99,15 +99,21 @@ class RegisterController extends Controller
      */
      public function register(Request $request)
      {
+
         $columns = array(
-        'name'      => 'bail|required|max:20|',
+//        'name'      => 'bail|required|max:20|',
         'username'  => 'bail|required|unique:users,username',
         'email'     => 'bail|required|unique:users,email',
         'password'  => 'bail|required',
         );
+
+
+
+
         $this->validate($request,$columns);
 
         $role_id = getRoleData('bidder');
+
 
         if ($request->user_type=='seller')
             $role_id = getRoleData('seller');
@@ -115,10 +121,11 @@ class RegisterController extends Controller
 
         $user           = new User();
 
-        $name           = $request->name;
-        
+        $name           = $request->username;
+
         $user->name     = $name;
-        $user->slug     = $user->makeSlug($user->name); 
+
+        $user->slug     = $user->makeSlug($user->name);
 
         $user->username = $request->username;
         $user->email    = $request->email;

@@ -201,39 +201,39 @@ $google_login = getSetting('google_plus_login','module');
                     </div>
 
 
-                 <div class="form-group col-lg-12">
+{{--                 <div class="form-group col-lg-12">--}}
 
 
 
 
-                                    {{ Form::text('name', old('name') , $attributes = array('class'=>'form-control',
+{{--                                    {{ Form::text('name', old('name') , $attributes = array('class'=>'form-control',--}}
 
-                                        'placeholder' => 'Nombre',
+{{--                                        'placeholder' => 'Nombre',--}}
 
-                                        'ng-model'=>'name',
+{{--                                        'ng-model'=>'name',--}}
 
-                                        'ng-pattern' => getRegexPattern('name'),
+{{--                                        'ng-pattern' => getRegexPattern('name'),--}}
 
-                                        'required'=> 'true',
+{{--                                        'required'=> 'true',--}}
 
-                                        'ng-class'=>'{"has-error": registrationForm.name.$touched && registrationForm.name.$invalid}',
+{{--                                        'ng-class'=>'{"has-error": registrationForm.name.$touched && registrationForm.name.$invalid}',--}}
 
-                                        'ng-minlength' => '4',
+{{--                                        'ng-minlength' => '4',--}}
 
-                                    )) }}
+{{--                                    )) }}--}}
 
 
-                                    <div class="validation-error" ng-messages="registrationForm.name.$error" >
+{{--                                    <div class="validation-error" ng-messages="registrationForm.name.$error" >--}}
 
-                                        {!! getValidationMessage()!!}
+{{--                                        {!! getValidationMessage()!!}--}}
 
-                                        {!! getValidationMessage('minlength')!!}
+{{--                                        {!! getValidationMessage('minlength')!!}--}}
 
-                                        {!! getValidationMessage('pattern')!!}
+{{--                                        {!! getValidationMessage('pattern')!!}--}}
 
-                                    </div>
+{{--                                    </div>--}}
 
-                                </div>
+{{--                                </div>--}}
 
 
 
@@ -246,7 +246,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                     {{ Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Apellido',
+                                        'placeholder' => 'Nombre Completo',
 
                                         'ng-model'=>'username',
 
