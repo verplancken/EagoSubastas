@@ -721,7 +721,7 @@ class AuctionController extends Controller
         //CUANDO EXISTEN DATOS EN auctionbidders
         $auctionbidders = AuctionBidder::select('auction_id', 'no_of_times', 'bidder_id')
                                         ->get();
-                                 //dd($auctionbidders);
+
          $users   = \Auth::user();
 
         $auctionbidders = AuctionBidder::where('bidder_id', '=', $users->id)
@@ -732,9 +732,6 @@ class AuctionController extends Controller
 
         $subcategoria = DB::table('sub_catogories')
                             ->first();
-
-
-                   //dd($user);
 
         $lote = DB::table('sub_catogories')
                             ->get();
@@ -1514,6 +1511,7 @@ class AuctionController extends Controller
                                 $save=TRUE;
                             } else {
                                 //redireccionamiento: el monto de la oferta no es válido
+                                Session::flash('warning', 'El monto de la oferta no es válido');
                                 flash('error','el monto de la oferta no es válido', 'error');
                                 return redirect(URL_HOME_AUCTION_DETAILS.'/'.$auction->slug);
                             }

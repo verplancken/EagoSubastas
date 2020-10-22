@@ -75,6 +75,30 @@ class AuctionsController extends Controller
 
         $data['auctions']      = $auctions;
 
+        $auctions = Auction::first();
+
+                    $now = strtotime(date('Y-m-d H:i:s'));
+                    $start_date = strtotime($auctions->start_date);
+                    $end_date   = strtotime($auctions->end_date);
+
+                       //comprobar la última puja reciente de la subasta
+                        $auction_last_bid = Bidding::getAuctionLastBid($auctions->id);
+
+                                $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
+                                    ->first();
+                                 //dd($record);
+
+                        if ($end_date<=$now) {
+                            $auctions->auction_status = 'closed';
+                            $auctions->save();
+                        }
+
+                        if ($end_date<=$now) {
+                            $record->is_bidder_won = 'Yes';
+                            //dd($record);
+                            $record->save();
+                        }
+
 
         return view('admin.auctions.index', $data);
     }

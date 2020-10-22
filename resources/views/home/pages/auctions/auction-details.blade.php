@@ -367,8 +367,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                 <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
                      <i class="fa fa-question" aria-hidden="true"></i>
                 </button>
-
-                 <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> <i class="fa fa-refresh" aria-hidden="true"></i> </a>
+                 <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> Recargar pag. <i class="fa fa-refresh" aria-hidden="true"></i> </a>
             </div>
                 <div class="d-flex bd-highlight mb-3">
                   <div class="mr-auto p-2 bd-highlight"><h4 class="text-left">{{$auction->title}}</h4></div>
@@ -589,6 +588,16 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                 <div class="row">
                   <div class="col-lg-12">
+                                 @if(Session::has('warning'))
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                            {{Session::get('warning')}}
+                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endif
 
                     {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
 

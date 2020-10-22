@@ -14,7 +14,42 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
           <!--ASIDE BAR SECTION-->
             <div class="col-lg-3 col-md-4 col-sm-12">
                 <h3 class="text-center">Proximas Subastas</h3>
+                @if ($featured_enable=='Yes')
+                    @foreach ($invitacion as $item)
+                        @if ($user->email == $item->email)
+                                <div class="row">
+                                   @foreach ($featured_records as $auction)
+                                       @if ($auction->sub_category_id == $item->auction_id)
+
+                                          <div class="col-lg-12 col-md-12 col-sm-3 p-3">
+
+                                              <div class="au-accordina">
+                                                  <div class="au-thumb"><a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}"> <img src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}" class="img-fluid premium-img"></a> </div>
+
+                                                  <div class="au-acord-secret">
+                                                       <h6 class="card-title text-center" data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom"><a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}">{!! str_limit($auction->title,25,'..') !!}</a></h6>
+                                                  </div>
+
+                                                  <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
+
+                                                  <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+
+
+                                              </div>
+                                          </div>
+                                       @endif
+                                       @break
+                                   @endforeach
+                                </div>
+                         @endif
+                    @endforeach
+                @endif
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Ver mas</button>
                           <!--featured auctions start-->
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
                 @if ($featured_enable=='Yes')
                     @foreach ($invitacion as $item)
                         @if ($user->email == $item->email)
@@ -22,7 +57,8 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                                 <div class="row">
                                    @foreach ($featured_records as $auction)
                                        @if ($auction->sub_category_id == $item->auction_id)
-                                          <div class="col-lg-12 col-md-12 col-sm-12 p-3">
+
+                                          <div class="col-lg-3 col-md-3 col-sm-3 p-3">
 
                                               <div class="au-accordina">
                                                   <div class="au-thumb"><a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}"> <img src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}" class="img-fluid premium-img"></a> </div>
@@ -45,6 +81,9 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                          @endif
                     @endforeach
                 @endif
+           </div>
+  </div>
+</div>
                           <!--featured auctions tab end-->
             </div>
 

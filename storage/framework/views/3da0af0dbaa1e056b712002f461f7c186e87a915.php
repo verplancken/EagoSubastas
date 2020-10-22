@@ -14,7 +14,42 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
           <!--ASIDE BAR SECTION-->
             <div class="col-lg-3 col-md-4 col-sm-12">
                 <h3 class="text-center">Proximas Subastas</h3>
+                <?php if($featured_enable=='Yes'): ?>
+                    <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($user->email == $item->email): ?>
+                                <div class="row">
+                                   <?php $__currentLoopData = $featured_records; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                       <?php if($auction->sub_category_id == $item->auction_id): ?>
+
+                                          <div class="col-lg-12 col-md-12 col-sm-3 p-3">
+
+                                              <div class="au-accordina">
+                                                  <div class="au-thumb"><a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>"> <img src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="<?php echo e($auction->title); ?>" class="img-fluid premium-img"></a> </div>
+
+                                                  <div class="au-acord-secret">
+                                                       <h6 class="card-title text-center" data-toggle="tooltip" title="<?php echo e($auction->title); ?>" data-placement="bottom"><a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>"><?php echo str_limit($auction->title,25,'..'); ?></a></h6>
+                                                  </div>
+
+                                                  <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
+
+                                                  <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+
+
+                                              </div>
+                                          </div>
+                                       <?php endif; ?>
+                                       <?php break; ?>
+                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </div>
+                         <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Ver mas</button>
                           <!--featured auctions start-->
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
                 <?php if($featured_enable=='Yes'): ?>
                     <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php if($user->email == $item->email): ?>
@@ -22,7 +57,8 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                                 <div class="row">
                                    <?php $__currentLoopData = $featured_records; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                        <?php if($auction->sub_category_id == $item->auction_id): ?>
-                                          <div class="col-lg-12 col-md-12 col-sm-12 p-3">
+
+                                          <div class="col-lg-3 col-md-3 col-sm-3 p-3">
 
                                               <div class="au-accordina">
                                                   <div class="au-thumb"><a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>"> <img src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="<?php echo e($auction->title); ?>" class="img-fluid premium-img"></a> </div>
@@ -45,6 +81,9 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                          <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php endif; ?>
+           </div>
+  </div>
+</div>
                           <!--featured auctions tab end-->
             </div>
 
