@@ -68,6 +68,22 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 }
 </style>
 
+
+
+
+ <!--CATEGORY BODY SECTION-->
+ @foreach ($invitacion as $item)
+    @if ($user->email == $item->email)
+{{--         <div class="row">--}}
+{{--             <div class="col-12 mt-3 ">--}}
+{{--                <div class="d-flex align-items-end flex-column">--}}
+{{--                  <div class="bd-highlight mr-5"><p>Tu correo: <strong>*{{$user->email}}*</strong></p></div>--}}
+{{--                  <div class="bd-highlight mr-5"> <p>Invitacion de correo: <strong>*{{$item->email}}*</strong></p></div>--}}
+{{--                </div>--}}
+{{--             </div>--}}
+{{--         </div>--}}
+    @if ($auction->sub_category_id == $item->auction_id)
+
 <div class="container">
     <div class="row">
         <div class="accordion" id="accordionExample">
@@ -248,12 +264,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
     </div>
 </div>
 
-
- <!--CATEGORY BODY SECTION-->
- @foreach ($invitacion as $item)
-    @if ($user->email == $item->email)
-    @if ($auction->sub_category_id == $item->auction_id)
-
      <section class="single-product section-pad">
       <div class="container">
 
@@ -367,7 +377,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                 <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
                      <i class="fa fa-question" aria-hidden="true"></i>
                 </button>
-                 <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> Recargar pag. <i class="fa fa-refresh" aria-hidden="true"></i> </a>
+                 <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> Recargar pag <i class="fa fa-refresh" aria-hidden="true"></i> </a>
             </div>
                 <div class="d-flex bd-highlight mb-3">
                   <div class="mr-auto p-2 bd-highlight"><h4 class="text-left">{{$auction->title}}</h4></div>
@@ -376,7 +386,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                 </div>
 
                    @if (!$live_auction) <!--normal auction happening-->
-                        <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                        <p title="Auction End Date"> La subasta finaliza el <strong> {!!  date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date)); !!} </strong> </p>
                    @endif
 
                     @if ($live_auction_starts)
@@ -452,14 +462,14 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                 </h4>
                            </div>
-                           <div class="col-6">
+                           <div class="col-6 text-right">
                                @foreach($auctionbidders as $item)
                                    @if($item->auction_id == $auction->id)
                                     <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros realizados <span class="badge" style="background-color: #0c100c;">{{$item->no_of_times}}</span>
                                     </button>
-                                   @endif
 
+                                   @endif
                                @endforeach
 
                                     <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
@@ -474,13 +484,14 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                @endforeach
 
                                @foreach($lote as $lotes)
-                                    <button class="btn mb-3 ml-4" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                    <button class="btn mb-3 " style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
                                       Art a ganar <span class="badge" style="background-color: #0c100c;">{{$lotes->articulos}}</span>
                                     </button>
                                    @break
                                @endforeach
 
                            </div>
+
                        </div>
 
 
@@ -605,7 +616,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                             @foreach($lote as $lotes)
                                 @if($auction->sub_category_id == $lotes->id)
                                     @if ($auctionbidders2[0]->bidder_count < $lotes->articulos)
-                                              <div class="form-group">
+
+                                              <div class="form-group" style="animation-name:pulse ;animation-delay: 1.5s; animation-duration: 2.0s; ">
                                                 {{ Form::number('bid_amount', null, $attributes =
 
                                                     array('class' => 'form-control',
@@ -621,7 +633,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                     )) }}
                                                 <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
                                               </div>
-
 
                                               <div class="form-group">
                                                 <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
@@ -750,11 +761,9 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
     <!--SELLER AUCTIONS SECTION-->
 
     @else
-    <div class="col-lg-12 col-md-12 col-sm-12">
+      @endif
+      @endif
 
-    </div>
-      @endif
-      @endif
       @endforeach
 
  <div class="modal" id="Instrucciones2" tabindex="-1" role="dialog">

@@ -106,6 +106,7 @@ $user = Auth::user();
                        @if (Auth::check())
 
                        <li><a  class="nav-link nav-press scroll"> Hola: {{$user->email}}</a></li>
+                       <li><a href="{{URL_LOGOUT}}" class="nav-link nav-press scroll"><i class="fa fa-sign-out"></i>Cerrar Sesion</a></li>
 
                        @endif
 
