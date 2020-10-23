@@ -26,44 +26,41 @@
 
                         {!! Form::open(array('url' => URL_USERS_REGISTER, 'method' => 'POST', 'novalidate'=>'', 'class'=>"form-horizontal", 'name'=>"registrationForm")) !!}
 
-                       
+
+{{--                            <div class="form-group">--}}
+
+{{--                               {!! Form::label('name', getPhrase('name'), ['class' => 'control-label']) !!}--}}
+
+{{--                                     <span class="text-red">*</span>--}}
+{{--                                 --}}
+{{--                                    {{ Form::text('name', old('name') , $attributes = array('class'=>'form-control',--}}
+
+{{--                                        'placeholder' => 'Name',--}}
+
+{{--                                        'ng-model'=>'name',--}}
+
+{{--                                        'ng-pattern' => getRegexPattern('name'),--}}
+
+{{--                                        'required'=> 'true', --}}
+
+{{--                                        'ng-class'=>'{"has-error": registrationForm.name.$touched && registrationForm.name.$invalid}',--}}
+
+{{--                                        'ng-minlength' => '4',--}}
+
+{{--                                    )) }}--}}
 
 
+{{--                                    <div class="validation-error" ng-messages="registrationForm.name.$error" >--}}
 
-                            <div class="form-group">
+{{--                                        {!! getValidationMessage()!!}--}}
 
-                               {!! Form::label('name', getPhrase('name'), ['class' => 'control-label']) !!}
+{{--                                        {!! getValidationMessage('minlength')!!}--}}
 
-                                     <span class="text-red">*</span>
-                                 
-                                    {{ Form::text('name', old('name') , $attributes = array('class'=>'form-control',
+{{--                                        {!! getValidationMessage('pattern')!!}--}}
 
-                                        'placeholder' => 'Name',
+{{--                                    </div>--}}
 
-                                        'ng-model'=>'name',
-
-                                        'ng-pattern' => getRegexPattern('name'),
-
-                                        'required'=> 'true', 
-
-                                        'ng-class'=>'{"has-error": registrationForm.name.$touched && registrationForm.name.$invalid}',
-
-                                        'ng-minlength' => '4',
-
-                                    )) }}
-
-
-                                    <div class="validation-error" ng-messages="registrationForm.name.$error" >
-
-                                        {!! getValidationMessage()!!}
-
-                                        {!! getValidationMessage('minlength')!!}
-
-                                        {!! getValidationMessage('pattern')!!}
-
-                                    </div>
-
-                                </div>
+{{--                                </div>--}}
 
                             
 
@@ -72,13 +69,13 @@
 
                             <div class="form-group">
 
-                                {!! Form::label('username', getPhrase('username'), ['class' => 'control-label']) !!}
+                                {!! Form::label('username','Nombre completo', ['class' => 'control-label']) !!}
 
                                     <span class="text-red">*</span>
                                  
                                     {{ Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Alias',
+                                        'placeholder' => 'Nombre',
 
                                         'ng-model'=>'username',
 

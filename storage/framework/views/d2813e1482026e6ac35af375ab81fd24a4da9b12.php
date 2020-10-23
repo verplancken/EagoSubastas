@@ -113,7 +113,7 @@
 
       <div class="modal-header">
 
-        <h4 class="modal-title"><?php echo e(getPhrase('forgot_password')); ?></h4>
+        <h4 class="modal-title">Recuperar contraseña</h4>
 
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
@@ -226,7 +226,7 @@
 
                                 'id'=> 'lg_modal_email',
 
-                                'placeholder' => getPhrase('username').'/'.getPhrase('email'),
+                                'placeholder' => 'Correo',
 
                                 'ng-class'=>'{"has-error": loginFormModal.email.$touched && loginFormModal.email.$invalid}',
 
@@ -332,53 +332,54 @@ $google_login = getSetting('google_plus_login','module');
                 <?php echo Form::close(); ?>
 
 
-
+            <br>
 
                   <?php echo Form::open(array('url' => URL_USERS_REGISTER, 'method' => 'POST', 'novalidate'=>'', 'class'=>"form-horizontal", 'name'=>"registrationFormModal",'id'=>'register-form-modal', 'style'=>'display:none')); ?>
 
 
             <div class="row">
-                                <div class="form-group col-lg-12">
-
-                                    <?php echo e(Form::text('name', old('name') , $attributes = array('class'=>'form-control',
-
-                                        'placeholder' => 'Name',
-
-                                        'ng-model'=>'name',
-
-                                        'ng-pattern' => getRegexPattern('name'),
-
-                                        'required'=> 'true',
-
-                                        'id'=>'rg_name',
-
-                                        'ng-class'=>'{"has-error": registrationFormModal.name.$touched && registrationFormModal.name.$invalid}',
-
-                                        'ng-minlength' => '4',
-
-                                    ))); ?>
+                    <div class="col-12">
+                          <h5 class="text-center p-3">
+                              <strong>Recuerda registrarte con el correo que te llego la invitacion</strong>
+                          </h5>
+                    </div>
 
 
-                                    <div class="validation-error" ng-messages="registrationFormModal.name.$error" >
-
-                                        <?php echo getValidationMessage(); ?>
 
 
-                                        <?php echo getValidationMessage('minlength'); ?>
 
 
-                                        <?php echo getValidationMessage('pattern'); ?>
 
 
-                                    </div>
 
-                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                             <div class="form-group  col-lg-12">
 
                                     <?php echo e(Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Username',
+                                        'placeholder' => 'Nombre completo',
 
                                         'ng-model'=>'username',
 

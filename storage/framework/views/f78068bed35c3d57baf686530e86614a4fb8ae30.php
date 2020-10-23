@@ -52,46 +52,13 @@
                     </div>
 
 
-                    <div class="col-lg-3 col-md-4 col-sm-12">
-                        <div class="media state-media box-ws">
-                            <div class="media-left">
-                            <a href="<?php echo e(URL_FAQ_QUESTIONS); ?>"><div class="state-icn bg-icon-success"><i class="fa fa-question"></i></div></a>
-                            </div>
-                            <div class="media-body">
-                            <h4 class="card-title"><?php echo e(App\FaqQuestion::get()->count()); ?></h4>
-
-                                <a href="<?php echo e(URL_FAQ_QUESTIONS); ?>">Preguntas y Respuestas</a>
-                            </div>
-                        </div>
-                    </div>
+                    
 
 
-                    <div class="col-lg-3 col-md-4 col-sm-12">
-                        <div class="media state-media box-ws">
-                            <div class="media-left">
-                            <a href="<?php echo e(URL_CITIES); ?>"><div class="state-icn bg-icon-blue"><i class="fa fa-map-marker"></i></div></a>
-                            </div>
-                            <div class="media-body">
-                            <h4 class="card-title"><?php echo e(App\City::get()->count()); ?></h4>
-
-                                <a href="<?php echo e(URL_CITIES); ?>">Ciudad</a>
-                            </div>
-                        </div>
-                    </div>
+                    
 
 
-                     <div class="col-lg-3 col-md-4 col-sm-12">
-                        <div class="media state-media box-ws">
-                            <div class="media-left">
-                            <a href="<?php echo e(URL_LANGUAGES_LIST); ?>"><div class="state-icn bg-icon-orange"><i class="fa fa-language"></i></div></a>
-                            </div>
-                            <div class="media-body">
-                            <h4 class="card-title"><?php echo e(App\Language::get()->count()); ?></h4>
-
-                                <a href="<?php echo e(URL_LANGUAGES_LIST); ?>">Lenguaje</a>
-                            </div>
-                        </div>
-                    </div>
+                     
 
 
                      <div class="col-lg-3 col-md-4 col-sm-12">

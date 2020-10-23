@@ -124,17 +124,17 @@ $user = Auth::user();
 
     @if (isset($breadcrumb))
      <!--BREADCRUMBS SECTION-->
-    <section class="au-bread-crumbs">
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 au-crumbs">
-                <h5>{{isset($title) ? $title : ''}}</h5>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 au-bread">
-                <a href="javascript:void(0);" class="justify-content-end">{{getPhrase('home')}} &nbsp; <span> / {{isset($title) ? $title : ''}} </span></a>
-            </div>
-         </div>
-      </div>
-    </section>
+{{--    <section class="au-bread-crumbs">--}}
+{{--      <div class="container">--}}
+{{--         <div class="row">--}}
+{{--            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 au-crumbs">--}}
+{{--                <h5>{{isset($title) ? $title : ''}}</h5>--}}
+{{--            </div>--}}
+{{--            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 au-bread">--}}
+{{--                <a href="javascript:void(0);" class="justify-content-end">{{getPhrase('home')}} &nbsp; <span> / {{isset($title) ? $title : ''}} </span></a>--}}
+{{--            </div>--}}
+{{--         </div>--}}
+{{--      </div>--}}
+{{--    </section>--}}
     <!--BREADCRUMBS SECTION-->
     @endif

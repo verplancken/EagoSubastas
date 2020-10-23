@@ -125,17 +125,17 @@ $networks = \App\Settings::getSettingRecord('social_networks');
 
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 au-body-footer">
-                    <h4><?php echo e(getPhrase('news_letter')); ?></h4>
-                    <p><?php echo e(getPhrase('signup_for_new_auction_updates')); ?></p>
 
 
-                        <div class="au-subscribe">
-                            <input required type="email" ng-model="subscriber_email" class="form-control" placeholder="<?php echo e(getPhrase('enter_email_address')); ?>" />
-                            <button type="button" class="btn btn-default login-bttn" ng-click="saveSubscriber(subscriber_email)"><?php echo e(getPhrase('subscribe')); ?></button>
-                        </div>
 
-                </div>
+
+
+
+
+
+
+
+
             </div>
             <!--FOOTER SUB SECTION-->
             <div class="row">

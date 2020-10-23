@@ -36,161 +36,13 @@ $active_class='';
             <?php endif; ?>
 
 
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('faq_management_access')): ?>
-            <li class="treeview <?php echo e(isActive($active_class,'faqs')); ?>">
-                <a href="#">
-                    <i class="fa fa-question"></i>
-                    <!-- <span class="title"> <?php echo e(getPhrase('faq_management')); ?> </span> -->
-                    <span class="title"> Gestión de preguntas frecuentes </span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('faq_category_access')): ?>
-                <li class="<?php echo e($request->segment(2) == 'faq_categories' ? 'active active-sub' : ''); ?>">
-                        <a href="<?php echo e(URL_FAQ_CATEGORIES); ?>">
-                            <i class="fa fa-briefcase"></i>
-                           <!-- <span class="title">
-                                <?php echo e(getPhrase('categories')); ?>
+            
 
-                            </span> -->
-                            <span class="title">
-                                Categorias
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('faq_question_access')): ?>
-                <li class="<?php echo e($request->segment(2) == 'faq_questions' ? 'active active-sub' : ''); ?>">
-                        <a href="<?php echo e(URL_FAQ_QUESTIONS); ?>">
-                            <i class="fa fa-question"></i>
-                           <!-- <span class="title">
-                                <?php echo e(getPhrase('questions')); ?>
-
-                            </span> -->
-                             <span class="title">
-                                Preguntas
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                </ul>
-            </li>
-            <?php endif; ?>
-
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_access')): ?>
-            <li class="treeview <?php echo e(isActive($active_class,'categories')); ?>">
-                <a href="#">
-                    <i class="fa fa-list"></i>
-                  <!--  <span class="title"> <?php echo e(getPhrase('categories')); ?> </span> -->
-                    <span class="title"> Categorias </span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_access')): ?>
-                <li class="<?php echo e($request->segment(2) == 'categories' ? 'active active-sub' : ''); ?>">
-                        <a href="<?php echo e(URL_CATEGORIES); ?>">
-                            <i class="fa fa-tags"></i>
-                          <!--  <span class="title">
-                                <?php echo e(getPhrase('category')); ?> 
-                            </span> -->
-                            <span class="title">
-                                Categorias
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('sub_catogory_access')): ?>
-                <li class="<?php echo e($request->segment(2) == 'sub_catogories' ? 'active active-sub' : ''); ?>">
-                        <a href="<?php echo e(URL_SUB_CATEGORIES); ?>">
-                            <i class="fa fa-list-alt"></i>
-                            <!-- <span class="title">
-                                <?php echo e(getPhrase('sub_categories')); ?> 
-                            </span> -->
-                            <span class="title">
-                                Subcategorias
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                </ul>
-            </li>
-            <?php endif; ?>
-
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('location_master_access')): ?>
-            <li class="treeview <?php echo e(isActive($active_class,'locations')); ?>">
-                <a href="#">
-                    <i class="fa fa-map-marker"></i>
-                   <!-- <span class="title"> <?php echo e(getPhrase('location_master')); ?> </span> -->
-                    <span class="title"> Maestro de Ubicación </span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('country_access')): ?>
-                <li class="<?php echo e($request->segment(2) == 'countries' ? 'active active-sub' : ''); ?>">
-                        <a href="<?php echo e(URL_COUNTRIES); ?>">
-                            <i class="fa fa-flag"></i>
-                           <!-- <span class="title">
-                                <?php echo e(getPhrase('countries')); ?>
-
-                            </span> -->
-                            <span class="title">
-                                Paises
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('state_access')): ?>
-                <li class="<?php echo e($request->segment(2) == 'states' ? 'active active-sub' : ''); ?>">
-                        <a href="<?php echo e(URL_STATES); ?>">
-                            <i class="fa fa-map-marker"></i>
-                          <!--  <span class="title">
-                                <?php echo e(getPhrase('states')); ?>
-
-                            </span> -->
-                            <span class="title">
-                                Estados
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('city_access')): ?>
-                <li class="<?php echo e($request->segment(2) == 'cities' ? 'active active-sub' : ''); ?>">
-                        <a href="<?php echo e(URL_CITIES); ?>">
-                            <i class="fa fa-building"></i>
-                          <!--  <span class="title">
-                                <?php echo e(getPhrase('cities')); ?>
-
-                            </span> -->
-                            <span class="title">
-                                Ciudades
-                            </span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                </ul>
-            </li>
-            <?php endif; ?>
+            
 
 
 
-            <?php if(checkRole(['admin'])): ?>
-            <li class="<?php echo e(isActive($active_class,'languages')); ?>">
-                <a href="<?php echo e(URL_LANGUAGES_LIST); ?>">
-                    <i class="fa fa-language"></i>
-                    <!-- <span><?php echo e(getPhrase('languages')); ?></span> -->
-                    <span>Idiomas</span>
-                </a>
-            </li>
-            <?php endif; ?>
+            
 
 
 
@@ -219,15 +71,7 @@ $active_class='';
             </li>
             <?php endif; ?>
 
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('testmony_access')): ?>
-            <li class="<?php echo e(isActive($active_class,'testimonials')); ?>">
-                <a href="<?php echo e(URL_TETSIMONIALS); ?>">
-                    <i class="fa fa-quote-left"></i>
-                    <!-- <span><?php echo e(getPhrase('testimonials')); ?></span> -->
-                    <span>Testimonios</span>
-                </a>
-            </li>
-            <?php endif; ?>
+            
 
 
 
@@ -246,7 +90,47 @@ $active_class='';
                 </li>
             <?php endif; ?>
 
-
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_access')): ?>
+            <li class="treeview <?php echo e(isActive($active_class,'categories')); ?>">
+                <a href="#">
+                    <i class="fa fa-list"></i>
+                  <!--  <span class="title"> <?php echo e(getPhrase('categories')); ?> </span> -->
+                    <span class="title"> Empresa </span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('category_access')): ?>
+                <li class="<?php echo e($request->segment(2) == 'categories' ? 'active active-sub' : ''); ?>">
+                        <a href="<?php echo e(URL_CATEGORIES); ?>">
+                            <i class="fa fa-tags"></i>
+                          <!--  <span class="title">
+                                <?php echo e(getPhrase('category')); ?> 
+                            </span> -->
+                            <span class="title">
+                                Empresa
+                            </span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('sub_catogory_access')): ?>
+                <li class="<?php echo e($request->segment(2) == 'sub_catogories' ? 'active active-sub' : ''); ?>">
+                        <a href="<?php echo e(URL_SUB_CATEGORIES); ?>">
+                            <i class="fa fa-list-alt"></i>
+                            <!-- <span class="title">
+                                <?php echo e(getPhrase('sub_categories')); ?> 
+                            </span> -->
+                            <span class="title">
+                                Lotes
+                            </span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                </ul>
+            </li>
+            <?php endif; ?>
 
 
             <li class="<?php echo e(isActive($active_class,'auctions')); ?>">
@@ -327,7 +211,7 @@ $active_class='';
             <?php endif; ?>
 
 
-       
+
 
              <li class="<?php echo e(isActive($active_class,'notifications')); ?>">
                 <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>">
@@ -337,16 +221,8 @@ $active_class='';
                 </a>
             </li>
 
-            <?php if(checkRole(['admin'])): ?>
-            <li class="<?php echo e(isActive($active_class,'sms')); ?>">
-                <a href="<?php echo e(URL_SEND_SMS); ?>">
-                    <i class="fa fa-mobile"></i>
-                    <!-- <span class="title"> <?php echo e(getPhrase('sms')); ?> </span> -->
-                    <span class="title"> SMS </span>
-                </a>
-            </li>
-            <?php endif; ?>
             
+
             <?php ($unread = App\MessengerTopic::countUnread()); ?>
             <li class="<?php echo e($request->segment(1) == 'messenger' ? 'active' : ''); ?> <?php echo e(($unread > 0 ? 'unread' : '')); ?>">
                 <a href="<?php echo e(URL_MESSENGER); ?>">
@@ -367,15 +243,7 @@ $active_class='';
             </style>
 
 
-            <?php if(checkRole(['admin'])): ?>
-            <li class="<?php echo e(isActive($active_class,'payments')); ?>">
-                <a href="<?php echo e(URL_PAYMENT_HISTORY); ?>">
-                    <i class="fa fa-money"></i>
-                  <!--  <span><?php echo e(getPhrase('payments')); ?></span> -->
-                    <span>Pagos</span>
-                </a>
-            </li>
-            <?php endif; ?>
+            
 
            
 

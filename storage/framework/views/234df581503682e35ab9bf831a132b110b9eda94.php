@@ -7,16 +7,24 @@
 
 <?php $__env->startSection('content'); ?>
 <?php
-$today = DATE('Y-m-d');
+        use App\Bidding;
+$today = DATE('d-m-Y');
 $currency_code = getSetting('currency_code','site_settings');
 $auctin_url = URL_HOME_AUCTIONS;
+$last_bidcerrada = Bidding::getLastBidRecordCerrada($auction->id);
 
-$enter_amount = 'Enter amount ';
-if (isset($last_bid) && !empty($last_bid->bid_amount))
-  $enter_amount .= '> '.$last_bid->bid_amount;
-elseif ($auction->minimum_bid>0)
-  $enter_amount .= '> '.$auction->minimum_bid;
-
+$enter_amount = 'Ingresar cantidad ';
+if ($auction->visibilidad == 1){
+    if (isset($last_bid) && !empty($last_bid->bid_amount))
+      $enter_amount .= 'mayor a '.number_format($last_bid->bid_amount);
+    elseif ($auction->minimum_bid>0)
+      $enter_amount .= 'mayor a '.number_format($auction->minimum_bid);
+}else{
+    if (isset($last_bid) && !empty($last_bidcerrada->bid_amount))
+      $enter_amount .= 'mayor a '.number_format($last_bidcerrada->bid_amount);
+    elseif ($auction->minimum_bid>0)
+      $enter_amount .= 'mayor a '.number_format($auction->minimum_bid);
+}
 
 $total_bids = $auction->getAuctionBiddersCount();
 
@@ -30,11 +38,219 @@ else
 $active_class='';
 
 $user = Auth::user();
-
+use App\AuctionBidder;
+use App\Auction;
+use App\SubCatogory;
 
 ?>
 
+<style>
+    .shadow{
+-webkit-box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+-moz-box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
+    }
+@media  screen and (max-width: 986px) {
+  .btn-res {
+     font-size: 15px;
+  }
+}
+
+@media  screen and (max-width: 536px) {
+  .btn-res {
+    font-size: 13px;
+  }
+    .au-product-nav{
+        padding: 5px !important;
+    }
+}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="accordion" id="accordionExample">
+            <div class="col-12 mt-3" >
+                <div class="d-flex justify-content-between">
+
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
+                          detalles de la subasta
+                      </a>
+
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="false">
+                          Envío & pago
+                      </a>
+
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-terms" role="button" aria-controls="nav-terms" aria-expanded="false">
+                          condiciones de subasta & informacion
+                      </a>
+
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-bid" role="button" aria-controls="nav-bid" aria-expanded="false">
+                          historial de ofertas
+                      </a>
+
+                </div>
+
+                    
+                     <div class="collapse" id="nav-auction" data-parent="#accordionExample">
+                      <div class="card card-body shadow">
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Fecha de inicio
+                                          <span class="btn-res"> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
+                                        </li>
+
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Fecha final
+                                          <span class="btn-res"> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
+                                        </li>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             Precio de reserva
+                                          <span class="btn-res"><?php if($auction->reserve_price): ?> $ <?php echo e(number_format($auction->reserve_price)); ?> mxn <?php endif; ?></span>
+                                         </li>
+
+
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             Tiros por subasta
+                                          <span class="btn-res"><?php if($auction->tiros): ?> <?php echo e($auction->tiros); ?> <?php endif; ?></span>
+                                         </li>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                              Inicio de oferta
+                                          <span class="btn-res"><?php if($auction->minimum_bid): ?> $  <?php echo e(number_format($auction->minimum_bid)); ?> mxn <?php endif; ?></span>
+                                         </li>
+
+                                          <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                             ¿La subasta de de auto incremento?
+                                            <span class="btn-res">
+                                                <?php if($auction->is_bid_increment==1): ?>
+                                                    Si
+                                                <?php else: ?>
+                                                    No
+                                                <?php endif; ?>
+                                            </span>
+                                         </li>
+
+                                        <?php if($auction->bid_increment): ?>
+                                             <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                                 Incremento de oferta ($MXN)
+                                              <span class="btn-res"><?php echo e($currency_code); ?> <?php echo e($auction->bid_increment); ?></span>
+                                             </li>
+                                         <?php endif; ?>
+
+                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+                                            Tipo de subastas
+                                            <span class="btn-res">
+                                            <?php if($auction->visibilidad==1): ?>
+                                                Abierta
+                                            <?php else: ?>
+                                                Cerrada
+                                            <?php endif; ?>
+                                            </span>
+                                         </li>
+
+                                          <?php if($auction->is_buynow==1): ?>
+                                              <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
+
+                                                  comprar ahora precio
+                                                <span class="btn-res"><?php if($auction->buy_now_price): ?> <?php echo e($currency_code); ?> <?php echo e($auction->buy_now_price); ?> <?php endif; ?></span>
+                                              </li>
+                                          <?php endif; ?>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    
+                     <div class="collapse" id="nav-shipping" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                      <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
+
+                                        <p><?php echo $auction->shipping_conditions; ?></p>
+
+                                      </div>
+                                    </div>
+
+                                </div>
+                          </div>
+                     </div>
+                     
+
+                     
+                     <div class="collapse" id="nav-terms" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
+
+                                          <p><?php echo $auction->shipping_terms; ?></p>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                          </div>
+                     </div>
+                     
+
+                      
+                     <div class="collapse" id="nav-bid" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                      <div class=" au-policy">
+
+                                        <?php if(isset($bidding_history) && count($bidding_history)): ?>
+
+                                          <?php if($auction->visibilidad==1): ?>
+                                            <ul class="list-group z-depth-0">
+                                              <li class="list-group-item justify-content-between">
+                                                  <span><b><?php echo e(getPhrase('username')); ?></b></span>
+                                                  <span style="float:right;"><b><?php echo e(getPhrase('bid_amount')); ?></b></span>
+                                              </li>
+                                              <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                  <li class="list-group-item justify-content-between">
+                                                    <span>Usuario</span>
+                                                    <span style="float:right;">$<?php echo e($bid->bid_amount); ?> MXN</span>
+                                                  </li>
+                                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </ul>
+                                           <?php else: ?>
+                                             <span>Usuario</span>
+                                          <?php endif; ?>
+                                        <?php endif; ?>
+
+                                      </div>
+                                  </div>
+
+                                </div>
+                          </div>
+                     </div>
+                     
+            </div>
+        </div>
+    </div>
+</div>
+
+
  <!--CATEGORY BODY SECTION-->
+ <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php if($user->email == $item->email): ?>
+    <?php if($auction->sub_category_id == $item->auction_id): ?>
 
      <section class="single-product section-pad">
       <div class="container">
@@ -78,11 +294,10 @@ $user = Auth::user();
 
                         </ul>
                     </div> -->
-
-                    <div class="sm-product-show">
+            <div class="sm-product-show">
 
                         <div class="sm-product-slider-img">
-                            <img src="<?php echo e(getAuctionImage($auction->image)); ?>" id="sm-product-zoom" class="img-responsive" data-zoom-image="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="">
+                            <img src="<?php echo e(getAuctionImage($auction->image)); ?>" id="sm-product-zoom" class="img-responsive img-fluid" data-zoom-image="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="">
                             <i class="sm-zoom-icn fa fa-expand"></i>
                         </div>
 
@@ -137,33 +352,60 @@ $user = Auth::user();
                         </ul>
 
                         <?php endif; ?>
-
-
                     </div>
-
-
-
 
                     <!-- /Product-gallery-container-->
                <!-- <img id="zoom_01" src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" data-zoom-image="<?php echo e(IMAGES_HOME); ?>large/image1.jpg" class="img-fluid"> -->
-            </div>
+             </div>
 
 
             <div class="col-lg-6">
 
-                <h4><?php echo e($auction->title); ?></h4>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
+                     <i class="fa fa-question" aria-hidden="true"></i>
+                </button>
+                 <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> Recargar pag. <i class="fa fa-refresh" aria-hidden="true"></i> </a>
+            </div>
+                <div class="d-flex bd-highlight mb-3">
+                  <div class="mr-auto p-2 bd-highlight"><h4 class="text-left"><?php echo e($auction->title); ?></h4></div>
+                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDSubasta<?php echo e($auction->id); ?></p></div>
+                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDLote:<?php echo e($auction->sub_category_id); ?></p></div>
+                </div>
 
-                <?php if(!$live_auction): ?> <!--normal auction happening-->
-                  <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
-                <?php endif; ?>
+                   <?php if(!$live_auction): ?> <!--normal auction happening-->
+                        <p title="Auction End Date"> La subasta regular finaliza el <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                   <?php endif; ?>
 
+                    <?php if($live_auction_starts): ?>
+                      <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i><?php echo e($auction->live_auction_start_time); ?>, Prepárate para participar</p>
+                    <?php endif; ?>
+                <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if(Session::has('succes')): ?>
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                            <?php echo e(Session::get('succes')); ?>
 
+                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                     <?php break; ?>
+                                <?php endif; ?>
+                                  <?php if(Session::has('warning')): ?>
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                            <?php echo e(Session::get('warning')); ?>
 
-                <?php if($live_auction_starts): ?>
-                  <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i><?php echo e($auction->live_auction_start_time); ?>, Be ready to participate</p>
-                <?php endif; ?>
-
-
+                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                    <?php break; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
               <?php if($live_auction): ?> <!--live auction happening-->
 
@@ -183,164 +425,234 @@ $user = Auth::user();
               <?php endif; ?>
 
 
-
-
-              <?php if(!$live_auction): ?><!--if live auction not happening normal auction-->
+              <?php if(!$live_auction): ?><!--si la subasta en vivo no ocurre subasta normal-->
 
                 <?php if($auction->auction_status=='open' && $auction->start_date<=now() && $auction->end_date>=now()): ?>
-                <!--if auction status is live start-->
-                 <!--product with border content-->
+                <!--si el estado de la subasta es inicio en vivo-->
+                 <!--producto con contenido de borde-->
                  <?php if($bid_div): ?>
-                <div class="product-border">
-                    <p class="text-blue"><b><i class="pe-7s-timer"> </i>
-                        <?php echo e(strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))); ?></b></p>
+     <div class="product-border">
+                   <!-- <p class="text-blue"><b><i class="pe-7s-timer"> </i>
+                        <?php echo e(strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))); ?></b></p>-->
+                       <div class="row">
+                           <div class="col-6">
+                               <h4>
+                                    <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >Precio Reserva <br> <strong>$<?php echo number_format($auction->reserve_price); ?> MXN</strong></p>
 
-                    <h4>
-                      <?php echo e($currency_code); ?><?php echo e($auction->reserve_price); ?>
+            
+                                  <!--<span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >-->
+                                    <!--<?php if($total_bids>1): ?>-->
+                                    <!--     ofertas - <?php echo e($total_bids); ?>-->
+                                    <!--<?php elseif($total_bids==1): ?>-->
+                                    <!--      oferta - <?php echo e($total_bids); ?>-->
+                                    <!--<?php else: ?>-->
+                                    <!--    0 <?php echo e(getPhrase('bids')); ?>-->
+                                    <!--<?php endif; ?>-->
+                                  <!--</span>-->
 
-                      <span class="badge">
-                        <?php if($total_bids>1): ?>
+                                </h4>
+                           </div>
+                           <div class="col-6">
+                               <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                   <?php if($item->auction_id == $auction->id): ?>
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                      Tiros realizados <span class="badge" style="background-color: #0c100c;"><?php echo e($item->no_of_times); ?></span>
+                                    </button>
+                                   <?php endif; ?>
 
-                             <?php echo e($total_bids); ?>ofertas
-                        <?php elseif($total_bids==1): ?>
+                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                            <?php echo e($total_bids); ?> oferta
-                        <?php else: ?>
-                            0 <?php echo e(getPhrase('bids')); ?>
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
+                                      Tiros permitidos <span class="badge" style="background-color: #0c100c;"><?php echo e($auction->tiros); ?></span>
+                                    </button>
 
-                        <?php endif; ?>
-                      </span>
-                        <span class="badge">Tiros - <?php echo e($auction->tiros); ?></span>
+                               <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Art ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
+                                    </button>
+                                       <?php break; ?>
+                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                    </h4>
+                               <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <button class="btn mb-3 ml-4" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
+                                      Art a ganar <span class="badge" style="background-color: #0c100c;"><?php echo e($lotes->articulos); ?></span>
+                                    </button>
+                                   <?php break; ?>
+                               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                  <?php if($bid_options): ?>
-
-
-                    <p>seleccione oferta máxima</p>
-                  <div class="row">
-                  <div class="col-lg-6">
-
-                    <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
-
-
-
-                    <div class="form-group">
-
-                          <?php echo e(Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',
-
-                            'class'=>'form-control',
-
-                            'ng-model'=>'bid_amount',
-
-                            'required'=> 'true',
-
-                            'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
-
-                         ])); ?>
-
-
-
-                        <div class="validation-error" ng-messages="formBid.bid_amount.$error" >
+                           </div>
+                       </div>
 
 
+            <?php if($bid_options || $bid_options2): ?>
+                <?php if($auction->visibilidad == 1): ?>
+                       <p>Seleccione oferta máxima</p>
+                        <div class="row">
+                          <div class="col-lg-5">
+                                <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
+
+
+                                
+                              <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if($auctionbidders2[0]->bidder_count < $lotes->articulos): ?>
+                                                  <div class="form-group">
+                                                        <?php echo e(Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',
+
+                                                            'class'=>'form-control',
+
+                                                            'ng-model'=>'bid_amount',
+
+                                                            'required'=> 'true',
+
+                                                            'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
+
+                                                        ])); ?>
+
+                                                        <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
+                                                      </div>
+                          </div>
+                                <div class="col-lg-7">
+
+                                                      <div class="form-group">
+                                                        <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
+                                                        <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
+                                                          <div class="col-12 d-flex">
+                                                            <a class="btn btn-danger"  href="<?php echo e(URL_HOME_AUCTIONS); ?>" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                                            <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+
+                                                          </div>
+                                                          </div>
+                                                      </div>
+                                                      <?php echo Form::close(); ?>
+
+
+                                                            <?php if($auction->is_bid_increment == 1): ?>
+                                                                <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>$<?php echo number_format($auction->bid_increment); ?> MXN</strong></p>
+                                                           <?php endif; ?>
+                                      <?php else: ?>
+                                        <p>Lo sentimos, ya no puede subastar</p>
+                                      <?php endif; ?>
+                                       <?php break; ?>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                          </div>
                         </div>
-
-                    </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                     <div class="form-group">
-
-                        <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
+                <?php else: ?>
+                        <p>Seleccione oferta máxima</p>
+                        <div class="row">
+                          <div class="col-lg-5">
+                                <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
 
-                            <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>- Pujar</button>
+                                
+                              <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if($auctionbidders2[0]->bidder_count < $lotes->articulos): ?>
+                                                  <div class="form-group">
+                                                        <?php echo e(Form::select('bid_amount', $bid_options2, null, ['placeholder'=>'select',
 
-                     </div>
+                                                            'class'=>'form-control',
+
+                                                            'ng-model'=>'bid_amount',
+
+                                                            'required'=> 'true',
+
+                                                            'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
+
+                                                        ])); ?>
+
+                                                        <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
+                                                      </div>
+                          </div>
+                                <div class="col-lg-7">
+
+                                                      <div class="form-group">
+                                                        <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
+                                                        <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
+                                                          <div class="col-12 d-flex">
+                                                            <a class="btn btn-danger"  href="<?php echo e(URL_HOME_AUCTIONS); ?>" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                                            <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+
+                                                          </div>
+                                                          </div>
+                                                      </div>
+                                                      <?php echo Form::close(); ?>
 
 
+                                                            <?php if($auction->is_bid_increment == 1): ?>
+                                                                <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>$<?php echo number_format($auction->bid_increment); ?> MXN</strong></p>
+                                                           <?php endif; ?>
+                                      <?php else: ?>
+                                        <p>Lo sentimos, ya no puede subastar</p>
+                                      <?php endif; ?>
+                                       <?php break; ?>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                      <?php echo Form::close(); ?>
+                          </div>
+                        </div>
+                <?php endif; ?>
+            <?php else: ?>
 
-
-                    </div>
-
-                    </div>
-                    <?php else: ?>
                 <div class="row">
-                    <div class="col-lg-6">
+                  <div class="col-lg-12">
+                                 <?php if(Session::has('warning')): ?>
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                            <?php echo e(Session::get('warning')); ?>
+
+                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
 
                     <?php echo Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')); ?>
 
 
+                        
+                            <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($auction->sub_category_id == $lotes->id): ?>
+                                    <?php if($auctionbidders2[0]->bidder_count < $lotes->articulos): ?>
+                                              <div class="form-group">
+                                                <?php echo e(Form::number('bid_amount', null, $attributes =
 
-                    <div class="form-group">
+                                                    array('class' => 'form-control',
 
-                         <?php echo e(Form::number('bid_amount', null, $attributes =
+                                                    'placeholder' => $enter_amount,
 
-                                array('class' => 'form-control',
+                                                    'ng-model' => 'bid_amount',
 
-                                'placeholder' => $enter_amount,
+                                                    'required' => 'true',
 
-                                'ng-model' => 'bid_amount',
+                                                    'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}',
 
-                                'required' => 'true',
+                                                    ))); ?>
 
-                                'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}',
-
-                                ))); ?>
-
+                                                <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
+                                              </div>
 
 
-                        <div class="validation-error" ng-messages="formBid.bid_amount.$error" >
+                                              <div class="form-group">
+                                                <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
+                                                <input type="hidden" name="sub" value="<?php echo e($auction->sub_category_id); ?>">
+                                                  <div class="col-12 d-flex">
+                                                      <a class="btn btn-danger"  href="<?php echo e(URL_HOME_AUCTIONS); ?>" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                                    <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+                                                  </div>
+                                              </div>
+                                              <?php echo Form::close(); ?>
 
 
+                                    <?php else: ?>
+                                        <p>Lo sentimos, ya no puede subastar, ha ganado el numero de articulos permitidos </p>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                        </div>
 
-                    </div>
                   </div>
-
-
-
-                   <div class="col-lg-6">
-
-                     <div class="form-group">
-                        <input type="hidden" name="bid_auction_id" value="<?php echo e($auction->id); ?>">
-
-                            <button class="btn btn-primary login-bttn au-btn-modren" ng-disabled='!formBid.$valid'>Pujar</button>
-                     </div>
-
-
-
-                        <ul class="list-group z-depth-0">
-                                      <li class="list-group-item justify-content-between">
-                                          <span><b>Usuarios</b></span>
-                                           <span style="float:right;"><b>Monto de la oferta</b></span>
-                                      </li>
-
-                                       <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                          <h4><?php echo e($user->id); ?> es <?php echo e($bid->created_at); ?> monto <?php echo e($bid->bid_amount); ?></h4>
-                                          <?php if( $user->id == $bid->id ): ?>
-                                            <li class="list-group-item justify-content-between">
-                                                <span><?php echo e($bid->id); ?></span>
-                                                <span style="float:right;"><?php echo e($currency_code); ?> <?php echo e($bid->bid_amount); ?></span>
-                                              </li>
-                                          <?php endif; ?>
-                                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-
-
-                         <?php echo Form::close(); ?>
-
-                    </div>
-
-                   </div>
-                    <?php endif; ?>
-
-
+                </div>
+            <?php endif; ?>
 
                 </div>
                 <?php endif; ?>
@@ -356,7 +668,6 @@ $user = Auth::user();
                       <?php echo e($currency_code); ?><?php echo e($auction->reserve_price); ?>
 
                       <span class="badge">
-
                            <?php echo e($auction->getAuctionBiddersCount()); ?> ofertas
                       </span>
                     </h4>
@@ -366,34 +677,22 @@ $user = Auth::user();
                 <!--if auction status is closed start-->
                  <div>
                      <p class="text-blue">
-
                          <b> Subasta finalizada </b>
                      </p>
 
-                    <h4><?php echo e($currency_code); ?><?php echo e($auction->reserve_price); ?>
-
-                      <span class="badge">
-
-                           <?php echo e($auction->getAuctionBiddersCount()); ?> ofertas
-
-                      </span>
-                    </h4>
 
                 </div>
+                 <?php else: ?>
+                        <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?><br></strong>
                 <!--if auction status is closed end-->
                 <?php endif; ?>
 
-
                 <?php endif; ?> <!--if live auction not happening-->
-
-
                 <br>
-
-
                 <div>
 
                   <?php if(Auth::user()): ?>
-                    <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)" title="Add to Wishlist" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
+                    <a href="javascript:void(0);" ng-click="addtoFavourites(<?php echo e($auction->id); ?>)" title="añadir a la lista de deseos" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
 
                         añadir a la lista de deseos</a>
                   <?php else: ?>
@@ -440,405 +739,53 @@ $user = Auth::user();
 
 
                 </div>
+       </div>
 
+   </div>
 
 
-            </div>
 
-          </div>
+    <!--SAME CATEGORY AUCTIONS SECTION-->
+     <?php echo $__env->make('home.pages.auctions.category-auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    <!--AUCTION DETAILS SECTION-->
-    <section class="au-premium-product">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 au-deals">
-               <!--     <p class="text-center">Dummy text of the printing industry</p> -->
-                   <!-- <h2 class="text-center"> Auction Information </h2> </div> -->
+    <!--SAME CATEGORY AUCTIONS SECTION-->
 
-                  <div class="col-lg-12 col-md-12 col-sm-12 au-premium product-tabs">
+    <!--SELLER AUCTIONS SECTION-->
+    
 
-                    <nav class="au-tabs">
-                      <div class="nav au-product-tabs nav-tabs" id="nav-tab" role="tablist">
+    <!--SELLER AUCTIONS SECTION-->
 
+    <?php else: ?>
+    <div class="col-lg-12 col-md-12 col-sm-12">
 
-                          <a class="nav-item au-product-nav nav-link active" id="nav-auction-tab" data-toggle="tab" href="#nav-auction" role="tab" aria-controls="nav-auction" aria-selected="true"> detalles de la subasta </a>
+    </div>
+      <?php endif; ?>
+      <?php endif; ?>
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-
-
-                            <a class="nav-item au-product-nav nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-shipping" aria-selected="false"> Envío & pago</a>
-
-
-
-                          <a class="nav-item au-product-nav nav-link" id="nav-terms-tab" data-toggle="tab" href="#nav-terms" role="tab" aria-controls="nav-terms" aria-selected="false"> condiciones de subasta & informacion </a>
-
-
-
-                          <a class="nav-item au-product-nav nav-link" id="nav-bid-tab" data-toggle="tab" href="#nav-bid" role="tab" aria-controls="nav-bid" aria-selected="false"> historial de ofertas </a>
-
-                      </div>
-                    </nav>
-
-
-                    <!--tabs start-->
-                    <div class="tab-content au-product-content" id="nav-tabContent">
-
-
-                        <!--auction details tab start-->
-                        <div class="tab-pane au-tab-pane fade show active" id="nav-auction" role="tabpanel" aria-labelledby="nav-auction-tab">
-
-                            <div class="row">
-
-                              <div class="col-lg-12">
-                                  <!-- <h5><b>Description</b></h5> -->
-
-                                  <p><?php echo $auction->description; ?></p>
-
-                              </div>
-
-
-                              <div class="col-lg-6 col-md-6 col-sm-12 au-terms">
-
-                                <ul class="list-group">
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                        Fecha de inicio
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></span>
-                                    </li>
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                        Fecha final
-                                      <span> <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </span>
-                                    </li>
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                         Precio de reserva
-                                      <span><?php if($auction->reserve_price): ?> <?php echo e($currency_code); ?> <?php echo e($auction->reserve_price); ?> <?php endif; ?></span>
-                                     </li>
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                         Tiros
-                                      <span><?php if($auction->tiros): ?> <?php echo e($auction->tiros); ?> <?php endif; ?></span>
-                                     </li>
-
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                          Inicio de oferta
-                                      <span><?php if($auction->minimum_bid): ?> <?php echo e($currency_code); ?><?php echo e($auction->minimum_bid); ?> <?php endif; ?></span>
-                                     </li>
-
-
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                          Es el incremento de la oferta
-                                        <span>
-                                        <?php if($auction->is_bid_increment==1): ?>
-
-                                            Si
-                                        <?php else: ?>
-
-                                            No
-                                        <?php endif; ?>
-                                        </span>
-                                     </li>
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                         aumento de oferta
-                                      <span><?php if($auction->bid_increment): ?> <?php echo e($currency_code); ?> <?php echo e($auction->bid_increment); ?> <?php endif; ?></span>
-                                    </li>
-
-
-                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                         comprar ahora artículo
-                                        <span>
-                                        <?php if($auction->is_buynow==1): ?>
-
-                                            SI
-                                        <?php else: ?>
-
-                                            NO
-                                        <?php endif; ?>
-                                        </span>
-                                     </li>
-
-
-                                     <?php if($auction->is_buynow==1): ?>
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                          comprar ahora precio
-                                        <span><?php if($auction->buy_now_price): ?> <?php echo e($currency_code); ?> <?php echo e($auction->buy_now_price); ?> <?php endif; ?></span>
-                                      </li>
-
-                                     <?php endif; ?>
-
-                                  </ul>
-                              </div>
-
-
-                              <?php if(isset($seller) && !empty($seller)): ?>
-
-                               <div class="col-lg-6 col-md-6 col-sm-12 au-terms">
-
-                                <ul class="list-group">
-
-                                    <li class="list-group-item">
-
-                                         <strong>Información del vendedor</strong>
-                                    </li>
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                        Nombre del vendedor
-                                      <span><?php echo e($seller->username); ?></span>
-                                    </li>
-
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                        Email
-                                      <span><?php echo e($seller->email); ?></span>
-                                    </li>
-
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                         Telefono
-                                      <span><?php echo e($seller->phone); ?></span>
-                                    </li>
-
-
-                                    <!--live auction date&time-->
-                                    <?php if($auction->live_auction_date): ?>
-                                    <li class="list-group-item">
-                                        <strong>
-
-                                            Subasta en vivo
-                                        </strong>
-                                    </li>
-
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                        Fecha
-                                        <?php if($auction->live_auction_date): ?>
-                                        <span>
-                                          <?php echo date(getSetting('date_format','site_settings'),  strtotime($auction->live_auction_date));?>
-                                        </span>
-                                        <?php endif; ?>
-                                      </li>
-
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                       Hora de inicio
-                                      <?php if($auction->live_auction_start_time): ?>
-                                      <span><?php echo e($auction->live_auction_start_time); ?></span>
-                                      <?php endif; ?>
-                                    </li>
-
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                                       Hora de finalización
-                                      <?php if($auction->live_auction_end_time): ?>
-                                      <span><?php echo e($auction->live_auction_end_time); ?></span>
-                                      <?php endif; ?>
-                                    </li>
-                                    <?php endif; ?>
-                                    <!--live auction date&time-->
-
-
-                                </ul>
-                               </div>
-
-                              <?php endif; ?>
-
-
-                               <!--  <div class="col-lg-7 col-md-7 col-sm-12 au-terms">
-
-                                   <table class="table table-responsive-xl table-bordered">
-
-                                     <tbody>
-                                      <tr>
-                                       <td>Start Date</td>
-                                       <td> <?php echo e($auction->start_date); ?></td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>End Date</td>
-                                       <td> <?php echo e($auction->end_date); ?></td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>Reserve Price </td>
-                                       <td> <?php if($auction->reserve_price): ?> <?php echo e($currency_code); ?><?php echo e($auction->reserve_price); ?> <?php endif; ?></td>
-                                      </tr>
-
-
-                                      <tr>
-                                       <td>Bid Start </td>
-                                       <td> <?php if($auction->minimum_bid): ?> <?php echo e($currency_code); ?><?php echo e($auction->minimum_bid); ?> <?php endif; ?></td>
-                                      </tr>
-
-
-                                       <tr>
-                                       <td>Bid Increment </td>
-                                       <td> <?php if($auction->bid_increment): ?> <?php echo e($currency_code); ?><?php echo e($auction->bid_increment); ?> <?php endif; ?></td>
-                                      </tr>
-
-                                       <tr>
-                                       <td>Buy Now Price </td>
-                                       <td> <?php if($auction->buy_now_price): ?> <?php echo e($currency_code); ?><?php echo e($auction->buy_now_price); ?> <?php endif; ?></td>
-                                      </tr>
-
-
-                                    </tbody>
-                                  </table>
-
-                                    </div> -->
-
-
-                                  <!-- <div class="col-lg-5 col-md-5 col-sm-12 au-terms">
-                                  <?php if(isset($seller) && !empty($seller)): ?>
-                                  <table class="table table-responsive-xl table-bordered">
-                                    <tbody>
-                                      <thead>
-                                        <tr>
-                                          <th>Seller Information</th>
-                                          <th></th>
-                                        </tr>
-                                      </thead>
-                                      <tr>
-                                       <td>Seller Name</td>
-                                       <td><?php echo e($seller->username); ?></td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>Email</td>
-                                       <td><?php echo e($seller->email); ?></td>
-                                      </tr>
-
-                                      <tr>
-                                       <td>Phone</td>
-                                       <td><?php echo e($seller->phone); ?></td>
-                                      </tr>
-
-                                    </tbody>
-                                  </table>
-                                  <?php endif; ?>
-                                </div> -->
-
-
-
-                            </div>
-
-                          </div>
-                          <!--auction details tab end-->
-
-                        <!--shipping and payment tab start-->
-                        <div class="tab-pane fade" id="nav-shipping" role="tabpanel" aria-labelledby="nav-shipping-tab">
-
-                          <div class="row">
-
-                              <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                              <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-
-                                <p><?php echo $auction->shipping_conditions; ?></p>
-                             </div>
-                           </div>
-
-                          </div>
-                        </div>
-                        <!--Shipping and payment tab end-->
-
-                        <!--Auctiont terms and info tab start-->
-                        <div class="tab-pane fade" id="nav-terms" role="tabpanel" aria-labelledby="nav-terms-tab">
-
-                          <div class="row">
-
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-
-                                <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-                                  <p><?php echo $auction->shipping_terms; ?></p>
-                                </div>
-
-                              </div>
-
-                           </div>
-                        </div>
-                        <!--auction terms and info tab end-->
-
-                        <!--Bidding history Tab Start-->
-                        <div class="tab-pane fade" id="nav-bid" role="tabpanel" aria-labelledby="nav-bid-tab">
-
-                          <div class="row">
-
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
-                                <div class=" au-policy">
-
-
-                                  <ul class="list-group z-depth-0">
-
-                                      <li class="list-group-item justify-content-between">
-
-                                          <span><b>Usuario</b></span>
-
-                                           <span style="float:right;"><b>Monto de la ofertas</b></span>
-                                      </li>
-                                      <?php $__currentLoopData = $bidding_history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bid): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                      <li class="list-group-item justify-content-between">
-                                        <span><?php echo e($bid->username); ?></span>
-                                        <span style="float:right;"><?php echo e($currency_code); ?> <?php echo e($bid->bid_amount); ?></span>
-                                      </li>
-                                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                  </ul>
-                                        <li ng-repeat="bid in bid_history" class="list-group-item justify-content-between">
-                                            <span><?php echo e($currency); ?>{{bid.bid_amount}}</span>
-                                            <span style="float:right;">{{bid.created_at}} </span>
-                                        </li>
-
-                                </div>
-                              </div>
-
-                           </div>
-                        </div>
-                        <!--Bidding Tab Section end-->
-
-
-                    </div>
-                    <!--tabs end-->
-
-                </div>
-            </div>
-        </div>
+ <div class="modal" id="Instrucciones2" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Como subastar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </section>
-    <!--AUCTION DETAILS SECTION END-->
-
-    <!--SAME CATEGORY AUCTIONS SECTION-->
-    <?php echo $__env->make('home.pages.auctions.category-auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-
-    <!--SAME CATEGORY AUCTIONS SECTION-->
-
-
-    <!--SELLER AUCTIONS SECTION-->
-    <?php echo $__env->make('home.pages.auctions.seller-auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-
-    <!--SELLER AUCTIONS SECTION-->
+      <div class="modal-body">
+        <img class="d-block w-100" src="<?php echo e(asset('public/images/imagenaucctio2n.png')); ?>">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
-<?php $__env->stopSection(); ?>
+    <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('footer_scripts'); ?>
 

@@ -35,19 +35,19 @@ if ($loggedInUser) {
                         <div class="dropdown-menu-notif-item dropdown-list ">
 
                             <a href="<?php echo e($single_notification_url); ?>" class="note-menu">
-                                <h4><?php echo e($title); ?></h4>
+                                <p class="text-muted"><strong><?php echo e($title); ?></strong> </p>
 
                                 <p><?php echo e($notification->updated_at->diffForHumans()); ?></p>
                             </a>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <div class="dropdown-menu-notif-more">
-                            <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>"><?php echo e(getPhrase('see_all')); ?></a>
+                            <a href="<?php echo e(URL_USER_NOTIFICATIONS); ?>">Ver todo</a>
                         </div>
                     </div>
                     <?php else: ?>
                     <div class="dropdown-menu-notif-list" >
-                        <div class="dropdown-menu-notif-item dropdown-list"><span class="no-notification-text"> <?php echo e(getPhrase('no_notifications_available')); ?></span>
+                        <div class="dropdown-menu-notif-item dropdown-list"><span class="no-notification-text"> No hay notificaciones disponibles</span>
                         </div>
                     </div>
                     <?php endif; ?>

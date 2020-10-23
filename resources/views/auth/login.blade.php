@@ -21,7 +21,7 @@ $google_login = getSetting('google_plus_login','module');
                         <div class="col-md-6">
                             <h4>
 {{--                        <a href="#" class="active" id="login-form-link">{{getPhrase('login')}}</a>--}}
-                                <a href="#" class="active" id="login-form-link">Iniciar sesi贸n</a>
+                                <a href="#" class="active" id="login-form-link">Iniciar sesion</a>
                   </h4> </div>
                         <div class="col-md-6">
                             <h4>
@@ -73,7 +73,7 @@ $google_login = getSetting('google_plus_login','module');
 
                                 'id'=> 'lg_email',
 
-                                'placeholder' => 'Apellido / '.getPhrase('email'),
+                                'placeholder' => 'Correo',
 
                                 'ng-class'=>'{"has-error": loginForm.email.$touched && loginForm.email.$invalid}',
 
@@ -273,8 +273,7 @@ $google_login = getSetting('google_plus_login','module');
 
                             </div>
 
-
-                  <div class="form-group col-lg-12">
+                            <div class="form-group col-lg-12">
 
 
 
@@ -305,11 +304,6 @@ $google_login = getSetting('google_plus_login','module');
 
 
                             </div>
-
-
-
-
-
 
                             <div class="form-group col-lg-12">
 
@@ -344,7 +338,6 @@ $google_login = getSetting('google_plus_login','module');
 
                             </div>
 
-
                              <div class="form-group col-lg-12">
 
 
@@ -378,7 +371,6 @@ $google_login = getSetting('google_plus_login','module');
 
 
                             </div>
-
 
                             <div class=" col-lg-12" style="display: none">
 

@@ -28,7 +28,6 @@
 
 <script src="<?php echo e(JS); ?>sweetalert-dev.js"></script>
 
-
 <script src="<?php echo e(JS_HOME); ?>datatables.min.js"></script>
 
 <!-- include alertify script -->
@@ -199,3 +198,4 @@ $(function() {
 <?php echo $__env->yieldContent('custom_div_end'); ?>
 
 <div class="ajax-loader" style="display:none;" id="ajax_loader"><img src="<?php echo e(AJAXLOADER); ?>"> <?php echo e(trans('please_wait')); ?>...</div>
+

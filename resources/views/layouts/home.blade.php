@@ -220,7 +220,7 @@
 
                                 'id'=> 'lg_modal_email',
 
-                                'placeholder' => getPhrase('username').'/'.getPhrase('email'),
+                                'placeholder' => 'Correo',
 
                                 'ng-class'=>'{"has-error": loginFormModal.email.$touched && loginFormModal.email.$invalid}',
 
@@ -319,48 +319,53 @@ $google_login = getSetting('google_plus_login','module');
 
                 {!! Form::close() !!}
 
-
+            <br>
 
                   {!! Form::open(array('url' => URL_USERS_REGISTER, 'method' => 'POST', 'novalidate'=>'', 'class'=>"form-horizontal", 'name'=>"registrationFormModal",'id'=>'register-form-modal', 'style'=>'display:none')) !!}
 
             <div class="row">
-                                <div class="form-group col-lg-12">
+                    <div class="col-12">
+                          <h5 class="text-center p-3">
+                              <strong>Recuerda registrarte con el correo que te llego la invitacion</strong>
+                          </h5>
+                    </div>
+{{--                                <div class="form-group col-lg-12">--}}
 
-                                    {{ Form::text('name', old('name') , $attributes = array('class'=>'form-control',
+{{--                                    {{ Form::text('name', old('name') , $attributes = array('class'=>'form-control',--}}
 
-                                        'placeholder' => 'Name',
+{{--                                        'placeholder' => 'Name',--}}
 
-                                        'ng-model'=>'name',
+{{--                                        'ng-model'=>'name',--}}
 
-                                        'ng-pattern' => getRegexPattern('name'),
+{{--                                        'ng-pattern' => getRegexPattern('name'),--}}
 
-                                        'required'=> 'true',
+{{--                                        'required'=> 'true',--}}
 
-                                        'id'=>'rg_name',
+{{--                                        'id'=>'rg_name',--}}
 
-                                        'ng-class'=>'{"has-error": registrationFormModal.name.$touched && registrationFormModal.name.$invalid}',
+{{--                                        'ng-class'=>'{"has-error": registrationFormModal.name.$touched && registrationFormModal.name.$invalid}',--}}
 
-                                        'ng-minlength' => '4',
+{{--                                        'ng-minlength' => '4',--}}
 
-                                    )) }}
+{{--                                    )) }}--}}
 
-                                    <div class="validation-error" ng-messages="registrationFormModal.name.$error" >
+{{--                                    <div class="validation-error" ng-messages="registrationFormModal.name.$error" >--}}
 
-                                        {!! getValidationMessage()!!}
+{{--                                        {!! getValidationMessage()!!}--}}
 
-                                        {!! getValidationMessage('minlength')!!}
+{{--                                        {!! getValidationMessage('minlength')!!}--}}
 
-                                        {!! getValidationMessage('pattern')!!}
+{{--                                        {!! getValidationMessage('pattern')!!}--}}
 
-                                    </div>
+{{--                                    </div>--}}
 
-                                </div>
+{{--                                </div>--}}
 
                             <div class="form-group  col-lg-12">
 
                                     {{ Form::text('username', old('username') , $attributes = array('class'=>'form-control',
 
-                                        'placeholder' => 'Username',
+                                        'placeholder' => 'Nombre completo',
 
                                         'ng-model'=>'username',
 

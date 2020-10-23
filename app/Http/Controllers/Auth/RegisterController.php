@@ -128,7 +128,10 @@ class RegisterController extends Controller
         $user->slug     = $user->makeSlug($user->name);
 
         $user->username = $request->username;
-        $user->email    = $request->email;
+
+        $email = strtolower($request->email);
+
+        $user->email    = $email;
         $password       = $request->password;
         $user->password       = bcrypt($password);
         $user->role_id        = $role_id;
