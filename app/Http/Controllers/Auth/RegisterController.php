@@ -141,7 +141,7 @@ class RegisterController extends Controller
         $user->save();
 
         
-        $message = 'registered_successfully';
+        $message = 'Registrado correctamente';
         
         try {
 
@@ -162,8 +162,7 @@ class RegisterController extends Controller
 
         } catch(Exception $ex) {
 
-            $message = getPhrase('registered_successfully ');
-            $message .= getPhrase('\ncannot_send_email_to_user, please_check_your_server_settings');
+            $message = 'Registrado correctamente';
         }
 
         flash('Success..',$message,'success');

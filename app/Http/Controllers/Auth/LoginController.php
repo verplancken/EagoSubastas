@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use Auth;
+use Session;
 use App\User;
 use App\Category;
 use App\SubCatogory;
@@ -75,7 +76,7 @@ class LoginController extends Controller
         //return Socialite::driver($driver)->redirect();
          if (!getSetting($driver.'_login', 'module'))
         {
-            flash('Ooops..!', $driver.'_login_is_disabled','error');
+            flash('Ooops..!', $driver.'el inicio de sesión está deshabilitado','error');
              return redirect(PREFIX);
         }
 
@@ -115,6 +116,7 @@ class LoginController extends Controller
                     return redirect(PREFIX);
                 }
 
+                Session::flash('warning', 'Error al iniciar sesión');
                 flash('Ooops...!', 'Error al iniciar sesión', 'error');
                 return redirect(PREFIX);
             }
@@ -261,8 +263,8 @@ class LoginController extends Controller
 
         if(!$login_status) 
         {
-
-            $message = getPhrase('please_check_your_details_or_contact_admin_to_approve_your_account');
+Session::flash('warning', 'por favor verifique sus datos');
+            $message = 'por favor verifique sus datos';
             flash('Ooops...!', $message, 'error');
             return redirect()->back();
 
