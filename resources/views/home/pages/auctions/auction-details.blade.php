@@ -68,9 +68,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 }
 </style>
 
-
-
-
  <!--CATEGORY BODY SECTION-->
  @foreach ($invitacion as $item)
     @if ($user->email == $item->email)
@@ -446,9 +443,21 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                         {{strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))}}</b></p>-->
                        <div class="row">
                            <div class="col-6">
+                               <div id="recargar"></div>
                                <h4>
                                     <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >Precio Reserva <br> <strong>${!! number_format($auction->reserve_price) !!} MXN</strong></p>
 
+                                   {{--Recargar Pagina--}}
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		setInterval(
+				function(){
+					$('#recargar').load('AuctionOffers.php');
+				},2000
+			);
+	});
+</script>
             {{--                        {{$auction->reserve_price}}--}}
                                   <!--<span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >-->
                                     <!--@if ($total_bids>1)-->
@@ -567,7 +576,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                                         ])}}
                                                         <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
-                                                      </div>
+                                                  </div>
                           </div>
                                 <div class="col-lg-7">
 
@@ -785,8 +794,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
     </div>
   </div>
 </div>
-
-
 
     @endsection
 
