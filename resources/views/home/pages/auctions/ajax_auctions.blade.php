@@ -91,7 +91,7 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
              <div class="col-lg-9 col-md-9 col-sm-12 au-wrapper-main">
                <div class="row au-main-header">
                  <div class="col-lg-9 col-md-6 col-sm-12 au-body-header">
-                   <h5>AUCTIONS</h5>
+                   <h5>Subastas Activas</h5>
                  </div>
                  <!--<div class="col-lg-3 col-md-6 col-sm-12 au-items-listt clearfix">
                       <label>Show</label>

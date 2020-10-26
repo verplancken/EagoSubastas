@@ -19,10 +19,10 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
 ?>
 
 
-  <!--CATEGORY BODY SECTION-->
+  <!--CATEGORY BODY SECTIONAUCTIONS-->
 
 
-                     @include('home.pages.auctions.ajax_auctions')
+    @include('home.pages.auctions.ajax_auctions')
 
 
     <!--CATEGORY BODY SECTION-->

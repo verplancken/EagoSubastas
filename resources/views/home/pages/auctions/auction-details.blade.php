@@ -9,7 +9,7 @@
 
 @section('content')
 <?php
-        use App\Bidding;
+use App\Bidding;
 $today = DATE('d-m-Y');
 $currency_code = getSetting('currency_code','site_settings');
 $auctin_url = URL_HOME_AUCTIONS;
@@ -270,103 +270,39 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
             <div class="col-lg-6">
                <!-- Product-gallery-container -->
 
-                    <!-- <div class="sm-product-show">
-                        <div class="sm-product-slider-img">
-                            <img src="http://via.placeholder.com/550x350" id="sm-product-zoom" class="img-responsive" data-zoom-image="http://via.placeholder.com/950x650" alt="">
-                            <i class="sm-zoom-icn fa fa-expand"></i>
-                        </div>
-                        <ul class="product-slider-thumbs" id="gallery_01">
+                <div class="sm-product-show">
+                     <div class="sm-product-slider-img">
+                                <img src="{{getAuctionImage($auction->image)}}" id="sm-product-zoom" class="img-responsive img-fluid" data-zoom-image="{{getAuctionImage($auction->image,'auction')}}" alt="">
+                                <i class="sm-zoom-icn fa fa-expand"></i>
+                            </div>
+                            @if ($active_picture_gallary=='Yes')
+                                <ul class="product-slider-thumbs" id="gallery_01">
+                                    <li>
+                                        <a href="#" class="elevatezoom-gallery active" data-image="{{getAuctionImage($auction->image,'auction')}}">
+                                            <img id="img_01" src="{{getAuctionImage($auction->image)}}" alt="">
+                                        </a>
+                                    </li>
+                                  @if ($auction_images)
+                                        <?php $i=0;?>
+                                      @foreach ($auction_images as $image)
+                                      <?php $i=$i+1;
 
-                            <li>
-                                <a href="#" class="elevatezoom-gallery active" data-image="http://via.placeholder.com/650x551">
-                                    <img id="img_01" src="http://via.placeholder.com/120x71" alt="">
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="elevatezoom-gallery" data-image="http://via.placeholder.com/650x552">
-                                    <img id="img_02" src="http://via.placeholder.com/120x72" alt="">
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="elevatezoom-gallery" data-image="http://via.placeholder.com/650x553">
-                                    <img id="img_03" src="http://via.placeholder.com/120x73" alt="">
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="elevatezoom-gallery" data-image="http://via.placeholder.com/650x554">
-                                    <img id="img_04" src="http://via.placeholder.com/120x74" alt="">
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div> -->
-            <div class="sm-product-show">
-
-                        <div class="sm-product-slider-img">
-                            <img src="{{getAuctionImage($auction->image)}}" id="sm-product-zoom" class="img-responsive img-fluid" data-zoom-image="{{getAuctionImage($auction->image,'auction')}}" alt="">
-                            <i class="sm-zoom-icn fa fa-expand"></i>
-                        </div>
-
-
-                        @if ($active_picture_gallary=='Yes')
-                        <ul class="product-slider-thumbs" id="gallery_01">
-
-                            <li>
-                                <a href="#" class="elevatezoom-gallery active" data-image="{{getAuctionImage($auction->image,'auction')}}">
-                                    <img id="img_01" src="{{getAuctionImage($auction->image)}}" alt="">
-                                </a>
-                            </li>
-
-                          @if ($auction_images)
-                          <?php $i=0;?>
-                          @foreach ($auction_images as $image)
-                          <?php $i=$i+1;
-
-                          if ($i==$max_number_of_pictures)
-                            break;
-                          ?>
-                          @if ($image->filename && file_exists(AUCTION_IMAGES_PATH.$image->filename))
-                            <li>
-                                <a href="#" class="elevatezoom-gallery active" data-image="{{AUCTION_IMAGES_PATH_URL}}{{$image->filename}}">
-                                    <img id="img_01" src="{{AUCTION_IMAGES_PATH_URL}}{{$image->filename}}" alt="">
-                                </a>
-                            </li>
+                                      if ($i==$max_number_of_pictures)
+                                        break;
+                                      ?>
+                                      @if ($image->filename && file_exists(AUCTION_IMAGES_PATH.$image->filename))
+                                        <li>
+                                            <a href="#" class="elevatezoom-gallery active" data-image="{{AUCTION_IMAGES_PATH_URL}}{{$image->filename}}">
+                                                <img id="img_01" src="{{AUCTION_IMAGES_PATH_URL}}{{$image->filename}}" alt="">
+                                            </a>
+                                        </li>
+                                      @endif
+                                    @endforeach
+                                  @endif
+                                </ul>
                             @endif
-
-
-                          @endforeach
-
-
-                            <!-- <li>
-                                <a href="#" class="elevatezoom-gallery" data-image="http://via.placeholder.com/650x552">
-                                    <img id="img_02" src="http://via.placeholder.com/120x72" alt="">
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="elevatezoom-gallery" data-image="http://via.placeholder.com/650x553">
-                                    <img id="img_03" src="http://via.placeholder.com/120x73" alt="">
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="elevatezoom-gallery" data-image="http://via.placeholder.com/650x554">
-                                    <img id="img_04" src="http://via.placeholder.com/120x74" alt="">
-                                </a>
-                            </li> -->
-                            @endif
-                        </ul>
-
-                        @endif
                     </div>
-
-                    <!-- /Product-gallery-container-->
-               <!-- <img id="zoom_01" src="{{getAuctionImage($auction->image,'auction')}}" data-zoom-image="{{IMAGES_HOME}}large/image1.jpg" class="img-fluid"> -->
-             </div>
-
+                </div>
 
             <div class="col-lg-6">
 
@@ -376,63 +312,62 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                 </button>
                  <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> Recargar pag <i class="fa fa-refresh" aria-hidden="true"></i> </a>
             </div>
-                <div class="d-flex bd-highlight mb-3">
-                  <div class="mr-auto p-2 bd-highlight"><h4 class="text-left">{{$auction->title}}</h4></div>
-                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDSubasta{{$auction->id}}</p></div>
-                  <div class="p-2 bd-highlight"><p class="text-muted text-right">IDLote:{{$auction->sub_category_id}}</p></div>
-                </div>
 
-                   @if (!$live_auction) <!--normal auction happening-->
+            <div class="d-flex bd-highlight mb-3">
+                <div class="mr-auto p-2 bd-highlight"><h4 class="text-left">{{$auction->title}}</h4></div>
+                <div class="p-2 bd-highlight"><p class="text-muted text-right">IDSubasta{{$auction->id}}</p></div>
+                <div class="p-2 bd-highlight"><p class="text-muted text-right">IDLote:{{$auction->sub_category_id}}</p></div>
+            </div>
+
+                    @if (!$live_auction) <!--normal auction happening-->
                         <p title="Auction End Date"> La subasta finaliza el <strong> {!!  date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date)); !!} </strong> </p>
                    @endif
 
                     @if ($live_auction_starts)
                       <p title="Auction End Date"> La subasta en vivo comienza en <i class="fa fa-clock-o"></i>{{$auction->live_auction_start_time}}, Prepárate para participar</p>
                     @endif
-                @foreach($auctionbidders as $bid)
-                                @if(Session::has('succes'))
-                                    <div class="col-lg-12">
-                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                            {{Session::get('succes')}}
-                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+
+                    @foreach($auctionbidders as $bid)
+                                    @if(Session::has('succes'))
+                                        <div class="col-lg-12">
+                                            <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                                {{Session::get('succes')}}
+                                                <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                     @break
-                                @endif
-                                  @if(Session::has('warning'))
-                                    <div class="col-lg-12">
-                                        <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                            {{Session::get('warning')}}
-                                            <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                         @break
+                                    @endif
+                                      @if(Session::has('warning'))
+                                        <div class="col-lg-12">
+                                            <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                                {{Session::get('warning')}}
+                                                <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
-                    @break
-                @endforeach
+                                    @endif
+                        @break
+                    @endforeach
 
               @if ($live_auction) <!--live auction happening-->
-
-              <div>
-                  <p title="Auction End Date"> ¡Subasta en vivo ahora! de <i class="fa fa-clock-o"></i>{{$auction->live_auction_start_time}} a <i class="fa fa-clock-o"></i>{{$auction->live_auction_end_time}}</p>
-              </div>
-
-              <div class="">
-                @if (!Auth::check())
-{{--                  <a class="btn btn-info au-btn-modren login-bttn" href="javascript:void(0);" onclick="showModal('loginModal')">{{getPhrase('participate_in_live_auction')}}</a>--}}
-                     <a class="btn btn-info au-btn-modren login-bttn" href="javascript:void(0);" onclick="showModal('loginModal')">participar en una subasta en vivo</a>
-                @else
-{{--                  <a class="btn btn-info au-btn-modren login-bttn live" href="javascript:void(0);" onclick="liveAuction('{{$auction->slug}}')">{{getPhrase('participate_in_live_auction')}}</a>--}}
-                     <a class="btn btn-info au-btn-modren login-bttn live" href="javascript:void(0);" onclick="liveAuction('{{$auction->slug}}')">participar en una subasta en vivo</a>
-                @endif
-              </div>
+                  <div>
+                      <p title="Auction End Date"> ¡Subasta en vivo ahora! de <i class="fa fa-clock-o"></i>{{$auction->live_auction_start_time}} a <i class="fa fa-clock-o"></i>{{$auction->live_auction_end_time}}</p>
+                  </div>
+                  <div class="">
+                    @if (!Auth::check())
+                         <a class="btn btn-info au-btn-modren login-bttn" href="javascript:void(0);" onclick="showModal('loginModal')">participar en una subasta en vivo</a>
+                    @else
+                         <a class="btn btn-info au-btn-modren login-bttn live" href="javascript:void(0);" onclick="liveAuction('{{$auction->slug}}')">participar en una subasta en vivo</a>
+                    @endif
+                  </div>
               @endif
 
 
-              @if (!$live_auction)<!--si la subasta en vivo no ocurre subasta normal-->
+              @if (!$live_auction)
+                <!--si la subasta en vivo no ocurre subasta normal-->
 
                 @if ($auction->auction_status=='open' && $auction->start_date<=now() && $auction->end_date>=now())
                 <!--si el estado de la subasta es inicio en vivo-->
@@ -443,21 +378,11 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                         {{strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))}}</b></p>-->
                        <div class="row">
                            <div class="col-6">
-                               <div id="recargar"></div>
                                <h4>
                                     <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >Precio Reserva <br> <strong>${!! number_format($auction->reserve_price) !!} MXN</strong></p>
 
                                    {{--Recargar Pagina--}}
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		setInterval(
-				function(){
-					$('#recargar').load('AuctionOffers.php');
-				},2000
-			);
-	});
-</script>
             {{--                        {{$auction->reserve_price}}--}}
                                   <!--<span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >-->
                                     <!--@if ($total_bids>1)-->
@@ -477,28 +402,23 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                     <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros realizados <span class="badge" style="background-color: #0c100c;">{{$item->no_of_times}}</span>
                                     </button>
-
                                    @endif
                                @endforeach
-
                                     <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
                                       Tiros permitidos <span class="badge" style="background-color: #0c100c;">{{$auction->tiros}}</span>
                                     </button>
-
                                @foreach($auctionbidders as $item)
                                     <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
                                       Art ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
                                     </button>
-                                       @break
+                                   @break
                                @endforeach
-
                                @foreach($lote as $lotes)
                                     <button class="btn mb-3 " style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
                                       Art a ganar <span class="badge" style="background-color: #0c100c;">{{$lotes->articulos}}</span>
                                     </button>
                                    @break
                                @endforeach
-
                            </div>
 
                        </div>
@@ -508,56 +428,56 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                 @if($auction->visibilidad == 1)
                        <p>Seleccione oferta máxima</p>
                         <div class="row">
-                          <div class="col-lg-5">
-                                {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
+                              <div class="col-lg-5">
 
-                                {{-- Traer el id de la subasta en que se esta --}}
-                              @foreach($lote as $lotes)
-                                    @if ($auctionbidders2[0]->bidder_count < $lotes->articulos)
-                                                  <div class="form-group">
-                                                        {{Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',
+                        {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
+                                    {{-- Traer el id de la subasta en que se esta --}}
+                        @foreach($lote as $lotes)
+                               @if ($auctionbidders2[0]->bidder_count < $lotes->articulos)
+                                    <div class="form-group">
+                                          {{Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',
 
-                                                            'class'=>'form-control',
+                                                'class'=>'form-control',
 
-                                                            'ng-model'=>'bid_amount',
+                                                'ng-model'=>'bid_amount',
 
-                                                            'required'=> 'true',
+                                                'required'=> 'true',
 
-                                                            'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
+                                                'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
 
-                                                        ])}}
-                                                        <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
-                                                      </div>
-                          </div>
-                                <div class="col-lg-7">
+                                          ])}}
+                                          <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
+                                    </div>
+                              </div>
 
-                                                      <div class="form-group">
-                                                        <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
-                                                        <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
-                                                          <div class="col-12 d-flex">
-                                                            <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
-                                                            <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+                              <div class="col-lg-7">
+                                  <div class="form-group">
+                                      <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
+                                      <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
+                                      <div class="col-12 d-flex">
+                                          <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                          <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+                                      </div>
+                                  </div>
+                              </div>
+                        {!! Form::close() !!}
 
-                                                          </div>
-                                                          </div>
-                                                      </div>
-                                                      {!! Form::close() !!}
+                               @if($auction->is_bid_increment == 1)
+                                   <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
+                               @endif
 
-                                                            @if($auction->is_bid_increment == 1)
-                                                                <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
-                                                           @endif
-                                      @else
-                                        <p>Lo sentimos, ya no puede subastar</p>
-                                      @endif
-                                       @break
-                              @endforeach
+                               @else
+                                 <p>Lo sentimos, ya no puede subastar</p>
+                               @endif
+                               @break
+                        @endforeach
 
                           </div>
                         </div>
                 @else
                         <p>Seleccione oferta máxima</p>
                         <div class="row">
-                          <div class="col-lg-5">
+                            <div class="col-lg-5">
                                 {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
 
                                 {{-- Traer el id de la subasta en que se esta --}}
@@ -577,28 +497,30 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                         ])}}
                                                         <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
                                                   </div>
-                          </div>
-                                <div class="col-lg-7">
+                           </div>
 
-                                                      <div class="form-group">
-                                                        <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
-                                                        <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
-                                                          <div class="col-12 d-flex">
-                                                            <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
-                                                            <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+                           <div class="col-lg-7">
+                               <div class="form-group">
+                                   <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
+                                   <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
 
-                                                          </div>
-                                                          </div>
-                                                      </div>
-                                                      {!! Form::close() !!}
+                                   <div class="col-12 d-flex">
+                                       <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                       <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+                                   </div>
+                               </div>
+                           </div>
+                                 {!! Form::close() !!}
 
-                                                            @if($auction->is_bid_increment == 1)
-                                                                <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
-                                                           @endif
-                                      @else
-                                        <p>Lo sentimos, ya no puede subastar</p>
-                                      @endif
-                                       @break
+                                @if($auction->is_bid_increment == 1)
+                                    <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
+                                @endif
+
+                                @else
+                                    <p>Lo sentimos, ya no puede subastar</p>
+                                @endif
+
+                                @break
                               @endforeach
 
                           </div>
@@ -626,6 +548,18 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                 @if($auction->sub_category_id == $lotes->id)
                                     @if ($auctionbidders2[0]->bidder_count < $lotes->articulos)
 
+                                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+                               <div id="recargarqwertyusdasdasdasd"></div>
+                                <script type="text/javascript">
+                                    var URLactual = window.location;
+                                    $(document).ready(function() {
+                                         setInterval( function(){
+                                         $('#recargarqwertyusdasdasdasd').load('http://localhost/EagoSubastas/resources/views/home/pages/auctions/AuctionOffers.blade.php');
+                                       }, 3000 );
+                                    });
+                                </script>
+                                                 <a href="./AuctionOffers.blade.php"></a>
+                                @yield('content')
                                               <div class="form-group" style="animation-name:pulse ;animation-delay: 1.5s; animation-duration: 2.0s; ">
                                                 {{ Form::number('bid_amount', null, $attributes =
 
@@ -696,17 +630,16 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                 <!--if auction status is closed end-->
                 @endif
 
-                @endif <!--if live auction not happening-->
+                @endif
+      <!--if live auction not happening-->
                 <br>
                 <div>
 
                   @if (Auth::user())
                     <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})" title="añadir a la lista de deseos" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
-{{--                    {{getPhrase('add_to_wish_list')}}</a>--}}
                         añadir a la lista de deseos</a>
                   @else
                    <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Add to Wishlist" class="btn btn-info au-btn-modren login-bttn">
-{{--                       <i class="pe-7s-plus"></i> {{getPhrase('add_to_wish_list')}} --}}
                        <i class="pe-7s-plus"></i> añadir a la lista de deseos
                    </a>
                   @endif
@@ -715,43 +648,14 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                   @if ($auction->is_buynow==1 && $auction->buy_now_price && $is_already_sold=='No')
                   @if ($bid_div)
                   @if (Auth::user())
-{{--                    <a href="{{URL_BID_AUCTION_PAYMENT}}/{{$auction->slug}}" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn"> {{getPhrase('buy_now')}}</a>--}}
                       <a href="{{URL_BID_AUCTION_PAYMENT}}/{{$auction->slug}}" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn"> compra ahora</a>
                   @else
-{{--                   <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn"> {{getPhrase('buy_now')}} </a>--}}
                       <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn">compra ahora </a>
                   @endif
                   @endif
                   @endif
 
 
-                 {{--
-                 {!! Share::page('http://phpstack-127012-364033.cloudwaysapps.com/', getSetting('site_title','site_settings'))
-  ->facebook()
-  ->twitter()
-  ->googlePlus()
-  ->linkedin('Extra linkedin summary can be passed here'); !!} --}}
-
-
-
-{{--                 <ul class="list-inline au-social-links">--}}
-
-{{--                   <li class="list-inline-item">--}}
-{{--                     <a href="https://www.facebook.com/sharer/sharer.php?u={{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}"> <i class="fa fa-facebook-f au-common"></i></a>--}}
-{{--                   </li>--}}
-
-{{--                   <li class="list-inline-item">--}}
-{{--                     <a href="https://twitter.com/intent/tweet?text={{getSetting('site_title','site_settings')}}&amp;url={{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}"><i class="fa fa-twitter au-common"></i></a>--}}
-{{--                   </li>--}}
-
-{{--                    <li class="list-inline-item">--}}
-{{--                     <a href="https://plus.google.com/share?url={{PREFIX}}"><i class="fa fa-google au-common"></i></a>--}}
-{{--                   </li>--}}
-
-{{--                   <li class="list-inline-item">--}}
-{{--                     <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{PREFIX}}&amp;title={{getSetting('site_title','site_settings')}}&amp;summary={{$auction->title}}"><i class="fa fa-linkedin au-common"></i></a>--}}
-{{--                   </li>--}}
-{{--                 </ul>--}}
                 </div>
        </div>
 
@@ -804,10 +708,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 @include('home.pages.auctions.auctions-js-script')
 
  <script src="{{JS_HOME}}jquery.elevatezoom.js"></script>
-  <script src="{{JS_HOME}}elevationzoom.js"></script>
-
-
-<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
+ <script src="{{JS_HOME}}elevationzoom.js"></script>
 
 <script src="{{JS}}share.js"></script>
 
@@ -823,25 +724,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
         });
     }
 </script>
-
-<!-- <script src="{{JS_HOME}}prefixfree.min.js"></script> -->
-<!-- <script src="{{JS_HOME}}zoom-slideshow.js"></script> -->
-
-<!-- <script>
-
-
-$(document).ready(function() {
-   // Initialisation du plugin jQuery
-   $('#view').setZoomPicture({
-   thumbsContainer: '#pics-thumbs',
-   prevContainer: '#nav-left-thumbs',
-   nextContainer: '#nav-right-thumbs',
-   zoomContainer: '#zoom',
-   zoomLevel: 2,
-   });
-});
-</script>
- -->
 
  <script>
   function liveAuction(auction_slug) {
