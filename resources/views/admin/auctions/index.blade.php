@@ -118,7 +118,8 @@ $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]
                                 </td>
 
                             @if($auction->start_date<=now() && $auction->end_date>=now())
-                                <td>
+                               <td>
+ {!! header("Refresh: 10"); !!}
                                     <a href="#" class="btn btn-xs btn-primary" disabled> <?php  ?>  Ver</a>
 
                                     @if (checkRole(['admin']))
