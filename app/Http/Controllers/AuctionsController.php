@@ -67,7 +67,14 @@ class AuctionsController extends Controller
                             ->get();
 
 //dd($auctions);
+                 $auction = Auction::select(['auctions.id', 'auctions.title', 'auctions.slug',
+                             'auctions.description', 'auctions.image',
+                             'auctions.reserve_price', 'auctions.auction_status',
+                             'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                             ->get();
 
+                  $array = array_flatten($auction);
+//dd($array);
         $data['title']              = getPhrase('auctions');
         $data['active_class']       = 'auctions';
 
@@ -75,30 +82,38 @@ class AuctionsController extends Controller
 
         $data['auctions']      = $auctions;
 
-        $auctions = Auction::first();
+ foreach ($array as $subastas) {
+     $now = strtotime(date('Y-m-d H:i:s'));
+     $start_date = strtotime($subastas->start_date);
+     $end_date = strtotime($subastas->end_date);
 
-                    $now = strtotime(date('Y-m-d H:i:s'));
-                    $start_date = strtotime($auctions->start_date);
-                    $end_date   = strtotime($auctions->end_date);
+     //comprobar la última puja reciente de la subasta
+     $auction_last_bid = Bidding::getAuctionLastBid($subastas->id);
 
-                       //comprobar la última puja reciente de la subasta
-                        $auction_last_bid = Bidding::getAuctionLastBid($auctions->id);
+     $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
+         ->first();
 
-                                $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
-                                    ->first();
-                                 //dd($record);
+     $record2 = AuctionBidder::where('auction_id',  $subastas->id)->exists();
+     //dd($record2);
 
-                        if ($end_date<=$now) {
-                            $auctions->auction_status = 'closed';
-                            $auctions->save();
-                        }
+     if ($record2 == true){
+     if ($end_date <= $now) {
+         $subastas->auction_status = 'closed';
+         $subastas->save();
+     }
 
-                        if ($end_date<=$now) {
-                            $record->is_bidder_won = 'Yes';
-                            //dd($record);
-                            $record->save();
-                        }
-
+     if ($end_date <= $now) {
+         $record->is_bidder_won = 'Yes';
+         //dd($record->save());
+         $record->save();
+     }
+     }else{
+         if ($end_date <= $now) {
+         $subastas->auction_status = 'closed';
+         $subastas->save();
+        }
+     }
+ }
 
         return view('admin.auctions.index', $data);
     }

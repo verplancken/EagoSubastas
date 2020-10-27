@@ -1650,11 +1650,6 @@ class AuctionController extends Controller
     }
 
 
-
-
-
-
-
     public function saveLiveBid(Request $request)
     {
         // dd($request);

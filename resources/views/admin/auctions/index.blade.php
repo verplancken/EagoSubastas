@@ -13,13 +13,15 @@ $mytime = Carbon\Carbon::now();
 $dt = new DateTime();
 $date_format = getSetting('date_format','site_settings');
 
-?>
+$time = time();
 
+$fecha = date("d-m-Y (H:i:s)", $time);
+$url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]
+?>
 
     <div class="panel panel-default">
         <div class="panel-heading">
             Lista
-
 {{--             <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right">{{getPhrase('add_new')}}</a>--}}
             @if (checkRole(['admin']))
                 <a href="{{ URL_AUCTIONS_ADD }}" class="btn btn-success btn-add pull-right"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
@@ -115,6 +117,15 @@ $date_format = getSetting('date_format','site_settings');
                                     @endif
                                 </td>
 
+                            @if($auction->start_date<=now() && $auction->end_date>=now())
+                                <td>
+                                    <a href="#" class="btn btn-xs btn-primary" disabled> <?php  ?>  Ver</a>
+
+                                    @if (checkRole(['admin']))
+                                            <a href="#" class="btn btn-xs btn-info" disabled> Editar</a>
+                                     @endif
+                                </td>
+                                @else
                                 <td>
                                     {{--<p>  date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));  $dt->format('d-m-Y H:i:s'); </p> --}}
 {{--                                    <a href="{{URL_AUCTIONS_VIEW}}{{$auction->slug}}" class="btn btn-xs btn-primary"> {{getPhrase('view')}} </a>--}}
@@ -126,12 +137,12 @@ $date_format = getSetting('date_format','site_settings');
                                         <a href="{{ URL_AUCTIONS_EDIT }}/{{$auction->slug}}" class="btn btn-xs btn-info"> Editar</a>
                                     @endif
 
-                                        {{-- @else   
+                                        {{-- @else
 
                                     @endif --}}
 
                                 </td>
-
+                                @endif
 
                             </tr>
                         @endforeach
