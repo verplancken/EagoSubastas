@@ -27,45 +27,45 @@
 
 
  <!-- Color Swicher -->
-<div class="theme-settings" id="switcher">
-    <span class="theme-click"><i class="fa fa-cog fa-spin" aria-hidden="true"></i></span>
+{{--<div class="theme-settings" id="switcher">--}}
+{{--    <span class="theme-click"><i class="fa fa-cog fa-spin" aria-hidden="true"></i></span>--}}
 
 
-   <!--  <span class="theme-color theme-default theme-active" data-color="{{CSS_HOME}}one"></span>
-    <span class="theme-color theme-color-two" data-color="{{CSS_HOME}}two"></span>
-    <span class="theme-color theme-color-three" data-color="{{CSS_HOME}}three"></span>
-    <span class="theme-color theme-color-four" data-color="{{CSS_HOME}}four"></span>
-    <span class="theme-color theme-color-five" data-color="{{CSS_HOME}}five"></span>
-    <span class="theme-color theme-color-six" data-color="{{CSS_HOME}}six"></span>
-    <span class="theme-color theme-color-seven" data-color="{{CSS_HOME}}seven"></span>
-    <span class="theme-color theme-color-eight" data-color="{{CSS_HOME}}eight"></span>
-    <span class="theme-color theme-color-nine" data-color="{{CSS_HOME}}nine"></span>
-    <span class="theme-color theme-color-ten" data-color="{{CSS_HOME}}ten"></span>
-    <span class="theme-color theme-color-eleven" data-color="{{CSS_HOME}}eleven"></span>
-    <span class="theme-color theme-color-twelve" data-color="{{CSS_HOME}}twelve"></span>
-    <span class="theme-color theme-color-thirteen" data-color="{{CSS_HOME}}thirteen"></span>
-    <span class="theme-color theme-color-fourteen" data-color="{{CSS_HOME}}fourteen"></span>
-    <span class="theme-color theme-color-fifteen" data-color="{{CSS_HOME}}fifteen"></span>  -->
+{{--   <!--  <span class="theme-color theme-default theme-active" data-color="{{CSS_HOME}}one"></span>--}}
+{{--    <span class="theme-color theme-color-two" data-color="{{CSS_HOME}}two"></span>--}}
+{{--    <span class="theme-color theme-color-three" data-color="{{CSS_HOME}}three"></span>--}}
+{{--    <span class="theme-color theme-color-four" data-color="{{CSS_HOME}}four"></span>--}}
+{{--    <span class="theme-color theme-color-five" data-color="{{CSS_HOME}}five"></span>--}}
+{{--    <span class="theme-color theme-color-six" data-color="{{CSS_HOME}}six"></span>--}}
+{{--    <span class="theme-color theme-color-seven" data-color="{{CSS_HOME}}seven"></span>--}}
+{{--    <span class="theme-color theme-color-eight" data-color="{{CSS_HOME}}eight"></span>--}}
+{{--    <span class="theme-color theme-color-nine" data-color="{{CSS_HOME}}nine"></span>--}}
+{{--    <span class="theme-color theme-color-ten" data-color="{{CSS_HOME}}ten"></span>--}}
+{{--    <span class="theme-color theme-color-eleven" data-color="{{CSS_HOME}}eleven"></span>--}}
+{{--    <span class="theme-color theme-color-twelve" data-color="{{CSS_HOME}}twelve"></span>--}}
+{{--    <span class="theme-color theme-color-thirteen" data-color="{{CSS_HOME}}thirteen"></span>--}}
+{{--    <span class="theme-color theme-color-fourteen" data-color="{{CSS_HOME}}fourteen"></span>--}}
+{{--    <span class="theme-color theme-color-fifteen" data-color="{{CSS_HOME}}fifteen"></span>  -->--}}
 
 
-    <a class="theme theme-one" href="{{CHANGE_THEME}}/one.css"></a>
-    <a class="theme theme-two" href="{{CHANGE_THEME}}/two.css"></a>
-    <a class="theme theme-three" href="{{CHANGE_THEME}}/three.css"></a>
-    <a class="theme theme-four" href="{{CHANGE_THEME}}/four.css"></a>
-    <a class="theme theme-five" href="{{CHANGE_THEME}}/five.css"></a>
-    <a class="theme theme-six" href="{{CHANGE_THEME}}/six.css"></a>
-    <a class="theme theme-seven" href="{{CHANGE_THEME}}/seven.css"></a>
-    <a class="theme theme-eight" href="{{CHANGE_THEME}}/eight.css"></a>
-    <a class="theme theme-nine" href="{{CHANGE_THEME}}/nine.css"></a>
-    <a class="theme theme-ten" href="{{CHANGE_THEME}}/ten.css"></a>
-    <a class="theme theme-eleven" href="{{CHANGE_THEME}}/eleven.css"></a>
-    <a class="theme theme-twelve" href="{{CHANGE_THEME}}/twelve.css"></a>
-    <a class="theme theme-thirteen" href="{{CHANGE_THEME}}/thirteen.css"></a>
-    <a class="theme theme-fourteen" href="{{CHANGE_THEME}}/fourteen.css"></a>
-    <a class="theme theme-fifteen" href="{{CHANGE_THEME}}/fifteen.css"></a>
+{{--    <a class="theme theme-one" href="{{CHANGE_THEME}}/one.css"></a>--}}
+{{--    <a class="theme theme-two" href="{{CHANGE_THEME}}/two.css"></a>--}}
+{{--    <a class="theme theme-three" href="{{CHANGE_THEME}}/three.css"></a>--}}
+{{--    <a class="theme theme-four" href="{{CHANGE_THEME}}/four.css"></a>--}}
+{{--    <a class="theme theme-five" href="{{CHANGE_THEME}}/five.css"></a>--}}
+{{--    <a class="theme theme-six" href="{{CHANGE_THEME}}/six.css"></a>--}}
+{{--    <a class="theme theme-seven" href="{{CHANGE_THEME}}/seven.css"></a>--}}
+{{--    <a class="theme theme-eight" href="{{CHANGE_THEME}}/eight.css"></a>--}}
+{{--    <a class="theme theme-nine" href="{{CHANGE_THEME}}/nine.css"></a>--}}
+{{--    <a class="theme theme-ten" href="{{CHANGE_THEME}}/ten.css"></a>--}}
+{{--    <a class="theme theme-eleven" href="{{CHANGE_THEME}}/eleven.css"></a>--}}
+{{--    <a class="theme theme-twelve" href="{{CHANGE_THEME}}/twelve.css"></a>--}}
+{{--    <a class="theme theme-thirteen" href="{{CHANGE_THEME}}/thirteen.css"></a>--}}
+{{--    <a class="theme theme-fourteen" href="{{CHANGE_THEME}}/fourteen.css"></a>--}}
+{{--    <a class="theme theme-fifteen" href="{{CHANGE_THEME}}/fifteen.css"></a>--}}
 
 
-</div>
+{{--</div>--}}
 <!-- /Color Swicher -->
 
 

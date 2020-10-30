@@ -108,8 +108,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                     {{--  Detalles de la subasta--}}
                      <div class="collapse" id="nav-auction" data-parent="#accordionExample">
                       <div class="card card-body shadow">
+                            <h5 class="ml-3"><strong>Detalles de la subasta</strong></h5>
                             <div class="row">
-
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                         <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
                                             Fecha de inicio
@@ -188,6 +188,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                     {{--  Envio y Pago--}}
                      <div class="collapse" id="nav-shipping" data-parent="#accordionExample">
                           <div class="card card-body shadow">
+                              <h5 class="ml-3"><strong>Envio y Pago</strong></h5>
                                 <div class="row">
 
                                     <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
@@ -206,6 +207,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                      {{--  Condiciones De Subasta & Informacion--}}
                      <div class="collapse" id="nav-terms" data-parent="#accordionExample">
                           <div class="card card-body shadow">
+                              <h5 class="ml-3"><strong>Condiciones De Subasta e Informacion</strong></h5>
                                 <div class="row">
 
                                     <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
@@ -224,6 +226,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                       {{--  Historial De Ofertas --}}
                      <div class="collapse" id="nav-bid" data-parent="#accordionExample">
                           <div class="card card-body shadow">
+                                   <h5 class="ml-3"><strong>Historial De Ofertas</strong></h5>
                                 <div class="row">
 
                                   <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
@@ -383,44 +386,52 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                    {{--Recargar Pagina--}}
 
-            {{--                        {{$auction->reserve_price}}--}}
-                                  <!--<span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >-->
-                                    <!--@if ($total_bids>1)-->
-                                    <!--     ofertas - {{$total_bids}}-->
-                                    <!--@elseif ($total_bids==1)-->
-                                    <!--      oferta - {{$total_bids}}-->
-                                    <!--@else-->
-                                    <!--    0 {{getPhrase('bids')}}-->
-                                    <!--@endif-->
-                                  <!--</span>-->
+{{--                                     {{$auction->reserve_price}}--}}
+{{--                                 <span class="badge" data-toggle="tooltip" title="No. de ofertantes" data-placement="top" >--}}
+{{--                                   @if ($total_bids>1)--}}
+{{--                                        ofertas - {{$total_bids}}--}}
+{{--                                   @elseif ($total_bids==1)--}}
+{{--                                         oferta - {{$total_bids}}--}}
+{{--                                   @else--}}
+{{--                                       0 {{getPhrase('bids')}}--}}
+{{--                                   @endif--}}
+{{--                                 </span>--}}
 
                                 </h4>
                            </div>
-                           <div class="col-6 text-right">
-                               @foreach($auctionbidders as $item)
-                                   @if($item->auction_id == $auction->id)
-                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
-                                      Tiros realizados <span class="badge" style="background-color: #0c100c;">{{$item->no_of_times}}</span>
-                                    </button>
-                                   @endif
-                               @endforeach
-                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #2064e7; border-radius: 10px; color: #fff" >
-                                      Tiros permitidos <span class="badge" style="background-color: #0c100c;">{{$auction->tiros}}</span>
-                                    </button>
-                               @foreach($auctionbidders as $item)
-                                    <button class="btn mb-3" style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Art ganados <span class="badge" style="background-color: #0c100c;"><?php echo $auctionbidders2[0]->bidder_count; ?></span>
-                                    </button>
-                                   @break
-                               @endforeach
-                               @foreach($lote as $lotes)
-                                    <button class="btn mb-3 " style="padding: 3px; font-size: 12px; background-color: #e9841a; border-radius: 10px; color: #fff" >
-                                      Art a ganar <span class="badge" style="background-color: #0c100c;">{{$lotes->articulos}}</span>
-                                    </button>
-                                   @break
-                               @endforeach
-                           </div>
+                       </div>
 
+                       <div class="row">
+                               <div class="col-12">
+                                   <div class="d-flex justify-content-between">
+                                       @foreach($auctionbidders as $item)
+                                           @if($item->auction_id == $auction->id)
+                                               <div class="d-flex flex-column bd-highlight text-success">
+                                                <h6 class="text-center d-inline-block"><strong>Tiros Realizados</strong></h6>
+                                                <p class="text-center">{{$item->no_of_times}}</p>
+                                               </div>
+                                           @endif
+                                       @endforeach
+                                       <div class="d-flex flex-column bd-highlight media i">
+                                            <h6 class="text-center d-inline-block"><strong>Tiros permitidos</strong></h6>
+                                            <p class="text-center">{{$auction->tiros}}</p>
+                                       </div>
+                                       @foreach($auctionbidders as $item)
+                                           <div class="d-flex flex-column bd-highlight text-success">
+                                            <h6 class="text-center "><strong>Art ganados</strong></h6>
+                                            <p class="text-center">{!! $auctionbidders2[0]->bidder_count !!}</p>
+                                           </div>
+                                           @break
+                                       @endforeach
+                                       @foreach($lote as $lotes)
+                                           <div class="d-flex flex-column bd-highlight text-primary">
+                                            <h6 class="text-center"><strong> Art a ganar</strong></h6>
+                                            <p class="text-center">{{$lotes->articulos}}</p>
+                                           </div>
+                                           @break
+                                       @endforeach
+                               </div>
+                             </div>
                        </div>
 
 
@@ -558,8 +569,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                        }, 3000 );
                                     });
                                 </script>
-                                                 <a href="./AuctionOffers.blade.php"></a>
-                                @yield('content')
+
                                               <div class="form-group" style="animation-name:pulse ;animation-delay: 1.5s; animation-duration: 2.0s; ">
                                                 {{ Form::number('bid_amount', null, $attributes =
 
