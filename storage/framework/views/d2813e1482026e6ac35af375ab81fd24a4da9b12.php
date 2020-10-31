@@ -27,45 +27,45 @@
 
 
  <!-- Color Swicher -->
-<div class="theme-settings" id="switcher">
-    <span class="theme-click"><i class="fa fa-cog fa-spin" aria-hidden="true"></i></span>
 
 
-   <!--  <span class="theme-color theme-default theme-active" data-color="<?php echo e(CSS_HOME); ?>one"></span>
-    <span class="theme-color theme-color-two" data-color="<?php echo e(CSS_HOME); ?>two"></span>
-    <span class="theme-color theme-color-three" data-color="<?php echo e(CSS_HOME); ?>three"></span>
-    <span class="theme-color theme-color-four" data-color="<?php echo e(CSS_HOME); ?>four"></span>
-    <span class="theme-color theme-color-five" data-color="<?php echo e(CSS_HOME); ?>five"></span>
-    <span class="theme-color theme-color-six" data-color="<?php echo e(CSS_HOME); ?>six"></span>
-    <span class="theme-color theme-color-seven" data-color="<?php echo e(CSS_HOME); ?>seven"></span>
-    <span class="theme-color theme-color-eight" data-color="<?php echo e(CSS_HOME); ?>eight"></span>
-    <span class="theme-color theme-color-nine" data-color="<?php echo e(CSS_HOME); ?>nine"></span>
-    <span class="theme-color theme-color-ten" data-color="<?php echo e(CSS_HOME); ?>ten"></span>
-    <span class="theme-color theme-color-eleven" data-color="<?php echo e(CSS_HOME); ?>eleven"></span>
-    <span class="theme-color theme-color-twelve" data-color="<?php echo e(CSS_HOME); ?>twelve"></span>
-    <span class="theme-color theme-color-thirteen" data-color="<?php echo e(CSS_HOME); ?>thirteen"></span>
-    <span class="theme-color theme-color-fourteen" data-color="<?php echo e(CSS_HOME); ?>fourteen"></span>
-    <span class="theme-color theme-color-fifteen" data-color="<?php echo e(CSS_HOME); ?>fifteen"></span>  -->
 
 
-    <a class="theme theme-one" href="<?php echo e(CHANGE_THEME); ?>/one.css"></a>
-    <a class="theme theme-two" href="<?php echo e(CHANGE_THEME); ?>/two.css"></a>
-    <a class="theme theme-three" href="<?php echo e(CHANGE_THEME); ?>/three.css"></a>
-    <a class="theme theme-four" href="<?php echo e(CHANGE_THEME); ?>/four.css"></a>
-    <a class="theme theme-five" href="<?php echo e(CHANGE_THEME); ?>/five.css"></a>
-    <a class="theme theme-six" href="<?php echo e(CHANGE_THEME); ?>/six.css"></a>
-    <a class="theme theme-seven" href="<?php echo e(CHANGE_THEME); ?>/seven.css"></a>
-    <a class="theme theme-eight" href="<?php echo e(CHANGE_THEME); ?>/eight.css"></a>
-    <a class="theme theme-nine" href="<?php echo e(CHANGE_THEME); ?>/nine.css"></a>
-    <a class="theme theme-ten" href="<?php echo e(CHANGE_THEME); ?>/ten.css"></a>
-    <a class="theme theme-eleven" href="<?php echo e(CHANGE_THEME); ?>/eleven.css"></a>
-    <a class="theme theme-twelve" href="<?php echo e(CHANGE_THEME); ?>/twelve.css"></a>
-    <a class="theme theme-thirteen" href="<?php echo e(CHANGE_THEME); ?>/thirteen.css"></a>
-    <a class="theme theme-fourteen" href="<?php echo e(CHANGE_THEME); ?>/fourteen.css"></a>
-    <a class="theme theme-fifteen" href="<?php echo e(CHANGE_THEME); ?>/fifteen.css"></a>
 
 
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- /Color Swicher -->
 
 

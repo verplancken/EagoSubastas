@@ -380,9 +380,11 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                    <!-- <p class="text-blue"><b><i class="pe-7s-timer"> </i>
                         {{strtoUpper(getAuctionDaysLeft($auction->start_date,$auction->end_date))}}</b></p>-->
                        <div class="row">
-                           <div class="col-6">
+                           <div class="col-12">
                                <h4>
-                                    <p data-toggle="tooltip" title="Precio de reserva" data-placement="top" >Precio Reserva <br> <strong>${!! number_format($auction->reserve_price) !!} MXN</strong></p>
+                                    <p data-toggle="tooltip" title="  Oferta Inicial" data-placement="top" >
+                                        Oferta Inicial  <strong> ${!! number_format($auction->reserve_price) !!} MXN </strong>
+                                    </p>
 
                                    {{--Recargar Pagina--}}
 
@@ -399,6 +401,9 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                 </h4>
                            </div>
+                          <div class="col-lg-12 col-md-12 col-sm-12 au-deals">
+                            <h2>Última oferta {{$bid_amount}}</h2>
+                          </div>
                        </div>
 
                        <div class="row">
@@ -412,7 +417,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                </div>
                                            @endif
                                        @endforeach
-                                       <div class="d-flex flex-column bd-highlight media i">
+                                       <div class="d-flex flex-column bd-highlight text-primary">
                                             <h6 class="text-center d-inline-block"><strong>Tiros permitidos</strong></h6>
                                             <p class="text-center">{{$auction->tiros}}</p>
                                        </div>
@@ -441,49 +446,49 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                         <div class="row">
                               <div class="col-lg-5">
 
-                        {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
-                                    {{-- Traer el id de la subasta en que se esta --}}
-                        @foreach($lote as $lotes)
-                               @if ($auctionbidders2[0]->bidder_count < $lotes->articulos)
-                                    <div class="form-group">
-                                          {{Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',
+                                    {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
+                                            {{-- Traer el id de la subasta en que se esta --}}
+                                    @foreach($lote as $lotes)
+                                           @if ($auctionbidders2[0]->bidder_count < $lotes->articulos)
+                                                <div class="form-group">
+                                                      {{Form::select('bid_amount', $bid_options, null, ['placeholder'=>'select',
 
-                                                'class'=>'form-control',
+                                                            'class'=>'form-control',
 
-                                                'ng-model'=>'bid_amount',
+                                                            'ng-model'=>'bid_amount',
 
-                                                'required'=> 'true',
+                                                            'required'=> 'true',
 
-                                                'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
+                                                            'ng-class'=>'{"has-error": formBid.bid_amount.$touched && formBid.bid_amount.$invalid}'
 
-                                          ])}}
-                                          <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
-                                    </div>
+                                                      ])}}
+                                                      <div class="validation-error" ng-messages="formBid.bid_amount.$error" ></div>
+                                                </div>
+                                          </div>
+
+                                          <div class="col-lg-7">
+                                              <div class="form-group">
+                                                  <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
+                                                  <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
+                                                  <div class="col-12 d-flex">
+                                                      <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                                      <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        {!! Form::close() !!}
+
+                                           @if($auction->is_bid_increment == 1)
+                                               <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
+                                           @endif
+
+                                           @else
+                                             <p>Lo sentimos, ya no puede subastar</p>
+                                           @endif
+                                           @break
+                                    @endforeach
+
                               </div>
-
-                              <div class="col-lg-7">
-                                  <div class="form-group">
-                                      <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
-                                      <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
-                                      <div class="col-12 d-flex">
-                                          <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
-                                          <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
-                                      </div>
-                                  </div>
-                              </div>
-                        {!! Form::close() !!}
-
-                               @if($auction->is_bid_increment == 1)
-                                   <p class="ml-3" title="Precio de reserva" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
-                               @endif
-
-                               @else
-                                 <p>Lo sentimos, ya no puede subastar</p>
-                               @endif
-                               @break
-                        @endforeach
-
-                          </div>
                         </div>
                 @else
                         <p>Seleccione oferta máxima</p>
@@ -602,8 +607,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                     @endif
                                 @endif
                               @endforeach
-
-
                   </div>
                 </div>
             @endif
@@ -632,8 +635,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                      <p class="text-blue">
                          <b> Subasta finalizada </b>
                      </p>
-
-
                 </div>
                  @else
                         <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?><br></strong>
@@ -647,7 +648,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                   @if (Auth::user())
                     <a href="javascript:void(0);" ng-click="addtoFavourites({{$auction->id}})" title="añadir a la lista de deseos" class="btn btn-info au-btn-modren login-bttn"><i class="pe-7s-plus"></i>
-                        añadir a la lista de deseos</a>
+                        añadir a la lista de deseos
+                    </a>
                   @else
                    <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Add to Wishlist" class="btn btn-info au-btn-modren login-bttn">
                        <i class="pe-7s-plus"></i> añadir a la lista de deseos
@@ -656,13 +658,13 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
 
                   @if ($auction->is_buynow==1 && $auction->buy_now_price && $is_already_sold=='No')
-                  @if ($bid_div)
-                  @if (Auth::user())
-                      <a href="{{URL_BID_AUCTION_PAYMENT}}/{{$auction->slug}}" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn"> compra ahora</a>
-                  @else
-                      <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn">compra ahora </a>
-                  @endif
-                  @endif
+                      @if ($bid_div)
+                          @if (Auth::user())
+                              <a href="{{URL_BID_AUCTION_PAYMENT}}/{{$auction->slug}}" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn"> compra ahora</a>
+                          @else
+                              <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Buy Auction" class="btn btn-info au-btn-modren login-bttn">compra ahora </a>
+                          @endif
+                      @endif
                   @endif
 
 

@@ -17,10 +17,10 @@ $closed_auctions_count = \App\Auction::getHomeAuctionStatusAuctions('closed')->c
 ?>
 
 
-  <!--CATEGORY BODY SECTION-->
+  <!--CATEGORY BODY SECTIONAUCTIONS-->
 
 
-                     <?php echo $__env->make('home.pages.auctions.ajax_auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('home.pages.auctions.ajax_auctions', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 
     <!--CATEGORY BODY SECTION-->
