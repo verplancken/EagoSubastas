@@ -91,6 +91,10 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                           detalles de la subasta
                       </a>
 
+                      <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-description" role="button" aria-controls="nav-description" aria-expanded="false">
+                          Descripcion
+                      </a>
+
                       <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-shipping" role="button" aria-controls="nav-shipping" aria-expanded="false">
                           Envío & pago
                       </a>
@@ -184,6 +188,24 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                         </div>
                     </div>
                     {{-- Fin  Detalles de la subasta--}}
+
+                     {{--  Descripcion--}}
+                     <div class="collapse" id="nav-description" data-parent="#accordionExample">
+                          <div class="card card-body shadow">
+                                <div class="row">
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
+                                      <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
+
+                                        <p>{!! $auction->description !!}</p>
+
+                                      </div>
+                                    </div>
+
+                                </div>
+                          </div>
+                     </div>
+                     {{-- Fin Descripcion--}}
 
                     {{--  Envio y Pago--}}
                      <div class="collapse" id="nav-shipping" data-parent="#accordionExample">
@@ -323,7 +345,9 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
             </div>
 
                     @if (!$live_auction) <!--normal auction happening-->
-                        <p title="Auction End Date"> La subasta finaliza el <strong> {!!  date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date)); !!} </strong> </p>
+                        @if($auction->start_date<=now() && $auction->end_date>=now())
+                            <p title="Auction End Date"> La subasta finaliza el <strong> {!!  date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date)); !!} </strong> </p>
+                        @endif
                    @endif
 
                     @if ($live_auction_starts)
@@ -471,7 +495,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                   <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
                                                   <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
                                                   <div class="col-12 d-flex">
-                                                      <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                                      <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver a Subastas</a>
                                                       <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
                                                   </div>
                                               </div>
@@ -521,7 +545,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                    <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
 
                                    <div class="col-12 d-flex">
-                                       <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                       <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver a Subastas</a>
                                        <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
                                    </div>
                                </div>
@@ -596,7 +620,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                 <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
                                                 <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
                                                   <div class="col-12 d-flex">
-                                                      <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver</a>
+                                                      <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver a Subastas</a>
                                                     <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
                                                   </div>
                                               </div>

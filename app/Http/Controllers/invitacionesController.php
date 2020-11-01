@@ -70,7 +70,7 @@ class InvitacionesController extends Controller
             $array2 = array_pluck($invitacion3, 'email');
            //dd($array2);
             foreach ($array2 as $email) {
-                dd($email);
+               // dd($email);
                 $invitacion = Invitaciones::where('email', $email)
                     ->where('auction_id',$lote)
                     ->where('estatus',0)

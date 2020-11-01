@@ -27,6 +27,11 @@ use App\AuctionImages;
 use App\AuctionBidder;
 use Exception;
 use App\Invitaciones;
+use PHPMailer\PHPMailer\PHPMailer;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
 
 class AuctionsController extends Controller
 {
@@ -82,6 +87,7 @@ class AuctionsController extends Controller
 
         $data['auctions']      = $auctions;
 
+
  foreach ($array as $subastas) {
      $now = strtotime(date('Y-m-d H:i:s'));
      $start_date = strtotime($subastas->start_date);
@@ -97,16 +103,26 @@ class AuctionsController extends Controller
      //dd($record2);
 
      if ($record2 == true){
-     if ($end_date <= $now) {
-         $subastas->auction_status = 'closed';
-         $subastas->save();
-     }
+         if ($end_date <= $now) {
+             $subastas->auction_status = 'closed';
+             $subastas->save();
+         }
 
-     if ($end_date <= $now) {
-         $record->is_bidder_won = 'Yes';
-         //dd($record->save());
-         $record->save();
-     }
+         if ($end_date <= $now) {
+             $record->is_bidder_won = 'Yes';
+           // dd($record);
+             $record->save();
+         }
+//         if ($end_date <= $now) {
+//           $auction_last_bid = Bidding::getAuctionLastBid($subastas->id);
+//
+//            $record =  AuctionBidder::join('users','auctionbidders.bidder_id','users.id')
+//                            ->where('id', $auction_last_bid->ab_id)
+//                            ->select(['users.name'])
+//                        ->get();
+//
+//            dd($record);
+//         }
      }else{
          if ($end_date <= $now) {
          $subastas->auction_status = 'closed';
