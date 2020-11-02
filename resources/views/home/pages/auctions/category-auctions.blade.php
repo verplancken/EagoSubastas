@@ -38,13 +38,21 @@ if (isset($auction) && !empty($auction)) {
 
                         <div class="card-block au-similar-block text-center">
 
-                          <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom">
-                            <h6 class="card-title text-center"> {!! str_limit($auction->title,30,'..') !!}</h6>
-                          </a>
+                            <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom">
+                              <h4 class="card-title text-center p-2"> {!! str_limit($auction->title,30,'..') !!}</h4>
+                            </a>
 
-                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
+                            <p class="card-title text-center">
+                                <strong> Fecha Inicio: <br></strong> {!!  date(getSetting('date_format','site_settings'), strtotime($auction->start_date)); !!}
+                                <br> <strong> Hora Inicio: <br></strong> {!!  date(' H:i:s', strtotime($auction->start_date)); !!}
+                            </p>
 
-                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                               <hr>
+
+                            <p class="card-title text-center">
+                                <strong> Fecha Fin: <br></strong> {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
+                                <br> <strong> Hora Fin: <br></strong> {!!  date(' H:i:s', strtotime($auction->end_date)); !!}
+                            </p>
 
                       </div>
                     </div>

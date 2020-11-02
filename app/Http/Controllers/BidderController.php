@@ -250,14 +250,14 @@ class BidderController extends Controller
         $user = \Auth::user();
 
         $auctions = $user->getBidderParicipatedAuctions();
-        // dd($auctions);
+        //dd($auctions);
         $data['title']              = getPhrase('my_auctions');
         $data['active_class']       = 'auctions';
 
         $data['layout']        = getLayOut();
         $data['datatable']     = TRUE;
         $data['auctions']      = $auctions;
-
+        //dd($data);
         return view('bidder.auctions.my_auctions', $data);
     }
 

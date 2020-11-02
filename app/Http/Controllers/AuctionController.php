@@ -1019,20 +1019,14 @@ class AuctionController extends Controller
                                         ->where('auction_id', $auction->id)
                                          ->select('auction_id', 'no_of_times', 'bidder_id')
                                         ->get();
-      //dd($auctionbidders);
-
 
         $subcategoria = DB::table('sub_catogories')
                             ->first();
 
-
-                   //dd($user);
-
         $lote = DB::table('sub_catogories')
                             ->where('id',$auction->sub_category_id)
                             ->get();                  
-  
-       //dd($lote);
+
        $cond2[] = ['auctionbidders.is_bidder_won','=','Yes'];
        $auctionbidders2 = DB::table('auctionbidders')
                      ->select(DB::raw('count(*) as bidder_count'))
@@ -1040,7 +1034,21 @@ class AuctionController extends Controller
                      ->where('sub', '=', $auction->sub_category_id)
                      ->where($cond2)
                      ->get();
-      // dd($auctionbidders2);
+
+       $tiros = Bidding::join('auctionbidders', 'bidding.ab_id', 'auctionbidders.id')
+                                      ->join('users','auctionbidders.bidder_id','users.id')
+                                      ->where('bidding.ab_id',$ab->id)
+                                      ->select('users.name','bidding.bid_amount', 'bidding.created_at')
+                                      ->orderBy('bidding.id','desc')
+                                      ->get();
+       //dd($tiros);
+
+       $articulos = AuctionBidder::join('auctions','auctionbidders.auction_id','auctions.id')
+                                ->where('bidder_id', '=', $users->id)
+                                ->where('is_bidder_won', 'Yes')
+                                ->select(['auctionbidders.*','auctions.slug as auction_slug','auctions.image','auctions.title','auctions.start_date','auctions.end_date','auctions.reserve_price'])
+                                ->get();
+       //dd($subastas);
 
                     $now = strtotime(date('Y-m-d H:i:s'));
                     $start_date = strtotime($auction->start_date);
@@ -1075,7 +1083,7 @@ class AuctionController extends Controller
                             }
                         }
 
-        return view('home.pages.auctions.auction-details', $data, compact('invitacion', 'auctionbidders', 'auctionbidders2', 'lote'));
+        return view('home.pages.auctions.auction-details', $data, compact('invitacion', 'auctionbidders', 'auctionbidders2', 'lote', 'tiros', 'articulos'));
     }
 
 
