@@ -25,6 +25,18 @@
 
             <div class="au-left-side form-auth-style">
 
+                <div class="row">
+                    <div class="col-12 p-2">
+                        <div class="d-flex">
+                          <div class="mr-auto p-2">
+                              <h2>Datos de Perfil</h2>
+                          </div>
+
+                          <a href="{{URL_USER_SHIPPING_ADDRESS}}" class="btn btn-success"> <i class="fas fa-file-csv"></i> Ir a datos de facturacion</a>
+
+                        </div>
+                    </div>
+                </div>
 
             	{{ Form::model($record, 
 				array('url' => URL_USERS_EDIT.'/'.$record->slug, 

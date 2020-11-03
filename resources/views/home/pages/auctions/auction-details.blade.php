@@ -356,7 +356,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                             <br>
-                                                            <p>Por favor llena tus datos de Facturacion <a href="users/edit/{{$user->slug}}">Facturacion</a></p>
+                                                            <p>Por favor llena tus datos de  <a href="users/edit/{{$user->slug}}">Facturacion</a></p>
                                                         </div>
                                                     </div>
                                                      @break
