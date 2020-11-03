@@ -586,20 +586,20 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                          @foreach($auctionbidders as $item)
                                                              @if($item->auction_id == $auction->id)
                                                                      <div class="d-flex flex-column bd-highlight text-success">
-                                                                         <a href="#" data-toggle="modal" data-target="#bidHistoryModal" title="view total bid history" style="color: #ffc107;">
+                                                                         <a class="text-info" href="#" data-toggle="modal" data-target="#bidHistoryModal" title="Tiros Realizados">
                                                                              <h6 class="text-center d-inline-block"><strong>Tiros Realizados</strong></h6>
                                                                              <p class="text-center">{{$item->no_of_times}}</p>
                                                                          </a>
                                                                      </div>
                                                              @endif
                                                          @endforeach
-                                                         <div class="d-flex flex-column bd-highlight text-primary">
-                                                             <h6 class="text-center d-inline-block" style="color:#FF0000"><strong>Tiros permitidos</strong></h6>
+                                                         <div class="d-flex flex-column bd-highlight ">
+                                                             <h6 class="text-center d-inline-block text-danger"><strong>Tiros permitidos</strong></h6>
                                                              <p class="text-center" style="color:#FF0000">{{$auction->tiros}}</p>
                                                          </div>
                                                              @foreach($auctionbidders as $item)
                                                                  <div class="d-flex flex-column bd-highlight text-success">
-                                                                     <a href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" style="color: #28a745;">
+                                                                     <a class="text-success" href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" >
                                                                          <h6 class="text-center"><strong>Art ganados</strong></h6>
                                                                          <p class="text-center">{!! $auctionbidders2[0]->bidder_count !!}</p>
                                                                      </a>
@@ -727,9 +727,9 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                @foreach($tiros as $subastas)
                 <tr>
 
-                      <td>${!! number_format($subastas->bid_amount) !!} MXN</td>
+                      <td class="text-center">${!! number_format($subastas->bid_amount) !!} MXN</td>
 
-                      <td>
+                      <td class="text-center">
                           <strong>Fecha:</strong> {!!  date(getSetting('date_format','site_settings'), strtotime($subastas->created_at)); !!}
                                           <br> <strong>Hora: </strong> {!!  date(' H:i:s', strtotime($subastas->created_at)); !!}
                       </td>
