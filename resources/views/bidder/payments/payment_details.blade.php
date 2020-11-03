@@ -44,7 +44,7 @@ $currency_code = getSetting('currency_code','site_settings');
 
 
                   <tr>
-                      <th> {{getPhrase('sub_category')}}  </th>
+                      <th> Lote  </th>
                       <td> @if ($auction->sub_category) {{ $auction->sub_category->sub_category }} @endif </td>
                   </tr>
 

@@ -643,7 +643,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                  </p>
                             </div>
                              @else
-                                    <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?><br></strong>
+                                    <strong>La subasta inicia:  <strong>Fecha Fin:</strong> {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
+                                                      <br> <strong>Hora Fin: </strong> {!!  date(' H:i:s', strtotime($auction->end_date)); !!}<br></strong>
                             <!--if auction status is closed end-->
                             @endif
 

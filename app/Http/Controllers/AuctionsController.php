@@ -1113,11 +1113,6 @@ class AuctionsController extends Controller
           if (($auctionbidder)) {
 
               //check invoice sent to this bidder
-              if ($auctionbidder->is_admin_sent_email=='Yes') {
-
-                 flash('error','factura ya enviada a este postor', 'error');
-                 return redirect(URL_AUCTIONS_VIEW.$auction->slug);
-              }
 
 
 
