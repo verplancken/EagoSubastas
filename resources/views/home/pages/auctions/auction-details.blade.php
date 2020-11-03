@@ -418,13 +418,22 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                             @if($auction->visibilidad == 1)
                                                 <div class="d-flex justify-content-between">
                                                    <p>Seleccione oferta máxima</p>
+                                                         @if(Session::has('warning'))
+                                                            <div class="col-lg-12">
+                                                                <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                                                    {{Session::get('warning')}}
+                                                                    <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                          @endif
                                                    @if($auction->is_bid_increment == 1)
                                                       <p class="ml-3" title="Incremento" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
                                                    @endif
                                                 </div>
                                                     <div class="row">
                                                           <div class="col-lg-12">
-
                                                             {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
                                                                         {{-- Traer el id de la subasta en que se esta --}}
                                                               @foreach($lote as $lotes)
@@ -473,6 +482,16 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                 </div>
                                                     <div class="row">
                                                         <div class="col-lg-5">
+                                                          @if(Session::has('warning'))
+                                                            <div class="col-lg-12">
+                                                                <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
+                                                                    {{Session::get('warning')}}
+                                                                    <button type="" class="close" data-dismiss="alert" arial-label="close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                          @endif
                                                             {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
 
                                                             {{-- Traer el id de la subasta en que se esta --}}
@@ -519,17 +538,6 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                             <div class="row">
                                               <div class="col-lg-12">
-                                                             @if(Session::has('warning'))
-                                                                <div class="col-lg-12">
-                                                                    <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                                                        {{Session::get('warning')}}
-                                                                        <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            @endif
-
                                                 {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
 
                                                     {{-- Traer el id de la subasta en que se esta --}}

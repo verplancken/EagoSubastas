@@ -45,4 +45,12 @@ class AuctionBidder extends Model
 		            ->orderBy('id','desc')
 		            ->get();
     }
+
+    public function AuctionBidder(){
+        return $this->belongsToMany(AuctionBidder::class);
+    }
+
+    public function User(){
+        return $this->hasMany(User::class);
+    }
 }

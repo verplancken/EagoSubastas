@@ -79,6 +79,7 @@ class AuctionsController extends Controller
                              ->get();
 
                   $array = array_flatten($auction);
+
 //dd($array);
         $data['title']              = getPhrase('auctions');
         $data['active_class']       = 'auctions';
@@ -102,27 +103,97 @@ class AuctionsController extends Controller
      $record2 = AuctionBidder::where('auction_id',  $subastas->id)->exists();
      //dd($record2);
 
+     $record3 = AuctionBidder::join('users','auctionbidders.bidder_id','users.id')
+                             ->where('auctionbidders.id', $auction_last_bid->ab_id)
+                             ->where('auctionbidders.is_bidder_won', 'Yes')
+                             ->select('users.email')
+                             ->first();
+
+     $array3 = array_pull($record3, 'email');
+//dd($array3);
+
+
      if ($record2 == true){
-         if ($end_date <= $now) {
+         if ($start_date<= $now && $end_date <= $now) {
              $subastas->auction_status = 'closed';
              $subastas->save();
          }
 
-         if ($end_date <= $now) {
+         if ($start_date<= $now && $end_date <= $now) {
              $record->is_bidder_won = 'Yes';
-           // dd($record);
              $record->save();
-         }
-//         if ($end_date <= $now) {
-//           $auction_last_bid = Bidding::getAuctionLastBid($subastas->id);
-//
-//            $record =  AuctionBidder::join('users','auctionbidders.bidder_id','users.id')
-//                            ->where('id', $auction_last_bid->ab_id)
-//                            ->select(['users.name'])
-//                        ->get();
-//
-//            dd($record);
-//         }
+
+            if ($record->save() == true && $start_date<= $now && $end_date <= $now && $record->is_admin_sent_email == 'No'){
+             try {
+
+                $mail = new PHPMailer(true);
+                $mail->SMTPDebug = 0;                               // Enable verbose debug output
+                $mail->isSMTP();                                    // Send using SMTP
+                $mail->Host = 'smtp.gmail.com';
+
+                $mail->SMTPAuth = true;                            // Enable SMTP authentication ACCESO A CUENTA
+                $mail->Username = 'dinopiza@gmail.com';            // SMTP username ACCESO A CUENTA
+                $mail->Password = 'Ytumamatambien164862014041311';           // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+                $mail->Port = 587;
+
+                $mail->Subject = 'Felicidades gano la subasta '.$array3.'';
+                $mail->AddAddress($array3); // Cargamos el e-mail destinatario a la clase PHPMailer
+
+                $mail->setfrom('contacto@eago.com.mx', 'EAGO'); //DESDE DONDE SE VA AENVIAR
+
+                //  $mail->addaddress('contacto_webtech@yahoo.com', 'Information-copia');
+                $mail->isHTML(true);                               // Set email format to HTML
+
+                $mail->Body = '<!doctype html>
+                        <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport"
+                                      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                                <title>Document</title>
+                            </head>
+                            <body>
+                                <div style="width:100%; background:#fff; position:relative; font-family:sans-serif; padding-bottom:40px">
+                                    <center>
+                                        <img style="padding:20px; width:10%" src="https://eago.com.mx/general/1595961692.gif">
+                                    </center>
+                                    <div style="position:relative; margin:auto; width:600px; background:#fff; padding:20px">
+                                        <center>
+                                        <h1 style="font-weight:100; color:#000"><strong>Gano Subasta</strong></h1>
+                                        <hr style="border:1px solid #ccc; width:80%">
+                                        <h4 style="font-weight:100; color:#000; padding:0 20px;font-size: 20px">Usted fue invitado a participar en una subasta por favor concluya el registro para poder participar.</h4>
+                                        <a href="https://escuderiaservicios.com/eagosubastas/login" target="_blank" style="text-decoration:none">
+                                        <div style="line-height:50px; background:#0e1c66; width:50%; color:white">Aceptar Invitacion</div>
+                                        </a>
+                                        <br>
+                                        <hr style="border:1px solid #ccc; width:80%">
+                                        <img style="padding:20px; width:40%" src="https://eago.com.mx/Eago-frontend/vistas/img/subastas-persona-bg.png">
+                                        </center>
+                                    </div>
+                                </div>
+                            </body>
+                        </html>';
+
+
+                if ($mail->send()) {
+                    $messages[] = "correo  ha sido enviado con éxito.";
+                   // dd($messages);
+                    $record->is_admin_sent_email = 'Yes';
+                    $record->save();
+                } else {
+                    $errors[] = "Lo sentimos, el correo falló. Por favor, regrese y vuelva a intentarlo.";
+                    //dd($errors);
+                }
+
+                  $mail->ClearAddresses(); // Limpia los "Address" cargados previamente para volver a cargar uno.
+
+          } catch (Exception $e) {
+                //dd($array3);
+          }
+        }
+ }
      }else{
          if ($end_date <= $now) {
          $subastas->auction_status = 'closed';

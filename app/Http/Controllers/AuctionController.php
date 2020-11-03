@@ -1492,6 +1492,7 @@ class AuctionController extends Controller
                                     $save = TRUE;
                                 } else {
                                     //redireccionamiento: el monto de la oferta no es válido
+                                    Session::flash('warning', 'El monto de la oferta no es válido');
                                     flash('error', 'el monto de la oferta no es válido', 'error');
                                     return redirect(URL_HOME_AUCTION_DETAILS . '/' . $auction->slug);
                                 }
@@ -1503,6 +1504,7 @@ class AuctionController extends Controller
                                     $save = TRUE;
                                 } else {
                                     //redireccionamiento: el monto de la oferta no es válido
+                                    Session::flash('warning', 'El monto de la oferta no es válido');
                                     flash('error', 'el monto de la oferta no es válido', 'error');
                                     return redirect(URL_HOME_AUCTION_DETAILS . '/' . $auction->slug);
                                 }

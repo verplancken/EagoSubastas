@@ -286,4 +286,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(City::class, 'shipping_city')->select('cities.city')->first();
     }
+
+    public function AuctionBidder(){
+        return $this->belongsToMany(AuctionBidder::class);
+    }
+
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 }
