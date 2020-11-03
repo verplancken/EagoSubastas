@@ -11,8 +11,8 @@
         <div class="panel-body table-responsive">
             <div class="row">
 
+                <h3 class="text-center p-5">Datos de perfil</h3>
                 <div class="col-md-6">
-
                     <table class="table table-bordered table-striped">
                         <tr>
                             <th> {{getPhrase('name')}} </th>
@@ -55,13 +55,9 @@
                         </tr>
                        
                     </table>
-
                 </div>
 
-
-
                 <div class="col-md-6">
-
                     <table class="table table-bordered table-striped">
                         
                         <tr>
@@ -97,20 +93,56 @@
                         @endif
                        
                     </table>
-
                 </div>
 
             </div>
 
+            <div class="row">
+                <h3 class="text-center p-5">Datos de Facturacion</h3>
+
+                <div class="col-md-6">
+                    <table class="table table-bordered table-striped">
 
 
+                        <tr>
+                            <th> Nombre de facturacion </th>
+                            <td field-key='billing_name'>{{ $user->billing_name }}</td>
+                        </tr>
 
+                        <tr>
+                            <th> Correo de facturacion </th>
+                            <td field-key='billing_email'>{{ $user->billing_email }}</td>
+                        </tr>
 
+                        <tr>
+                            <th>RFC  Facturacion </th>
+                            <td field-key='billing_phone'>{{ $user->billing_phone }}</td>
+                        </tr>
 
+                        <tr>
+                            <th> Pais de Facturacion </th>
+                            <td field-key='billing_country'>{{ $user->billing_country }}</td>
+                        </tr>
 
+                        <tr>
+                            <th> Estado de facturacion </th>
+                            <td field-key='billing_state'>  {{$user->billing_state}} </td>
+                        </tr>
 
+                        <tr>
+                            <th> Ciudad de Facturacion </th>
+                            <td field-key='billing_city'>  {{$user->billing_city}} </td>
+                        </tr>
 
-            <p>&nbsp;</p>
+                        <tr>
+                            <th> Direccion de facturacion </th>
+                            <td field-key='billing_city'>  {{$user->billing_address}} </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
 
             <a href="{{ URL_USERS }}" class="btn btn-default">@lang('global.app_back_to_list')</a>
         </div>

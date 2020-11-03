@@ -35,7 +35,7 @@
 
                 	<div class="form-group">
 
-                    {!! Form::label('billing_name', getPhrase('billing_name'), ['class' => 'control-label']) !!}
+                    {!! Form::label('billing_name', 'Nombre de facturacion', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -49,7 +49,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Billing Name',
+                    'placeholder' => 'Nombre de facturacion',
 
                     'ng-model' => 'billing_name', 
 
@@ -86,7 +86,7 @@
 
                 <div class="form-group">
 
-                    {!! Form::label('billing_phone', getPhrase('billing_phone'), ['class' => 'control-label']) !!}
+                    {!! Form::label('billing_phone','RFC Facturacion', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -100,13 +100,11 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Billing Phone',
+                    'placeholder' => 'RFC Facturacion',
 
                     'ng-model' => 'billing_phone', 
 
                     'required' => 'true',
-
-                    'ng-pattern' => getRegexPattern("phone"),
 
                     'ng-maxlength' => '20',
 
@@ -133,7 +131,7 @@
                 
                  <div class="form-group">
 
-                        <label for="name"> {{ getPhrase('state') }} <span class="text-red">*</span></label>
+                        <label for="name"> Estado <span class="text-red">*</span></label>
 
 
                         <?php 
@@ -164,7 +162,7 @@
 
                   <div class="form-group">
 
-                    {!! Form::label('billing_address', getPhrase('billing_address'), ['class' => 'control-label']) !!}
+                    {!! Form::label('billing_address','Direccion de facturacion', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
                     
@@ -178,7 +176,7 @@
 
                     array('class' => 'form-control', 'rows'=>3, 
 
-                    'placeholder' => 'Billing Address',
+                    'placeholder' => 'Direccion de facturacion',
 
                     'ng-model' => 'billing_address', 
 
@@ -227,7 +225,7 @@
 
                     ?>
 
-                    {!! Form::label('billing_email', getPhrase('billing_email'), ['class' => 'control-label']) !!}
+                    {!! Form::label('billing_email', 'Correo de facturacion', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -235,7 +233,7 @@
 
                     array('class' => 'form-control', 
 
-                    'placeholder' => 'Billing Email',
+                    'placeholder' => 'Correo de facturacion',
 
                     'ng-model' => 'billing_email', 
 
@@ -269,7 +267,7 @@
 
                 <div class="form-group">
 
-                    {!! Form::label('billing_country', getPhrase('billing_country'), ['class' => 'control-label']) !!}
+                    {!! Form::label('billing_country', 'país de facturación', ['class' => 'control-label']) !!}
 
                     <span class="text-red">*</span>
 
@@ -309,7 +307,7 @@
 
                 <div class="form-group">
 
-                       <label for="name"> {{ getPhrase('city') }} <span class="text-red">*</span></label>
+                       <label for="name"> Ciudad <span class="text-red">*</span></label>
 
                         <?php 
 
