@@ -1037,7 +1037,8 @@ class AuctionController extends Controller
 
        $tiros = Bidding::join('auctionbidders', 'bidding.ab_id', 'auctionbidders.id')
                                       ->join('users','auctionbidders.bidder_id','users.id')
-                                      ->where('bidding.ab_id',$ab->id)
+                                      ->where('auctionbidders.bidder_id',$users->id)
+                                      ->where('auctionbidders.auction_id', $auction->id)
                                       ->select('users.name','bidding.bid_amount', 'bidding.created_at')
                                       ->orderBy('bidding.id','desc')
                                       ->get();

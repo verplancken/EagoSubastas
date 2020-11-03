@@ -356,7 +356,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                             <br>
-                                                            <p>Por favor llena tus datos de  <a href="users/edit/{{$user->slug}}">Facturacion</a></p>
+                                                            <p>Por favor llena tus datos de  <a href="{{URL_USERS_EDIT}}/{{$user->slug}}">Facturacion</a></p>
                                                         </div>
                                                     </div>
                                                      @break
@@ -401,13 +401,16 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                        <div class="col-12">
                                                            <h4>
                                                                 <p data-toggle="tooltip" title="  Oferta Inicial" data-placement="top" >
-                                                                    Oferta Inicial  <strong> ${!! number_format($auction->reserve_price) !!} MXN </strong>
+                                                                    Oferta Inicial  <strong> ${!! number_format($auction->minimum_bid) !!} MXN </strong>
                                                                 </p>
-
                                                             </h4>
                                                        </div>
                                                       <div class="col-lg-12 col-md-12 col-sm-12 au-deals">
-                                                        <h2 style="font-weight: 500">Última oferta ${!! number_format($last_bid->bid_amount) !!} MXN</h2>
+                                                          @if ($auction->visibilidad == 1)
+                                                              <h2 style="font-weight: 500">Última oferta ${!! number_format($last_bid->bid_amount) !!} MXN</h2>
+                                                              @else
+                                                              <h2 style="font-weight: 500">Última oferta ${!! number_format($last_bidcerrada->bid_amount) !!} MXN</h2>
+                                                          @endif
                                                       </div>
                                                    </div>
 
