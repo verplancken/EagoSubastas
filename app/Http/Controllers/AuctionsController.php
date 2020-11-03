@@ -96,7 +96,7 @@ class AuctionsController extends Controller
 
      //comprobar la última puja reciente de la subasta
      $auction_last_bid = Bidding::getAuctionLastBid($subastas->id);
-
+//dd($auction_last_bid);
      $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
          ->first();
 
@@ -104,13 +104,14 @@ class AuctionsController extends Controller
      //dd($record2);
 
      $record3 = AuctionBidder::join('users','auctionbidders.bidder_id','users.id')
+                             ->join('auctions','auctionbidders.auction_id','auctions.id')
                              ->where('auctionbidders.id', $auction_last_bid->ab_id)
                              ->where('auctionbidders.is_bidder_won', 'Yes')
-                             ->select('users.email')
+                             ->select('users.email', 'auctions.title')
                              ->first();
 
      $array3 = array_pull($record3, 'email');
-//dd($array3);
+
 
 
      if ($record2 == true){
@@ -163,7 +164,7 @@ class AuctionsController extends Controller
                                         <h1 style="font-weight:100; color:#000"><strong>Hola  '.$array3.'</strong></h1>
                                         <hr style="border:1px solid #ccc; width:80%">
                                         <h4 style="font-weight:100; color:#000; padding:0 20px;font-size: 20px">
-                                            Felicidades, Has ganado la subasta {{$auction_title}} con la oferta más alta {{$currency}}{{$bid_amount}}
+                                            Felicidades, Has ganado la subasta '.$record3->title.' con la oferta más alta $ '.$auction_last_bid->bid_amount.' MXN
                                         </h4>
                                             <br>
                                             <p>
@@ -181,12 +182,12 @@ class AuctionsController extends Controller
 
                 if ($mail->send()) {
                     $messages[] = "correo  ha sido enviado con éxito.";
-                   // dd($messages);
+                   //dd($messages);
                     $record->is_admin_sent_email = 'Yes';
                     $record->save();
                 } else {
                     $errors[] = "Lo sentimos, el correo falló. Por favor, regrese y vuelva a intentarlo.";
-                    //dd($errors);
+                   //dd($errors);
                 }
 
                   $mail->ClearAddresses(); // Limpia los "Address" cargados previamente para volver a cargar uno.
@@ -197,7 +198,7 @@ class AuctionsController extends Controller
         }
  }
      }else{
-         if ($end_date <= $now) {
+         if ($start_date<= $now && $end_date <= $now) {
          $subastas->auction_status = 'closed';
          $subastas->save();
         }
