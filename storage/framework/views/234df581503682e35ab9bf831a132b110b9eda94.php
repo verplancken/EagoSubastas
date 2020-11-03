@@ -358,6 +358,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                             <button type="" class="close" data-dismiss="alert" arial-label="close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
+                                                            <br>
+                                                            <p>Porfavor llena tus datos de Facturacion <a href="users/edit/<?php echo e($user->slug); ?>">Facturacion</a></p>
                                                         </div>
                                                     </div>
                                                      <?php break; ?>
