@@ -190,16 +190,11 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                              
                              <div class="collapse" id="nav-description" data-parent="#accordionExample">
                                   <div class="card card-body shadow">
+                                      <h5 class="ml-3"><strong>Descripcion</strong></h5>
                                         <div class="row">
-
-                                            <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
                                               <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-
                                                 <p><?php echo $auction->description; ?></p>
-
-                                              </div>
                                             </div>
-
                                         </div>
                                   </div>
                              </div>
@@ -601,20 +596,20 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                          <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                              <?php if($item->auction_id == $auction->id): ?>
                                                                      <div class="d-flex flex-column bd-highlight text-success">
-                                                                         <a href="#" data-toggle="modal" data-target="#bidHistoryModal" title="view total bid history" style="color: #ffc107;">
+                                                                         <a class="text-info" href="#" data-toggle="modal" data-target="#bidHistoryModal" title="Tiros Realizados">
                                                                              <h6 class="text-center d-inline-block"><strong>Tiros Realizados</strong></h6>
                                                                              <p class="text-center"><?php echo e($item->no_of_times); ?></p>
                                                                          </a>
                                                                      </div>
                                                              <?php endif; ?>
                                                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                         <div class="d-flex flex-column bd-highlight text-primary">
-                                                             <h6 class="text-center d-inline-block" style="color:#FF0000"><strong>Tiros permitidos</strong></h6>
+                                                         <div class="d-flex flex-column bd-highlight ">
+                                                             <h6 class="text-center d-inline-block text-danger"><strong>Tiros permitidos</strong></h6>
                                                              <p class="text-center" style="color:#FF0000"><?php echo e($auction->tiros); ?></p>
                                                          </div>
                                                              <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                  <div class="d-flex flex-column bd-highlight text-success">
-                                                                     <a href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" style="color: #28a745;">
+                                                                     <a class="text-success" href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" >
                                                                          <h6 class="text-center"><strong>Art ganados</strong></h6>
                                                                          <p class="text-center"><?php echo $auctionbidders2[0]->bidder_count; ?></p>
                                                                      </a>
@@ -743,9 +738,9 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                <?php $__currentLoopData = $tiros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subastas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
 
-                      <td>$<?php echo number_format($subastas->bid_amount); ?> MXN</td>
+                      <td class="text-center">$<?php echo number_format($subastas->bid_amount); ?> MXN</td>
 
-                      <td>
+                      <td class="text-center">
                           <strong>Fecha:</strong> <?php echo date(getSetting('date_format','site_settings'), strtotime($subastas->created_at));; ?>
 
                                           <br> <strong>Hora: </strong> <?php echo date(' H:i:s', strtotime($subastas->created_at));; ?>

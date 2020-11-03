@@ -38,13 +38,25 @@ if (isset($auction) && !empty($auction)) {
 
                         <div class="card-block au-similar-block text-center">
 
-                          <a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>" data-toggle="tooltip" title="<?php echo e($auction->title); ?>" data-placement="bottom">
-                            <h6 class="card-title text-center"> <?php echo str_limit($auction->title,30,'..'); ?></h6>
-                          </a>
+                            <a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>" data-toggle="tooltip" title="<?php echo e($auction->title); ?>" data-placement="bottom">
+                              <h4 class="card-title text-center p-2"> <?php echo str_limit($auction->title,30,'..'); ?></h4>
+                            </a>
 
-                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?></p>
+                            <p class="card-title text-center">
+                                <strong> Fecha Inicio: <br></strong> <?php echo date(getSetting('date_format','site_settings'), strtotime($auction->start_date));; ?>
 
-                                <p class="card-title text-center"><?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </p>
+                                <br> <strong> Hora Inicio: <br></strong> <?php echo date(' H:i:s', strtotime($auction->start_date));; ?>
+
+                            </p>
+
+                               <hr>
+
+                            <p class="card-title text-center">
+                                <strong> Fecha Fin: <br></strong> <?php echo date(getSetting('date_format','site_settings'), strtotime($auction->end_date));; ?>
+
+                                <br> <strong> Hora Fin: <br></strong> <?php echo date(' H:i:s', strtotime($auction->end_date));; ?>
+
+                            </p>
 
                       </div>
                     </div>

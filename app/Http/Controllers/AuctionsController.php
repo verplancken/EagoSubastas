@@ -149,8 +149,7 @@ class AuctionsController extends Controller
                         <html lang="en">
                             <head>
                                 <meta charset="UTF-8">
-                                <meta name="viewport"
-                                      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                                <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
                                 <meta http-equiv="X-UA-Compatible" content="ie=edge">
                                 <title>Document</title>
                             </head>
@@ -161,15 +160,18 @@ class AuctionsController extends Controller
                                     </center>
                                     <div style="position:relative; margin:auto; width:600px; background:#fff; padding:20px">
                                         <center>
-                                        <h1 style="font-weight:100; color:#000"><strong>Gano Subasta</strong></h1>
+                                        <h1 style="font-weight:100; color:#000"><strong>Hola  '.$array3.'</strong></h1>
                                         <hr style="border:1px solid #ccc; width:80%">
-                                        <h4 style="font-weight:100; color:#000; padding:0 20px;font-size: 20px">Usted fue invitado a participar en una subasta por favor concluya el registro para poder participar.</h4>
-                                        <a href="https://escuderiaservicios.com/eagosubastas/login" target="_blank" style="text-decoration:none">
-                                        <div style="line-height:50px; background:#0e1c66; width:50%; color:white">Aceptar Invitacion</div>
-                                        </a>
+                                        <h4 style="font-weight:100; color:#000; padding:0 20px;font-size: 20px">
+                                            Felicidades, Has ganado la subasta {{$auction_title}} con la oferta más alta {{$currency}}{{$bid_amount}}
+                                        </h4>
+                                            <br>
+                                            <p>
+                                                Por favor, proceda al pago
+                                            </p>
                                         <br>
                                         <hr style="border:1px solid #ccc; width:80%">
-                                        <img style="padding:20px; width:40%" src="https://eago.com.mx/Eago-frontend/vistas/img/subastas-persona-bg.png">
+                                        <img style="padding:20px; width:40%" src="https://www.flaticon.es/svg/static/icons/svg/2754/2754375.svg">
                                         </center>
                                     </div>
                                 </div>

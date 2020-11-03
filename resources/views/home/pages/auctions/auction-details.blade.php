@@ -188,16 +188,11 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                              {{--  Descripcion--}}
                              <div class="collapse" id="nav-description" data-parent="#accordionExample">
                                   <div class="card card-body shadow">
+                                      <h5 class="ml-3"><strong>Descripcion</strong></h5>
                                         <div class="row">
-
-                                            <div class="col-lg-12 col-md-12 col-sm-12 au-terms">
                                               <div class="col-lg-12 col-md-12 col-sm-12 au-policy">
-
                                                 <p>{!! $auction->description !!}</p>
-
-                                              </div>
                                             </div>
-
                                         </div>
                                   </div>
                              </div>

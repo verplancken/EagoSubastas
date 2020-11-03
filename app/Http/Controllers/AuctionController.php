@@ -1074,7 +1074,7 @@ class AuctionController extends Controller
 
                             //reached /> precio de reserva, muestra el ganador del tiempo de subasta ha terminado
                             $currency_code = getSetting('currency_code', 'site_settings');
-                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta '. '$' . $auction_last_bid->bid_amount . 'mxn';
+                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta '. '$ ' . $auction_last_bid->bid_amount . 'mxn' . html_entity_decode(<a> Perfil </a>) ;
 
                             if ($users->id == $record->bidder_id) {
                                 Session::flash('succes', $msg);

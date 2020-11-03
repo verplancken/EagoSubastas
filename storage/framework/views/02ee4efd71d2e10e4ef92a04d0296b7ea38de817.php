@@ -56,7 +56,7 @@ $user = Auth::user();
 
                         <!--<li><a href="<?php echo e(URL_HOME); ?>"> <?php echo e(getPhrase('home')); ?> </a></li>-->
 
-                        <li><a href="<?php echo e(URL_HOME_AUCTIONS); ?>"> <?php echo e(getPhrase('auctions')); ?> </a></li>
+                        <li><a href="<?php echo e(URL_HOME_AUCTIONS); ?>"> Subastas </a></li>
 
                       <!--   <li><a href="<?php echo e(URL_LIVE_AUCTIONS); ?>"> <?php echo e(getPhrase('live_auctions')); ?> </a></li>-->
 
@@ -100,13 +100,13 @@ $user = Auth::user();
                        <?php echo $__env->make('bidder.common.notifications', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                        <?php endif; ?>
 
-                        <li><a href="<?php echo e(URL_DASHBOARD); ?>" title="Dashboard" class="nav-link nav-press scroll"> Inicio </a></li>
+                        <li><a href="<?php echo e(URL_DASHBOARD); ?>" title="Dashboard" class="nav-link nav-press scroll"> Perfil </a></li>
 
 
                        <?php if(Auth::check()): ?>
 
                        <li><a  class="nav-link nav-press scroll"> Hola: <?php echo e($user->email); ?></a></li>
-                       <li><a href="<?php echo e(URL_LOGOUT); ?>" class="nav-link nav-press scroll"><i class="fa fa-sign-out"></i>Cerrar Sesion</a></li>
+                       <li><a href="<?php echo e(URL_LOGOUT); ?>" class="nav-link nav-press scroll"><i class="fa fa-sign-out"></i>  Cerrar Sesion</a></li>
 
                        <?php endif; ?>
 

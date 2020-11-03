@@ -56,7 +56,7 @@ $user = Auth::user();
 
                         <!--<li><a href="{{URL_HOME}}"> {{getPhrase('home')}} </a></li>-->
 
-                        <li><a href="{{URL_HOME_AUCTIONS}}"> {{getPhrase('auctions')}} </a></li>
+                        <li><a href="{{URL_HOME_AUCTIONS}}"> Subastas </a></li>
 
                       <!--   <li><a href="{{URL_LIVE_AUCTIONS}}"> {{getPhrase('live_auctions')}} </a></li>-->
 
@@ -100,13 +100,13 @@ $user = Auth::user();
                        @include('bidder.common.notifications')
                        @endif
 
-                        <li><a href="{{URL_DASHBOARD}}" title="Dashboard" class="nav-link nav-press scroll"> Inicio </a></li>
+                        <li><a href="{{URL_DASHBOARD}}" title="Dashboard" class="nav-link nav-press scroll"> Perfil </a></li>
 
 
                        @if (Auth::check())
 
                        <li><a  class="nav-link nav-press scroll"> Hola: {{$user->email}}</a></li>
-                       <li><a href="{{URL_LOGOUT}}" class="nav-link nav-press scroll"><i class="fa fa-sign-out"></i>Cerrar Sesion</a></li>
+                       <li><a href="{{URL_LOGOUT}}" class="nav-link nav-press scroll"><i class="fa fa-sign-out"></i>  Cerrar Sesion</a></li>
 
                        @endif
 
