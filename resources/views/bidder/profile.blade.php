@@ -32,7 +32,7 @@
                               <h2>Datos de Perfil</h2>
                           </div>
 
-                          <a href="{{URL_USER_SHIPPING_ADDRESS}}" class="btn btn-success"> <i class="fas fa-file-csv"></i> Ir a datos de facturacion</a>
+                          <a href="{{URL_USER_BILLING_ADDRESS}}" class="btn btn-success"> <i class="fas fa-file-csv"></i> Ir a datos de facturacion</a>
 
                         </div>
                     </div>
