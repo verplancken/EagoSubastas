@@ -1003,16 +1003,8 @@ class AuctionController extends Controller
 
         $invitacion = DB::table('invitaciones')
         ->get();
-        //dd($invitacion);
-        $user = DB::table('users')
-        ->first();
-
-
 
         //CUANDO EXISTEN DATOS EN auctionbidders
-        $auctionbidders = AuctionBidder::select('auction_id', 'no_of_times', 'bidder_id')
-                                        ->get();
-                                 //dd($auctionbidders);
          $users   = \Auth::user();
 
         $auctionbidders = AuctionBidder::where('bidder_id', '=', $users->id)
@@ -1021,6 +1013,7 @@ class AuctionController extends Controller
                                         ->get();
 
         $subcategoria = DB::table('sub_catogories')
+                            ->where('id',$auction->sub_category_id)
                             ->first();
 
         $lote = DB::table('sub_catogories')
@@ -1047,9 +1040,10 @@ class AuctionController extends Controller
        $articulos = AuctionBidder::join('auctions','auctionbidders.auction_id','auctions.id')
                                 ->where('bidder_id', '=', $users->id)
                                 ->where('is_bidder_won', 'Yes')
+                                ->where('sub', $subcategoria->id)
                                 ->select(['auctionbidders.*','auctions.slug as auction_slug','auctions.image','auctions.title','auctions.start_date','auctions.end_date','auctions.reserve_price'])
                                 ->get();
-       //dd($subastas);
+       //dd($articulos);
 
                     $now = strtotime(date('Y-m-d H:i:s'));
                     $start_date = strtotime($auction->start_date);
