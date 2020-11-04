@@ -77,7 +77,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                     <div class="col-12 mt-3" >
                         <div class="d-flex justify-content-between">
 
-                              <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
+                              <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false" >
                                   detalles de la subasta
                               </a>
 
@@ -325,7 +325,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
-                                 <i class="fa fa-question" aria-hidden="true"></i>
+                                 <i class="fa fa-question" aria-hidden="true">Ayuda</i>
                             </button>
                              <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> Recargar pag <i class="fa fa-refresh" aria-hidden="true"></i> </a>
                         </div>
@@ -340,8 +340,10 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                 <?php if(!$live_auction): ?> <!--normal auction happening-->
                                     <?php if($auction->start_date<=now() && $auction->end_date>=now()): ?>
-                                        <p title="Auction End Date"> La subasta finaliza Fecha: <strong> <?php echo date(getSetting('date_format','site_settings'), strtotime($auction->end_date));; ?></strong>
-                                                                                            Hora: <strong> <?php echo date(' H:i:s', strtotime($auction->end_date));; ?></strong>
+                                        <p title="Auction End Date"> La subasta finaliza <br><strong>Fecha:</strong>  <?php echo date(getSetting('date_format','site_settings'), strtotime($auction->end_date));; ?>
+
+                                                                                         <strong>  Hora:</strong>  <?php echo date(' H:i:s', strtotime($auction->end_date));; ?>
+
                                     <?php endif; ?>
                                 <?php endif; ?>
 
@@ -359,7 +361,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                             <br>
-                                                            <p>Porfavor llena tus datos de Facturacion <a href="users/edit/<?php echo e($user->slug); ?>">Facturacion</a></p>
+                                                            <p>Por favor llena tus datos de  <a href="<?php echo e(URL_USERS_EDIT); ?>/<?php echo e($user->slug); ?>">Facturacion</a></p>
                                                         </div>
                                                     </div>
                                                      <?php break; ?>
@@ -405,13 +407,16 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                        <div class="col-12">
                                                            <h4>
                                                                 <p data-toggle="tooltip" title="  Oferta Inicial" data-placement="top" >
-                                                                    Oferta Inicial  <strong> $<?php echo number_format($auction->reserve_price); ?> MXN </strong>
+                                                                    Oferta Inicial  <strong> $<?php echo number_format($auction->minimum_bid); ?> MXN </strong>
                                                                 </p>
-
                                                             </h4>
                                                        </div>
                                                       <div class="col-lg-12 col-md-12 col-sm-12 au-deals">
-                                                        <h2 style="font-weight: 500">Última oferta $<?php echo number_format($last_bid->bid_amount); ?> MXN</h2>
+                                                          <?php if($auction->visibilidad == 1): ?>
+                                                              <h2 style="font-weight: 500">Última oferta $<?php echo number_format($last_bid->bid_amount); ?> MXN</h2>
+                                                              <?php else: ?>
+                                                              <h2 style="font-weight: 500">Última oferta $<?php echo number_format($last_bidcerrada->bid_amount); ?> MXN</h2>
+                                                          <?php endif; ?>
                                                       </div>
                                                    </div>
 
@@ -599,20 +604,20 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                              <?php if($item->auction_id == $auction->id): ?>
                                                                      <div class="d-flex flex-column bd-highlight text-success">
                                                                          <a class="text-info" href="#" data-toggle="modal" data-target="#bidHistoryModal" title="Tiros Realizados">
-                                                                             <h6 class="text-center d-inline-block"><strong>Tiros Realizados</strong></h6>
+                                                                             <h6 class="text-center d-inline-block" style="text-decoration: underline"><strong>Tiros Realizados</strong></h6>
                                                                              <p class="text-center"><?php echo e($item->no_of_times); ?></p>
                                                                          </a>
                                                                      </div>
                                                              <?php endif; ?>
                                                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                          <div class="d-flex flex-column bd-highlight ">
-                                                             <h6 class="text-center d-inline-block text-danger"><strong>Tiros permitidos</strong></h6>
-                                                             <p class="text-center" style="color:#FF0000"><?php echo e($auction->tiros); ?></p>
+                                                             <h6 class="text-center d-inline-block" style="color:#888888"><strong>Tiros permitidos</strong></h6>
+                                                             <p class="text-center" style="color:#888888"><?php echo e($auction->tiros); ?></p>
                                                          </div>
                                                              <?php $__currentLoopData = $auctionbidders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                  <div class="d-flex flex-column bd-highlight text-success">
-                                                                     <a class="text-success" href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" >
-                                                                         <h6 class="text-center"><strong>Art ganados</strong></h6>
+                                                                     <a href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" style="color:#17a2b8">
+                                                                         <h6 class="text-center" style="text-decoration: underline"><strong>Art ganados</strong></h6>
                                                                          <p class="text-center"><?php echo $auctionbidders2[0]->bidder_count; ?></p>
                                                                      </a>
                                                                  </div>
@@ -620,8 +625,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                              <?php $__currentLoopData = $lote; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lotes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                  <div class="d-flex flex-column bd-highlight text-primary">
-                                                                     <h6 class="text-center" style="color: #295aa9;"><strong> Art a ganar</strong></h6>
-                                                                     <p class="text-center" style="color: #295aa9;"><?php echo e($lotes->articulos); ?></p>
+                                                                     <h6 class="text-center" style="color: #888888;"><strong> Art a ganar</strong></h6>
+                                                                     <p class="text-center" style="color: #888888;"><?php echo e($lotes->articulos); ?></p>
                                                                  </div>
                                                                  <?php break; ?>
                                                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -656,7 +661,9 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                  </p>
                             </div>
                              <?php else: ?>
-                                    <strong>La subasta inicia:  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?><br></strong>
+                                                     La subasta inicia:  <strong>Fecha:</strong> <?php echo date(getSetting('date_format','site_settings'), strtotime($auction->end_date));; ?>
+
+                                                      <br> <strong>Hora: </strong> <?php echo date(' H:i:s', strtotime($auction->end_date));; ?><br>
                             <!--if auction status is closed end-->
                             <?php endif; ?>
 

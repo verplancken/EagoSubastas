@@ -79,7 +79,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                     <div class="col-12 mt-3" >
                         <div class="d-flex justify-content-between">
 
-                              <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false">
+                              <a class="nav-item au-product-nav nav-link d-inline btn-res" data-toggle="collapse" href="#nav-auction" role="button" aria-controls="nav-auction" aria-expanded="false" >
                                   detalles de la subasta
                               </a>
 
@@ -587,7 +587,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                              @if($item->auction_id == $auction->id)
                                                                      <div class="d-flex flex-column bd-highlight text-success">
                                                                          <a class="text-info" href="#" data-toggle="modal" data-target="#bidHistoryModal" title="Tiros Realizados">
-                                                                             <h6 class="text-center d-inline-block"><strong>Tiros Realizados</strong></h6>
+                                                                             <h6 class="text-center d-inline-block" style="text-decoration: underline"><strong>Tiros Realizados</strong></h6>
                                                                              <p class="text-center">{{$item->no_of_times}}</p>
                                                                          </a>
                                                                      </div>
@@ -600,7 +600,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                              @foreach($auctionbidders as $item)
                                                                  <div class="d-flex flex-column bd-highlight text-success">
                                                                      <a href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" style="color:#17a2b8">
-                                                                         <h6 class="text-center"><strong>Art ganados</strong></h6>
+                                                                         <h6 class="text-center" style="text-decoration: underline"><strong>Art ganados</strong></h6>
                                                                          <p class="text-center">{!! $auctionbidders2[0]->bidder_count !!}</p>
                                                                      </a>
                                                                  </div>
