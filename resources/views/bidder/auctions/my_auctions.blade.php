@@ -93,7 +93,6 @@
                                              <a href="{{URL_BID_PAYMENT_CONFIRM}}/{{$auction->slug}}" class="btn btn-warning btn-sm login-bttn" data-toggle="tooltip" title="Pay Auction Bid"> pagar</a>
                                         @endif
 
-
                                         @if ($auction->is_bidder_won=='Yes')
 {{--                                        <span class="btn btn-success btn-sm login-bttn" data-toggle="tooltip" title="You have won this Auction">{{getPhrase('won')}}</span>--}}
                                             <span class="btn btn-success btn-sm login-bttn" data-toggle="tooltip" title="You have won this Auction">Ganadas</span>

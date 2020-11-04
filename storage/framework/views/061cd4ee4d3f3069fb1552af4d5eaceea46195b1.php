@@ -25,24 +25,32 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                     </div>
 
                  </div>
-                 <!--<div class="col-lg-3 col-md-6 col-sm-12 au-items-listt clearfix">
-                      <label>Show</label>
-                       <select class="form-control form-control-sm au-form-dropdown">
-                        <option>10</option>
-                        <option>50</option>
-                        <option>100</option>
-                       </select>
-                       <label>Entries</label>
-                 </div>-->
+
+
+
+
+
+
+
+
+
 
                 </div>
                 <div id="load" style="position: relative;">
                     <section class="auctions">
                         <div class="row"style="background: #F8F8F8" >
+                                  <?php
+
+                                  ?>
                               <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php if($user->email == $item->email): ?>
+                                <?php
+                                    $email_formateada = trim($item->email);
+                                ?>
+                                <?php if($user->email == $email_formateada): ?>
+
                                     <?php if(count($auctions)): ?>
                                     <?php $__currentLoopData = $auctions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                                         <?php if($auction->sub_category_id == $item->auction_id): ?>
                                             <div class="col-lg-4 col-md-6 col-sm-6 au-item-categorys" >
                                                 <div class="card au-cards">
@@ -120,12 +128,15 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                           <!--featured auctions start-->
                 <?php if($featured_enable=='Yes'): ?>
                     <?php $__currentLoopData = $invitacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php if($user->email == $item->email): ?>
+                        <?php
+                            $email_formateada = trim($item->email);
+                        ?>
+                        <?php if($user->email == $email_formateada): ?>
                             <?php if(count($featured_records)): ?>
                                 <div class="row">
                                    <?php $__currentLoopData = $featured_records; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $auction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                        <?php if($auction->sub_category_id == $item->auction_id): ?>
-                                          <div class="col-lg-12 col-md-12 col-sm-12 p-3" style="background: #D9F0FC">
+                                          <div class="col-lg-12 col-md-12 col-sm-12 p-3" style="border: #0798bc 2px solid;">
 
                                               <div class="au-accordina">
                                                   <div class="au-thumb"><a href="<?php echo e(URL_HOME_AUCTION_DETAILS); ?>/<?php echo e($auction->slug); ?>"> <img src="<?php echo e(getAuctionImage($auction->image,'auction')); ?>" alt="<?php echo e($auction->title); ?>" class="img-fluid premium-img"></a> </div>
