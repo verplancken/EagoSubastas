@@ -323,7 +323,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-primary btn-sm text-left" data-toggle="modal" data-target="#Instrucciones2">
-                                 <i class="fa fa-question" aria-hidden="true"></i>
+                                 <i class="fa fa-question" aria-hidden="true">Ayuda</i>
                             </button>
                              <a class="btn btn-dark btn-sm text-left" href="javascript:location.reload()" data-toggle="tooltip" title="Recargar pagina"> Recargar pag <i class="fa fa-refresh" aria-hidden="true"></i> </a>
                         </div>
@@ -338,8 +338,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                 @if (!$live_auction) <!--normal auction happening-->
                                     @if($auction->start_date<=now() && $auction->end_date>=now())
-                                        <p title="Auction End Date"> La subasta finaliza Fecha: <strong> {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}</strong>
-                                                                                            Hora: <strong> {!!  date(' H:i:s', strtotime($auction->end_date)); !!}</strong>
+                                        <p title="Auction End Date"> La subasta finaliza <strong>Fecha:  {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}</strong>
+                                                                                          <strong>  Hora:  {!!  date(' H:i:s', strtotime($auction->end_date)); !!}</strong>
                                     @endif
                                 @endif
 
@@ -594,12 +594,12 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                              @endif
                                                          @endforeach
                                                          <div class="d-flex flex-column bd-highlight ">
-                                                             <h6 class="text-center d-inline-block text-danger"><strong>Tiros permitidos</strong></h6>
-                                                             <p class="text-center" style="color:#FF0000">{{$auction->tiros}}</p>
+                                                             <h6 class="text-center d-inline-block" style="color:#888888"><strong>Tiros permitidos</strong></h6>
+                                                             <p class="text-center" style="color:#888888">{{$auction->tiros}}</p>
                                                          </div>
                                                              @foreach($auctionbidders as $item)
                                                                  <div class="d-flex flex-column bd-highlight text-success">
-                                                                     <a class="text-success" href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" >
+                                                                     <a href="#" data-toggle="modal" data-target="#ModalWon" title="Articulos ganados" style="color:#17a2b8">
                                                                          <h6 class="text-center"><strong>Art ganados</strong></h6>
                                                                          <p class="text-center">{!! $auctionbidders2[0]->bidder_count !!}</p>
                                                                      </a>
@@ -608,8 +608,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                              @endforeach
                                                              @foreach($lote as $lotes)
                                                                  <div class="d-flex flex-column bd-highlight text-primary">
-                                                                     <h6 class="text-center" style="color: #295aa9;"><strong> Art a ganar</strong></h6>
-                                                                     <p class="text-center" style="color: #295aa9;">{{$lotes->articulos}}</p>
+                                                                     <h6 class="text-center" style="color: #888888;"><strong> Art a ganar</strong></h6>
+                                                                     <p class="text-center" style="color: #888888;">{{$lotes->articulos}}</p>
                                                                  </div>
                                                                  @break
                                                              @endforeach
@@ -643,8 +643,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                  </p>
                             </div>
                              @else
-                                    <strong>La subasta inicia:  <strong>Fecha Fin:</strong> {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
-                                                      <br> <strong>Hora Fin: </strong> {!!  date(' H:i:s', strtotime($auction->end_date)); !!}<br></strong>
+                                                     La subasta inicia:  <strong>Fecha:</strong> {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
+                                                      <br> <strong>Hora: </strong> {!!  date(' H:i:s', strtotime($auction->end_date)); !!}<br>
                             <!--if auction status is closed end-->
                             @endif
 

@@ -1075,7 +1075,7 @@ class AuctionController extends Controller
 
                             //reached /> precio de reserva, muestra el ganador del tiempo de subasta ha terminado
                             $currency_code = getSetting('currency_code', 'site_settings');
-                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta '. '$ ' . $auction_last_bid->bid_amount . 'mxn';
+                             $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta '. '$ ' . $auction_last_bid->bid_amount . 'mxn';
 
                             if ($users->id == $record->bidder_id) {
                                 Session::flash('succes', $msg);
@@ -1099,12 +1099,12 @@ class AuctionController extends Controller
       // $current_time = date('M d Y H:i:s', strtotime(date('Y-m-d H:i:s')));
       // $end_time = date('M d Y H:i:s', strtotime('2018-06-26 18:05:10'));
 
-       
+
 
         //check auction date, time
         //if not matches - display message
         //if any one won - same...
-        
+
         if (checkRole(getUserGrade(4))) {
             return redirect(URL_DASHBOARD);
         }
@@ -1120,11 +1120,11 @@ class AuctionController extends Controller
 
         //pago de oferta - pagado o no
         $bid_payment_record = $auction->getAuctionPayment();
-        
+
 
         //comprar ahora pago - pagado o no
         $buy_now_payment_record = $auction->getBuyNowAuctionPayment();
-        
+
         $bid_div=true;
         if (count($bid_payment_record) || count($buy_now_payment_record)) {
 
@@ -1137,7 +1137,7 @@ class AuctionController extends Controller
 
         $data['bid_div'] = $bid_div;
 
-        
+
         //oferta mínima, es incremento de oferta, incremento de oferta
         $bid_options=[];
         $today=date('Y-m-d');
@@ -1151,7 +1151,7 @@ class AuctionController extends Controller
 
         if ($auction->auction_status=='open' && $auction->start_date<=now() && $auction->end_date>=now()) {
             if ($auction->is_bid_increment && $auction->bid_increment>0) {
-                    
+
                 $start = $auction->minimum_bid;
 
                 if (isset($last_bid) && $last_bid->bid_amount) {
@@ -1169,15 +1169,15 @@ class AuctionController extends Controller
 
                     //options - start from minimum bid
                     // $bid_options[] = $start;
-                    
-                    for ($i=$start;$i<=($reserve_price+$increment);$i=$i+$increment) {
+
+                    for ($i=$start;$i<=($reserve_price+$start+$increment);$i=$i+$increment) {
                         $bid_options[$i] = $i;
                     }
-                   
+
                 } else {
 
                     //opciones - empezar desde la cantidad bid_increment
-                    for ($i=$increment;$i<=($reserve_price+$increment);$i=$i+$increment) {
+                    for ($i=$increment;$i<=($reserve_price+$start+$increment);$i=$i+$increment) {
                         $bid_options[$i] = $i;
                     }
                     

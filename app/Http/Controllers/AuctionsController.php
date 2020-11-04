@@ -61,12 +61,13 @@ class AuctionsController extends Controller
 
         $where = array();
         if (checkRole(['seller']))
-            $where = array('categories.user_id'=>$user->id);
+            $where = array('auctions.user_id'=>$user->id);
 
 
-        $auctions = Auction::join('categories','auctions.category_id','categories.id')
-                            ->join('users','categories.user_id','users.id')
-                            ->select(['auctions.id','auctions.slug','auctions.image','auctions.reserve_price','auctions.tiros','auctions.title','auctions.auction_status','auctions.admin_status','auctions.start_date','auctions.end_date','auctions.live_auction_date','auctions.live_auction_start_time','auctions.live_auction_end_time','users.username','users.slug as seller_slug'])
+
+        $auctions = Auction::join('users','auctions.user_id','users.id')
+                            ->join('users as created_by', 'auctions.created_by_id', 'created_by.id')
+                            ->select(['auctions.id','auctions.slug','auctions.image','auctions.reserve_price','auctions.title','auctions.auction_status','auctions.admin_status','auctions.start_date','auctions.end_date','auctions.live_auction_date','auctions.live_auction_start_time','auctions.live_auction_end_time','users.username','users.slug as seller_slug','created_by.username as created_by'])
                             ->where($where)
                             ->orderBy('auctions.id','desc')
                             ->get();
@@ -402,6 +403,7 @@ class AuctionsController extends Controller
 
         }
 
+
         $record->save();
 
         $message = 'record_added_successfully';
@@ -693,24 +695,6 @@ class AuctionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-        // function ganador(Request $request){
-
-    // }
-    //     $ab_id = $request->ab_id;
-
-    //     $record = AuctionBidder::where('id',$ab_id)
-    //                             ->first();
-    //     $record->is_bidder_won        = 'Yes';
-    //     //dd($record);
-    //     $record->save();
-
-
-
-    // flash('success','invoice_sent_to_bidder_successfully', 'success');
-    // return redirect(URL_AUCTIONS_VIEW.$auction->slug);
-
-    // }
-
     public function show($slug)
     {
         if(!checkRole(getUserGrade(4)))
@@ -726,8 +710,6 @@ class AuctionsController extends Controller
                         ->leftJoin('users as updated_by','auctions.last_updated_by','updated_by.id')
                         ->select(['auctions.*','users.username','created_by.username as created_by','categories.category','sub_catogories.sub_category', 'updated_by.username as updated_by_name'])
                         ->where('auctions.slug',$slug)->first();
-
-       // dd($record);
 
 
         if ($isValid = $this->isValidRecord($record))
