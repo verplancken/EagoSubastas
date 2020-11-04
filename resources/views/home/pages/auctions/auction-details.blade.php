@@ -338,8 +338,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                 @if (!$live_auction) <!--normal auction happening-->
                                     @if($auction->start_date<=now() && $auction->end_date>=now())
-                                        <p title="Auction End Date"> La subasta finaliza <strong>Fecha:  {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}</strong>
-                                                                                          <strong>  Hora:  {!!  date(' H:i:s', strtotime($auction->end_date)); !!}</strong>
+                                        <p title="Auction End Date"> La subasta finaliza <br><strong>Fecha:</strong>  {!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
+                                                                                         <strong>  Hora:</strong>  {!!  date(' H:i:s', strtotime($auction->end_date)); !!}
                                     @endif
                                 @endif
 
