@@ -39,28 +39,34 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                 <div id="load" style="position: relative;">
                     <section class="auctions">
                         <div class="row"style="background: #F8F8F8" >
-                                  @php
-
-                                  @endphp
+                            @php
+                                $con = 0;
+                            @endphp
                               @foreach ($invitacion as $item)
                                 @php
                                     $email_formateada = trim($item->email);
+                                    $contador=count($auctions);
                                 @endphp
                                 @if ($user->email == $email_formateada)
 {{--                                 @if ($user->email == $item->email)--}}
                                     @if (count($auctions))
                                     @foreach ($auctions as $auction)
-
                                         @if ($auction->sub_category_id == $item->auction_id)
                                             <div class="col-lg-4 col-md-6 col-sm-6 au-item-categorys" >
                                                 <div class="card au-cards">
-                                                    @if (Auth::user())
-                                                    <a href="javascript:void(0);" onclick="auctionAddtoFavourites({{$auction->id}})" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
-                                                    @else
-                                                     <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
-                                                    @endif
+
+                                                   <div class="d-flex justify-content-between">
+                                                       <p style="position: relative; right: 0px; top: 5px; font-size: 14px; color: #668ee6; background-color: #FFFFFF; border-radius: 50%; padding: 5px; border: 2px solid #3065b5;"> {{$con= $con + 1}}/{{count($auctions)}}</p>
+                                                        @if (Auth::user())
+                                                        <a href="javascript:void(0);" onclick="auctionAddtoFavourites({{$auction->id}})" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                        @else
+                                                         <a href="javascript:void(0);" onclick="showModal('loginModal')" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                        @endif
+                                                   </div>
+
                                                     <a href="{{URL_HOME_AUCTION_DETAILS}}/{{$auction->slug}}" title="View Auction Details">
                                                         <img class="img-fluid auction-img" src="{{getAuctionImage($auction->image,'auction')}}" alt="{{$auction->title}}">
+
                                                     </a>
 
                                                     <div class="card-block au-card-block">

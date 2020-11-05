@@ -696,7 +696,7 @@ class AuctionController extends Controller
                              'auctions.reserve_price', 'auctions.auction_status',
                              'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
                          ->where($cond)
-                         ->orderBy('auctions.id', 'desc')->paginate(PAGINATE_RECORDS);
+                         ->orderBy('auctions.id', 'asc')->paginate(PAGINATE_RECORDS);
 
                  }
 
