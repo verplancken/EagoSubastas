@@ -7,8 +7,9 @@
     <!--Dashboard section -->
 
 
-    <div class="col-lg-8 col-md-8 col-sm-12 au-onboard">
+    <div class="col-12 au-onboard" id="contendor">
 
+            <h2>Crear Mensaje</h2>
 
             {{-- <a href="{{URL_HOME}}" class="au-middles justify-content-start"> {{getPhrase('home')}} &nbsp;<span> / {{$title}} </span></a> --}}
 

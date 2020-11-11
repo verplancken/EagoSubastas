@@ -19,8 +19,10 @@
 <!--Dashboard section -->
 
 
-    <div class="col-lg-9 col-md-8 col-sm-12 au-onboard">
+    <div class="col-12 au-onboard" id="contendor">
             {{-- <a href="{{URL_HOME}}" class="au-middles justify-content-start"> {{getPhrase('home')}} &nbsp;<span> / {{$title}} </span></a> --}}
+
+        <h2>Direccion de de envio</h2>
 
             <div class="au-left-side form-auth-style">
 

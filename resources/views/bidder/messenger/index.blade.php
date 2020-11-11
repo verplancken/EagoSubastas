@@ -7,8 +7,8 @@
     <!--Dashboard section -->
 
 
-    <div class="col-lg-8 col-md-8 col-sm-12 au-onboard">
-
+    <div class="col-12 au-onboard" id="contendor">
+            <h2>Mensajes</h2>
 
             {{-- <a href="{{URL_HOME}}" class="au-middles justify-content-start"> {{getPhrase('home')}} &nbsp;<span> / {{$title}} </span></a> --}}
 
@@ -33,7 +33,7 @@
                 @empty
                     <div class="row msg-item">
                        <h4 class="no-msg">
-                        You have no messages.
+                      No hay mensajes
                         </h4>
                     </div>
                 @endforelse
