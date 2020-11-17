@@ -25,16 +25,6 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                     </div>
 
                  </div>
-{{--               <div class="col-lg-3 col-md-6 col-sm-12 au-items-listt clearfix">--}}
-{{--                      <label>Show</label>--}}
-{{--                       <select class="form-control form-control-sm au-form-dropdown">--}}
-{{--                        <option>10</option>--}}
-{{--                        <option>50</option>--}}
-{{--                        <option>100</option>--}}
-{{--                       </select>--}}
-{{--                       <label>Entries</label>--}}
-{{--                 </div>--}}
-
                 </div>
                 <div id="load" style="position: relative;">
                     <section class="auctions">
@@ -45,7 +35,6 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                               @foreach ($invitacion as $item)
                                 @php
                                     $email_formateada = trim($item->email);
-                                    $contador=count($auctions);
                                 @endphp
                                 @if ($user->email == $email_formateada)
 {{--                                 @if ($user->email == $item->email)--}}
@@ -56,7 +45,7 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                                                 <div class="card au-cards">
 
                                                    <div class="d-flex justify-content-between">
-                                                       <p style="position: relative; right: 0px; top: 5px; font-size: 14px; color: #668ee6; background-color: #FFFFFF; border-radius: 50%; padding: 5px; border: 2px solid #3065b5;"> {{$con= $con + 1}}/{{count($auctions)}}</p>
+                                                       <p style="position: relative; right: 0px; top: 5px; font-size: 14px; color: #668ee6; background-color: #FFFFFF; border-radius: 50%; padding: 5px; border: 2px solid #3065b5;"> {{$con= count($auctions) - 1}}/{{count($auctions)}}</p>
                                                         @if (Auth::user())
                                                         <a href="javascript:void(0);" onclick="auctionAddtoFavourites({{$auction->id}})" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
                                                         @else
@@ -89,6 +78,9 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                     {{--                                                <small>{{getAuctionDaysLeft($auction->start_date,$auction->end_date)}}</small>--}}
                                                                 </p>
                                                                 </a>
+                                                                    <div class="p-2 bd-highlight"><p class="text-center">Lote:
+                                                                            <br><strong>{{$auction->sub_category}}</strong></p></div>
+
                                                             </div>
                                                           @elseif ($auction->auction_status=='new' && $auction->start_date<=NOW() && $auction->end_date>=NOW())
                                                           <p>

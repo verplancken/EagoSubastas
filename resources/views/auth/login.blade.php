@@ -58,7 +58,7 @@ $google_login = getSetting('google_plus_login','module');
 
                 <!--form id="login-form" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;"-->
 
-                   @include('errors.errors')
+{{--                   @include('errors.errors')--}}
 
                    {!! Form::open(array('url' => URL_USERS_LOGIN, 'method' => 'POST', 'novalidate'=>'', 'class'=>"form-horizontal", 'name'=>"loginForm",'id'=>'login-form', 'style'=>'display:block')) !!}
   <div class="row">

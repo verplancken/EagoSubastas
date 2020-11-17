@@ -22,7 +22,7 @@
                     <div class="panel-body form-auth-style">
 
 
-                        @include('errors.errors')
+{{--                        @include('errors.errors')--}}
 
                         {!! Form::open(array('url' => URL_USERS_REGISTER, 'method' => 'POST', 'novalidate'=>'', 'class'=>"form-horizontal", 'name'=>"registrationForm")) !!}
 
@@ -257,7 +257,7 @@
                        {!! Form::close() !!}
 
 
-                       <a href="{{URL_USERS_LOGIN}}"><p class="text-center">{{getPhrase('i_am_having_account')}} </p></a>
+                       <a href="{{URL_USERS_LOGIN}}"><p class="text-center">Tengo una cuenta</p></a>
 
                     </div>
                 </div>

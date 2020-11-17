@@ -413,21 +413,11 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                           @endif
                                                       </div>
                                                    </div>
-
+                                  {{-- =======================SUBASTA AUTO-INCREMENTO ABIERTA=======================--}}
                                         @if ($bid_options || $bid_options2)
                                             @if($auction->visibilidad == 1)
                                                 <div class="d-flex justify-content-between">
                                                    <p>Seleccione oferta máxima</p>
-                                                         @if(Session::has('warning'))
-                                                            <div class="col-lg-12">
-                                                                <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                                                    {{Session::get('warning')}}
-                                                                    <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                          @endif
                                                    @if($auction->is_bid_increment == 1)
                                                       <p class="ml-3" title="Incremento" data-placement="top" >Incremento de: <strong>${!! number_format($auction->bid_increment) !!} MXN</strong></p>
                                                    @endif
@@ -458,11 +448,44 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                               <div class="form-group">
                                                                   <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
                                                                   <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
-                                                                  <div class="d-flex justify-content-between">
-                                                                      <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true" ></i>   Reg a Subastas</a>
-                                                                      <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
-                                                                  </div>
+                                                                                <div class="d-flex justify-content-between">
+                                                                                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                                                      <i class="fa fa-gavel"></i>    Ofertar
+                                                                                  </button>
+                                                                                  <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver a Subastas</a>
+                                                                                </div>
                                                               </div>
+                                                                            <!-- Modal -->
+                                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                              <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                  <div class="modal-header">
+                                                                                    <h5 class="modal-title text-center" id="exampleModalLabel">Confirmacion</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                      <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                  </div>
+
+
+                                                                                  <div class="modal-body">
+                                                                                      <h2 class="text-center">Seguro que desea ofertar la <strong>cantidad de: </strong></h2>
+                                                                                     <p class="text-center"><img src="https://www.flaticon.es/svg/static/icons/svg/3399/3399124.svg" alt="" style="width: 200px"></p>
+                                                                                   {{ Form::select('bid_amount', $bid_options, null,  [
+
+                                                                                    'class' => 'form-control',
+                                                                                    'disabled',
+                                                                                    'ng-model' => 'bid_amount'
+
+                                                                                    ]) }}
+                                                                                  </div>
+                                                                                  <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
+                                                                                    <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
                                                           </div>
                                                              {!! Form::close() !!}
 
@@ -474,6 +497,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                     </div>
 
                                             @else
+                                                {{-- =======================SUBASTA AUTO INCREMENTO CERRADA=======================--}}
                                                 <div class="d-flex justify-content-between">
                                                    <p>Seleccione oferta máxima</p>
                                                    @if($auction->is_bid_increment == 1)
@@ -481,17 +505,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                    @endif
                                                 </div>
                                                     <div class="row">
-                                                        <div class="col-lg-5">
-                                                          @if(Session::has('warning'))
-                                                            <div class="col-lg-12">
-                                                                <div class="alert alert-warning alert-dismissible fade show mb-4 mt-4" role="alert">
-                                                                    {{Session::get('warning')}}
-                                                                    <button type="" class="close" data-dismiss="alert" arial-label="close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                          @endif
+                                                        <div class="col-lg-12">
                                                             {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
 
                                                             {{-- Traer el id de la subasta en que se esta --}}
@@ -513,16 +527,49 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                                     </div>
                                                         </div>
 
-                                                       <div class="col-lg-7">
+                                                       <div class="col-lg-12">
                                                            <div class="form-group">
-                                                               <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
-                                                               <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
+                                                                   <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
+                                                                   <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
 
-                                                               <div class="d-flex justify-content-between">
-                                                                   <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver a Subastas</a>
-                                                                   <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
-                                                               </div>
+                                                                                <div class="d-flex justify-content-between">
+                                                                                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                                                      <i class="fa fa-gavel"></i>    Ofertar
+                                                                                  </button>
+                                                                                  <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver a Subastas</a>
+                                                                                </div>
                                                            </div>
+                                                                            <!-- Modal -->
+                                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                              <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                  <div class="modal-header">
+                                                                                    <h5 class="modal-title text-center" id="exampleModalLabel">Confirmacion</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                      <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                  </div>
+
+
+                                                                                  <div class="modal-body">
+                                                                                      <h2 class="text-center">Seguro que desea ofertar la <strong>cantidad de: </strong></h2>
+                                                                                     <p class="text-center"><img src="https://www.flaticon.es/svg/static/icons/svg/3399/3399124.svg" alt="" style="width: 200px"></p>
+                                                                                   {{ Form::select('bid_amount', $bid_options2, null,  [
+
+                                                                                    'class' => 'form-control',
+                                                                                    'disabled',
+                                                                                    'ng-model' => 'bid_amount'
+
+                                                                                    ]) }}
+                                                                                  </div>
+                                                                                  <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
+                                                                                    <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
                                                        </div>
                                                              {!! Form::close() !!}
 
@@ -535,7 +582,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
 
                                             @endif
                                         @else
-
+                                            {{-- =======================SUBASTA CAMPO LIBRE CERRADA/ABIERTA=======================--}}
                                             <div class="row">
                                               <div class="col-lg-12">
                                                 {!! Form::open(array('url' => URL_SAVE_BID, 'method' => 'POST','name'=>'formBid', 'files'=>'true', 'novalidate'=>'')) !!}
@@ -566,10 +613,44 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                                             <input type="hidden" name="bid_auction_id" value="{{$auction->id}}">
                                                                             <input type="hidden" name="sub" value="{{$auction->sub_category_id}}">
                                                                               <div class="d-flex justify-content-between">
+                                                                                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                                                                      <i class="fa fa-gavel"></i>    Ofertar
+                                                                                  </button>
                                                                                   <a class="btn btn-danger"  href="{{URL_HOME_AUCTIONS}}" data-toggle="tooltip" title="Regresar a las subastas" data-placement="top" > <i class="fa fa-arrow-left" aria-hidden="true"></i>   Volver a Subastas</a>
-                                                                                <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
-                                                                              </div>
+                                                                                </div>
                                                                           </div>
+                                                                            <!-- Modal -->
+                                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                              <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                  <div class="modal-header">
+                                                                                    <h5 class="modal-title text-center" id="exampleModalLabel">Confirmacion</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                      <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                  </div>
+
+
+                                                                                  <div class="modal-body">
+                                                                                      <h2 class="text-center">Seguro que desea ofertar la <strong>cantidad de: </strong></h2>
+                                                                                     <p class="text-center"><img src="https://www.flaticon.es/svg/static/icons/svg/3399/3399124.svg" alt="" style="width: 200px"></p>
+                                                                                   {{ Form::number('bid_amount', null, $attributes =
+
+                                                                                    array('class' => 'form-control',
+                                                                                    'disabled',
+                                                                                    'ng-model' => 'bid_amount',
+
+                                                                                    )) }}
+                                                                                  </div>
+                                                                                  <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
+                                                                                    <button data-toggle="tooltip" title="Subastar" data-placement="top" class="btn btn-success login-bttn au-btn-modren" ng-disabled='!formBid.$valid'> <i class="fa fa-gavel"></i>   Ofertar</button>
+
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+
                                                                           {!! Form::close() !!}
 
                                                                 @else

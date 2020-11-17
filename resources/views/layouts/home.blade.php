@@ -87,11 +87,12 @@
             <div class="alert alert-danger">
                 <ul class="list-unstyled">
                     @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li>Lo sentimos, El usuario ya se encuentra registrado</li>
                     @endforeach
                 </ul>
             </div>
         @endif
+
 
         @yield('content')
 

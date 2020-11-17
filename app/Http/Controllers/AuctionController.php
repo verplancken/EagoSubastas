@@ -81,7 +81,6 @@ class AuctionController extends Controller
             //Sub Categories
             $sub_categories = $request->sub_categories;
         }
-         
 
         $data['selected_category'] = $selected_category;                                
         $data['selected_sub_categories'] = $sub_categories;
@@ -694,34 +693,25 @@ class AuctionController extends Controller
                          ->select(['auctions.id', 'auctions.title', 'auctions.slug',
                              'auctions.description', 'auctions.image',
                              'auctions.reserve_price', 'auctions.auction_status',
-                             'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id'])
+                             'auctions.start_date', 'auctions.end_date', 'auctions.sub_category_id','sub_catogories.sub_category'])
                          ->where($cond)
                          ->orderBy('auctions.id', 'asc')->paginate(PAGINATE_RECORDS);
-
                  }
 
              }
-
+             $sub = SubCatogory::where('status','=','Active')
+                                 ->first();
+             $subastas = Auction::where('sub_category_id', $sub->id)
+                                  ->get();
+             //dd($subastas);
 
 
         $auctions->withPath(URL_HOME_AUCTIONS);
-        
-        
         $data['auctions'] = $auctions;
-       // dd($auctions);
        $invitacion = DB::table('invitaciones')
         ->get();
 
-        //dd($invitacion);
-        $user = DB::table('users')
-        ->first();
-
-
-
         //CUANDO EXISTEN DATOS EN auctionbidders
-        $auctionbidders = AuctionBidder::select('auction_id', 'no_of_times', 'bidder_id')
-                                        ->get();
-
          $users   = \Auth::user();
 
         $auctionbidders = AuctionBidder::where('bidder_id', '=', $users->id)
@@ -733,10 +723,6 @@ class AuctionController extends Controller
         $subcategoria = DB::table('sub_catogories')
                             ->first();
 
-        $lote = DB::table('sub_catogories')
-                            ->get();
-
-       //dd($lote);
        $cond2[] = ['auctionbidders.is_bidder_won','=','Yes'];
        $auctionbidders2 = DB::table('auctionbidders')
                      ->select(DB::raw('count(*) as bidder_count'))
@@ -756,7 +742,7 @@ class AuctionController extends Controller
             return view('home.pages.auctions.ajax_auctions',['auctions' => $auctions])->render();
         }
         // Auction::paginate(3);
-        return view('home.pages.auctions.auctions', $data, compact('invitacion', 'subcategoria', 'auctionbidders2', 'auctionbidders', 'auction'));
+        return view('home.pages.auctions.auctions', $data, compact('invitacion', 'subcategoria', 'auctionbidders2', 'auctionbidders', 'auction', 'subastas'));
     }
 
     /**
@@ -1044,34 +1030,22 @@ class AuctionController extends Controller
                                 ->select(['auctionbidders.*','auctions.slug as auction_slug','auctions.image','auctions.title','auctions.start_date','auctions.end_date','auctions.reserve_price'])
                                 ->get();
        //dd($articulos);
-
-                    $now = strtotime(date('Y-m-d H:i:s'));
-                    $start_date = strtotime($auction->start_date);
-                    $end_date   = strtotime($auction->end_date);
-
-                       //comprobar la última puja reciente de la subasta
                         $auction_last_bid = Bidding::getAuctionLastBid($auction->id);
-
-                                $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
+                                 $now = strtotime(date('Y-m-d H:i:s'));
+                                 $start_date = strtotime($auction->start_date);
+                                 $end_date = strtotime($auction->end_date);
+                                 $record = AuctionBidder::where('id', $auction_last_bid->ab_id)
                                     ->first();
-                                 //dd($record);
 
                         if ($end_date<=$now) {
-                            $auction->auction_status = 'closed';
-                            $auction->save();
-                        }
-
-                        if ($end_date<=$now) {
-                            $record->is_bidder_won = 'Yes';
-                            //dd($record);
-                            $record->save();
-
 
                             //reached /> precio de reserva, muestra el ganador del tiempo de subasta ha terminado
                             $currency_code = getSetting('currency_code', 'site_settings');
-                             $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta '. '$ ' . $auction_last_bid->bid_amount . 'mxn';
+                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta ' . $currency_code . $auction_last_bid->bid_amount;
+                            $msg = $auction_last_bid->name . ' has ganado la subasta con la oferta más alta '. '$' . $auction_last_bid->bid_amount . 'mxn';
 
                             if ($users->id == $record->bidder_id) {
+                                flash('success', $msg, 'success');
                                 Session::flash('succes', $msg);
                             } else {
                                 Session::flash('warning', 'Lo sentimos, no ganaste');
