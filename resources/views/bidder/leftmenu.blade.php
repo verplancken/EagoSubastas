@@ -31,18 +31,18 @@ $user = Auth::user();
                             </a>
 
                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Instrucciones3">
-                                 <i class="fa fa-question" aria-hidden="true"></i>
+                                 <i class="fa fa-question" aria-hidden="true">Ayuda</i>
                             </button>
                      </div>
               </div>
           </div>
 
         <div class="row ">
-            <div class="col-6 au-primary au-primary">
-                             <div class="au-card-franky">
+            <div class="col-6 au-primary">
+                             <div class="au-card-franky" style="background-color: #ff6000;">
                                <h4 class="text-center"><i class="fa fa-globe"></i></h4>
                                  <p class="text-center">Cuenta</p>
-                                 <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Ver</a>
+                                 <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="background-color: #b74803;">Ver</a>
 
                                     <div class="collapse" id="collapseExample">
                                       <div class="card card-body">
@@ -57,11 +57,11 @@ $user = Auth::user();
                              </div>
                          </div>
 
-            <div class="col-6 au-primary au-secondary">
-                             <div class="au-card-franky">
+            <div class="col-6 au-primary">
+                             <div class="au-card-franky" style="background-color: #FF052C;">
                                <h4 class="text-center"><i class="fa fa-envelope"></i> </h4>
                                  <p class="text-center">Mensajes</p>
-                                  <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">Ver</a>
+                                  <a  data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample" style="background-color: #a0051e;">Ver</a>
 
                                     <div class="collapse" id="collapseExample2">
                                       <div class="card card-body">
@@ -147,5 +147,25 @@ $user = Auth::user();
         </div>
 
       </div>
+
+        <div class="modal" id="Instrucciones3" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Dashboard</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img class="d-block w-100" src="{{asset('public/images/dashboard.png')}}">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
 </section>

@@ -4682,6 +4682,10 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #ffae11;
 }
 
+.au-cuenta .au-card-franky {
+    background-color: #ff6000;
+}
+
 .au-primary .au-card-franky h4 {
     color: #FFFFFF;
     font-size: 36px;

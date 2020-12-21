@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\User;
 use App\Auction;
+use App\Bidding;
 use App\Favouriteauction;
 use App\AuctionBidder;
 use App\Settings;
@@ -250,7 +251,7 @@ class BidderController extends Controller
         $user = \Auth::user();
 
         $auctions = $user->getBidderParicipatedAuctions();
-        //dd($auctions);
+//dd($auctions);
         $data['title']              = getPhrase('my_auctions');
         $data['active_class']       = 'auctions';
 
@@ -258,7 +259,10 @@ class BidderController extends Controller
         $data['datatable']     = TRUE;
         $data['auctions']      = $auctions;
         //dd($data);
-        return view('bidder.auctions.my_auctions', $data);
+
+        $auction_last_bid = Bidding::getAuctionLastBid( $data->auction_id);
+//dd($auction_last_bid);
+        return view('bidder.auctions.my_auctions', $data, compact('auction_last_bid'));
     }
 
     /**

@@ -117,7 +117,7 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                 <li class="list-group-item d-flex justify-content-between align-items-center btn-res">
                                                     Fecha final
                                                   <span class="btn-res"><strong> Fecha: </strong>{!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
-                                                    <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($auction->start_date)); !!}
+                                                    <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($auction->end_date)); !!}
                                                   </span>
                                                 </li>
                                         </div>
@@ -561,6 +561,8 @@ box-shadow: 10px 10px 30px 0px rgba(230,230,230,1);
                                                                                     'ng-model' => 'bid_amount'
 
                                                                                     ]) }}
+
+                                                                                      <form ng-model="bid_amount" class="form-control" value="bid_amount"></form>
                                                                                   </div>
                                                                                   <div class="modal-footer">
                                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>

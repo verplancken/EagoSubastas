@@ -362,7 +362,7 @@
 
                     'placeholder' => 'Precio Inicial',
 
-                    'ng-model' => 'reserve_price', 
+                    'ng-model' => 'reserve_price',
 
                     'required' => 'true',
 

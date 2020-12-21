@@ -18,7 +18,7 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
                     <div class="d-flex">
                       <div class="mr-auto p-2"><h5>Subastas Activas</h5></div>
                       <div class="p-2">
-                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Instrucciones">
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Instrucciones4">
                            <i class="fa fa-question" aria-hidden="true">Ayuda</i>
                         </button>
                       </div>
@@ -162,6 +162,26 @@ $featured_records = Auction::getHomeFeaturedAuctions(8);
 
          </div>
       </div>
+
+        <div class="modal" id="Instrucciones4" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Subastas </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img class="d-block w-100" src="{{asset('public/images/imagenaucction.jpeg')}}">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </section>
 
  <!--Pagination Section-->

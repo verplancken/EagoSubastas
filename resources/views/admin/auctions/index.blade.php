@@ -86,11 +86,15 @@ $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]
 
                                 <td> {{$auction->title}} </td>
 
-                                <td> @if ($auction->start_date) <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?> @endif </td>
+                                <td> @if ($auction->start_date) <span class="btn-res"> <strong> Fecha: </strong> {!!  date(getSetting('date_format','site_settings'), strtotime($auction->start_date)); !!}
+                                                              <br> <strong> Hora: </strong> {!!  date(' H:i:s', strtotime($auction->start_date)); !!}
+                                                              </span> @endif </td>
 
-                                <td>  @if ($auction->end_date) <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> @endif </td>
+                                <td>  @if ($auction->end_date) <span class="btn-res"><strong> Fecha: </strong>{!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
+                                                                <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($auction->end_date)); !!}
+                                                              </span> @endif </td>
 
-                                <td >{{ $auction->reserve_price }}</td>
+                                <td >{{ number_format($auction->reserve_price) }}</td>
                                 @if (checkRole(['admin']))
                                 <td> <a href="{{URL_USERS_VIEW}}/{{$auction->seller_slug}}" target="_blank" title="Seller Details"> {{ $auction->username }}</td>
                                 @endif

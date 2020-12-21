@@ -57,13 +57,15 @@
                                 <td> {{$record->transaction_id}} </td>
 
                                 
-                                <td> @if ($record->paid_amount) {{$currency}}{{$record->paid_amount}} @endif</td>
+                                <td> @if ($record->paid_amount) ${{ number_format($record->paid_amount)}} @endif MXN</td>
 
                                 <td> {{get_text($record->payment_for)}} </td>
 
                                 <td> {{ucfirst($record->payment_gateway)}} </td>
 
-                                 <td> @if ($record->created_at) <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($record->created_at));?> @endif </td>
+                                 <td>@if ($record->created_at) <span class="btn-res"><strong> Fecha: </strong>{!!  date(getSetting('date_format','site_settings'), strtotime($record->created_at)); !!}
+                                           <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($record->created_at)); !!}
+                                      </span> @endif </td>
 
                                 <td>
                                     <a href="{{URL_BIDDER_PAYMENT_DETAILS}}/{{$record->slug}}" class="btn btn-primary btn-sm login-bttn" title="View Payment Details"> {{getPhrase('view')}} </a>

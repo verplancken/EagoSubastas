@@ -51,7 +51,7 @@ $stripe = getSetting('stripe','module');
 
 
                   <tr>
-                      <th> {{getPhrase('sub_category')}}  </th>
+                      <th> Lote  </th>
                       <td> {{$record->sub_category}} </td>
                   </tr>
 
@@ -64,23 +64,29 @@ $stripe = getSetting('stripe','module');
 
                     <tr>
                         <th> {{getPhrase('start_date')}}  </th>
-                        <td>  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($record->start_date));?> </td>
+                        <td>  <span class="btn-res"><strong> Fecha: </strong>{!!  date(getSetting('date_format','site_settings'), strtotime($record->start_date)); !!}
+                                   <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($record->start_date)); !!}
+                              </span>
+                        </td>
                     </tr>
 
                     <tr>
                         <th> {{getPhrase('end_date')}}  </th>
-                        <td>  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($record->end_date));?> </td>
+                        <td>  <span class="btn-res"><strong> Fecha: </strong>{!!  date(getSetting('date_format','site_settings'), strtotime($record->end_date)); !!}
+                                   <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($record->end_date)); !!}
+                              </span>
+                        </td>
                     </tr>
 
 
                     <tr>
                         <th> {{getPhrase('reserve_price')}}  </th>
-                        <td> {{$currency_code}}{{$record->reserve_price}} </td>
+                        <td> ${{ number_format($record->reserve_price)}} MXN</td>
                     </tr>
 
                      <tr>
                           <th> {{getPhrase('bid_amount')}} </th>
-                          <td> {{$currency_code}}{{$record->bid_amount}}</td>
+                          <td> ${{ number_format($record->bid_amount)}} MXN</td>
                       </tr>
 
                 </table>

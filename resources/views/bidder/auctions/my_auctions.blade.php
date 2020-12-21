@@ -68,11 +68,15 @@
 
                                 <td> <span data-toggle="tooltip" title="{{$auction->title}}" data-placement="bottom"> {!! str_limit($auction->title,10) !!} </span> </td>
 
-                                <td>  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->start_date));?> </td>
+                                <td>    <span class="btn-res"><strong> Fecha: </strong>{!!  date(getSetting('date_format','site_settings'), strtotime($auction->start_date)); !!}
+                                               <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($auction->start_date)); !!}
+                                        </span> </td>
 
-                                <td>  <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($auction->end_date));?> </td>
+                                <td>  <span class="btn-res"><strong> Fecha: </strong>{!!  date(getSetting('date_format','site_settings'), strtotime($auction->end_date)); !!}
+                                           <br> <strong> Hora: </strong>{!!  date(' H:i:s', strtotime($auction->end_date)); !!}
+                                      </span> </td>
 
-                                <td> {{$currency}}{{$auction->reserve_price}}</td>
+                                <td> ${{ number_format($auction->reserve_price)}} MXN</td>
 
                                 <td> {{$auction->no_of_times}} </td>
 
@@ -155,14 +159,12 @@
         <ul class="list-group z-depth-0">
 
             <li class="list-group-item justify-content-between">
-{{--                <span><b>{{getPhrase('bid_amount')}}</b></span>--}}
                 <span><b>monto de la oferta</b></span>
-{{--                <span style="float:right;"><b>{{getPhrase('datetime')}}</b></span> --}}
                  <span style="float:right;"><b>fecha y hora</b></span>
             </li>
 
             <li ng-repeat="bid in bid_history" class="list-group-item justify-content-between">
-                <span>{{$currency}} @{{bid.bid_amount}}</span>
+                <span>$ @{{bid.bid_amount}} MXN</span>
                 <span style="float:right;">@{{bid.created_at}} </span>
             </li>
         </ul>

@@ -38,7 +38,9 @@
                                 <tr>
                                     <td>{{$title}}</td>
                                     <td>{{$description}}</td>
-                                    <td>  @if ($notification->updated_at) <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($notification->updated_at));?> @endif </td>
+                                    <td>  @if ($notification->updated_at) <span class="btn-res"> <strong> Fecha: </strong> {!!  date(getSetting('date_format','site_settings'), strtotime($notification->updated_at)); !!}
+                                                                            <br> <strong> Hora: </strong> {!!  date(' H:i:s', strtotime($notification->updated_at)); !!}
+                                                                          </span> @endif </td>
                                     <td><a class="btn btn-info btn-xs" href="{{URL_USER_NOTIFICATIONS_VIEW.$notification->id}}">View more</a></td>
                                 </tr>
                                 @endforeach

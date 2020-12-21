@@ -55,13 +55,13 @@ $currency_code = getSetting('currency_code','site_settings');
 
                   <tr>
                       <th>{{getPhrase('payment_for')}}</th>
-                      <td>{{get_text($record->payment_for)}}</td>
+                      <td>Ofertas</td>
                   </tr>
 
 
                   <tr>
                       <th> {{getPhrase('paid_amount')}} </th>
-                      <td> @if ($record->paid_amount) {{$currency_code}}{{$record->paid_amount}} @endif</td>
+                      <td> @if ($record->paid_amount) ${{ number_format($record->paid_amount)}} @endif MXN</td>
                   </tr>
 
 

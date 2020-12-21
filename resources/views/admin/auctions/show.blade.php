@@ -96,12 +96,16 @@
 
                         <tr>
                           <!--  <th> {{getPhrase('start_date')}}  </th> -->
-                            <td field-key='start_date'>  @if ($record->start_date) <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($record->start_date));?> @endif </td>
+                            <td field-key='start_date'>  @if ($record->start_date)<span class="btn-res"> <strong> Fecha: </strong> {!!  date(getSetting('date_format','site_settings'), strtotime($record->start_date)); !!}
+                                                                                    <br> <strong> Hora: </strong> {!!  date(' H:i:s', strtotime($record->start_date)); !!}
+                                                                                  </span> @endif </td>
                         </tr>
 
                         <tr>
                           <!--  <th> {{getPhrase('end_date')}}  </th> -->
-                            <td field-key='end_date'>  @if ($record->end_date) <?php echo date(getSetting('date_format','site_settings').' H:i:s', strtotime($record->end_date));?> @endif </td>
+                            <td field-key='end_date'>  @if ($record->end_date) <span class="btn-res"> <strong> Fecha: </strong> {!!  date(getSetting('date_format','site_settings'), strtotime($record->end_date)); !!}
+                                                                                    <br> <strong> Hora: </strong> {!!  date(' H:i:s', strtotime($record->end_date)); !!}
+                                                                                  </span> @endif </td>
                         </tr>
 
 
@@ -123,22 +127,22 @@
 
                         <tr>
                            <!-- <th> {{getPhrase('minimum_bid')}}  </th>-->
-                            <td field-key='minimum_bid'> {{$currency}}{{ $record->minimum_bid }} </td>
+                            <td field-key='minimum_bid'> $ {{ number_format($record->minimum_bid) }} MXN </td>
                         </tr>
 
                         <tr>
                           <!--  <th> {{getPhrase('reserve_price')}}  </th>-->
-                            <td field-key='reserve_price'> {{$currency}}{{ $record->reserve_price }} </td>
+                            <td field-key='reserve_price'> $ {{ number_format($record->reserve_price) }} MXN</td>
                         </tr>
 
                         <tr>
                           <!--  <th> {{getPhrase('buy_now_price')}}  </th>-->
-                            <td field-key='buy_now_price'> {{$currency}}{{ $record->buy_now_price }} </td>
+                            <td field-key='buy_now_price'> $ {{ number_format($record->buy_now_price) }} MXN</td>
                         </tr>
 
                          <tr>
                            <!-- <th> {{getPhrase('bid_increment')}}  </th>-->
-                            <td field-key='bid_increment'> {{$currency}}{{ $record->bid_increment }} </td>
+                            <td field-key='bid_increment'> $ {{ number_format($record->bid_increment) }} MXN</td>
                         </tr>
 
                         <tr>
